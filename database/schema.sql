@@ -1,0 +1,41 @@
+CREATE DATABASE IF NOT EXISTS mpesa_rent_wallet
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+USE mpesa_rent_wallet;
+
+CREATE TABLE IF NOT EXISTS users (
+  id CHAR(36) NOT NULL,
+  fullName VARCHAR(150) NOT NULL,
+  phone VARCHAR(30) NOT NULL,
+  email VARCHAR(150) NOT NULL,
+  passwordHash VARCHAR(255) NOT NULL,
+  createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY unique_phone (phone),
+  UNIQUE KEY unique_email (email)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS wallets (
+  userId CHAR(36) NOT NULL,
+  rentGoal INT NOT NULL DEFAULT 25000,
+  dueDate DATE NULL,
+  walletBalance INT NOT NULL DEFAULT 0,
+  updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (userId),
+  CONSTRAINT fk_wallet_user
+    FOREIGN KEY (userId) REFERENCES users(id)
+    ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS transactions (
+  id CHAR(36) NOT NULL,
+  userId CHAR(36) NOT NULL,
+  amount INT NOT NULL,
+  createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY idx_transactions_userId (userId),
+  CONSTRAINT fk_transaction_user
+    FOREIGN KEY (userId) REFERENCES users(id)
+    ON DELETE CASCADE
+) ENGINE=InnoDB;

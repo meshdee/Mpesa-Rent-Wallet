@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M-PESA Rent Wallet</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Safaricom Inspired Prototype</p>
+        <h1>M-PESA Rent Wallet</h1>
+        <p class="subtitle">Save smart. Pay rent. Build your future.</p>
+      </div>
+      <div class="topbar-badge">
+        <span>Version 7.0 • MySQL Ready</span>
+      </div>
+    </header>
+
+    <main id="authView" class="auth-grid">
+      <section class="card auth-intro">
+        <p class="greeting" id="welcomeLine">Welcome</p>
+        <h2>Tenant Identity</h2>
+        <p class="muted">
+          Register your profile, then log in to access your rent wallet dashboard.
+        </p>
+
+        <div class="auth-note">
+          <strong>What this version adds</strong>
+          <p class="muted">
+            Login, registration, logout, MySQL storage, and persistent wallet data.
+          </p>
+        </div>
+      </section>
+
+      <section class="card auth-card">
+        <div class="tabs">
+          <button class="tab active" id="showLoginBtn" type="button">Login</button>
+          <button class="tab" id="showRegisterBtn" type="button">Register</button>
+        </div>
+
+        <form id="loginForm" class="form-panel">
+          <h3>Login</h3>
+
+          <label for="loginId">Phone number or email</label>
+          <input id="loginId" type="text" placeholder="Enter phone or email" />
+
+          <label for="loginPassword">Password</label>
+          <input id="loginPassword" type="password" placeholder="Enter password" />
+
+          <div class="actions">
+            <button type="submit">Login</button>
+          </div>
+        </form>
+
+        <form id="registerForm" class="form-panel hidden">
+          <h3>Create tenant account</h3>
+
+          <label for="fullName">Full name</label>
+          <input id="fullName" type="text" placeholder="Enter your name" />
+
+          <label for="phoneNumber">Phone number</label>
+          <input id="phoneNumber" type="tel" placeholder="Enter phone number" />
+
+          <label for="emailAddress">Email address</label>
+          <input id="emailAddress" type="email" placeholder="Enter email" />
+
+          <label for="registerPassword">Password</label>
+          <input id="registerPassword" type="password" placeholder="Create password" />
+
+          <label for="confirmPassword">Confirm password</label>
+          <input id="confirmPassword" type="password" placeholder="Confirm password" />
+
+          <div class="actions">
+            <button type="submit">Register</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <main id="appView" class="dashboard hidden">
+      <section class="card hero-card">
+        <div>
+          <p class="greeting" id="greeting">Good day</p>
+          <h2 id="userNameLine">Welcome back</h2>
+          <p class="muted" id="userMetaLine">
+            Track your rent savings, due date, and transaction history in one place.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button class="secondary" id="logoutBtn" type="button">Logout</button>
+          <div class="topbar-badge light">
+            <span id="sessionStatus">Connected to backend</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card profile-card">
+        <h3>Your Profile</h3>
+        <div class="profile-grid">
+          <div>
+            <span class="stat-label">Name</span>
+            <strong id="profileName">-</strong>
+          </div>
+          <div>
+            <span class="stat-label">Phone</span>
+            <strong id="profilePhone">-</strong>
+          </div>
+          <div>
+            <span class="stat-label">Email</span>
+            <strong id="profileEmail">-</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid-2">
+        <section class="card">
+          <h3>Wallet Settings</h3>
+          <p class="muted">Set your rent goal and rent due date.</p>
+
+          <label for="rentGoalInput">Monthly rent goal (KES)</label>
+          <input id="rentGoalInput" type="number" min="1" step="1" placeholder="25000" />
+
+          <label for="dueDateInput">Rent due date</label>
+          <input id="dueDateInput" type="date" />
+
+          <div class="actions">
+            <button id="saveSettingsBtn" type="button">Save Settings</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>Wallet Overview</h3>
+
+          <div class="wallet-meta">
+            <div>
+              <span class="stat-label">Saved</span>
+              <strong id="savedAmount">KES 0</strong>
+            </div>
+            <div>
+              <span class="stat-label">Remaining</span>
+              <strong id="remainingAmount">KES 25,000</strong>
+            </div>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-head">
+              <span>Progress</span>
+              <strong id="progressPercent">0%</strong>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+
+          <label for="saveAmountInput">Add money to wallet</label>
+          <input id="saveAmountInput" type="number" min="1" step="1" placeholder="Enter amount to save" />
+
+          <div class="actions">
+            <button id="saveRentBtn" type="button">Save Rent</button>
+            <button class="secondary" id="resetWalletBtn" type="button">Reset Wallet</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="card">
+        <div class="section-head">
+          <div>
+            <h3>Transaction History</h3>
+            <p class="muted">Every saved amount is stored in MySQL.</p>
+          </div>
+          <span class="count-pill" id="historyCount">0 transactions</span>
+        </div>
+
+        <ul class="history-list" id="historyList"></ul>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

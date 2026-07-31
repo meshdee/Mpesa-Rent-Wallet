@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Landlord Registration</title>
+
+<link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard-shell">
+
+    <aside class="sidebar">
+
+        <div class="brand-block">
+
+            <p class="eyebrow">Safaricom Inspired</p>
+
+            <h1>M-PESA Rent Wallet</h1>
+
+            <p class="muted">Landlord Management</p>
+
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html">🏠 Dashboard</a>
+
+            <a href="landlord.html" class="active">👤 Landlord</a>
+
+            <a href="properties.html">🏢 Properties</a>
+
+            <a href="units.html">🏘️ Units</a>
+
+            <a href="tenants.html">👥 Tenants</a>
+
+        </nav>
+
+    </aside>
+
+    <main class="dashboard-main">
+
+        <h2>Register Landlord</h2>
+
+        <section class="card">
+
+            <label>Business Name</label>
+            <input id="businessName" type="text">
+
+            <label>National ID</label>
+            <input id="nationalId" type="text">
+
+            <label>Phone</label>
+            <input id="landlordPhone" type="text">
+
+            <br><br>
+
+            <button id="registerLandlordBtn">
+
+                Register Landlord
+
+            </button>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/config/storage.js"></script>
+
+<script src="../js/modules/landlord.js"></script>
+
+</body>
+
+</html>

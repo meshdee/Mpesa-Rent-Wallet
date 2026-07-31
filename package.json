@@ -8,12 +8,17 @@
     "dev": "nodemon backend/server.js"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mysql2": "^3.11.5"
+    "mysql2": "^3.11.5",
+    "uuid": "^14.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
+  },
+  "allowScripts": {
+    "bcrypt@6.0.0": true
   }
 }

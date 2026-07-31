@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tenant Management</title>
+
+<link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard-shell">
+
+    <aside class="sidebar">
+
+        <div class="brand-block">
+
+            <p class="eyebrow">Safaricom Inspired</p>
+
+            <h1>M-PESA Rent Wallet</h1>
+
+            <p class="muted">Tenant Management</p>
+
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html">🏠 Dashboard</a>
+
+            <a href="properties.html">🏢 Properties</a>
+
+            <a href="units.html">🏘️ Units</a>
+
+            <a href="tenants.html" class="active">👥 Tenants</a>
+
+            <a href="wallet.html">💰 Rent Wallet</a>
+
+        </nav>
+
+    </aside>
+
+    <main class="dashboard-main">
+
+        <h2>Tenant Management</h2>
+
+        <p class="muted">
+
+            Register tenants and assign them to available units.
+
+        </p>
+
+        <section class="card">
+
+            <h3>Register Tenant</h3>
+
+            <label for="tenantName">Full Name</label>
+            <input
+                id="tenantName"
+                type="text"
+                placeholder="Full Name"
+            >
+
+            <label for="tenantId">National ID</label>
+            <input
+                id="tenantId"
+                type="text"
+                placeholder="National ID"
+            >
+
+            <label for="tenantPhone">Phone</label>
+            <input
+                id="tenantPhone"
+                type="text"
+                placeholder="07XXXXXXXX"
+            >
+
+            <label for="tenantEmail">Email</label>
+            <input
+                id="tenantEmail"
+                type="email"
+                placeholder="example@email.com"
+            >
+
+            <label for="tenantProperty">Property</label>
+
+            <select id="tenantProperty">
+
+                <option value="">Select Property</option>
+
+            </select>
+
+            <label for="tenantUnit">Available Unit</label>
+
+            <select id="tenantUnit">
+
+                <option value="">Select Unit</option>
+
+            </select>
+
+            <label for="tenantRent">Monthly Rent</label>
+
+            <input
+                id="tenantRent"
+                type="number"
+                min="1"
+                placeholder="Monthly Rent"
+            >
+
+            <br><br>
+
+            <button
+                id="registerTenantBtn"
+                type="button"
+            >
+
+                Register Tenant
+
+            </button>
+
+        </section>
+
+        <br>
+
+        <section class="card">
+
+            <h3>Registered Tenants</h3>
+
+            <table class="data-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Name</th>
+
+                        <th>Phone</th>
+
+                        <th>Property</th>
+
+                        <th>Unit</th>
+
+                        <th>Rent</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="tenantTableBody">
+
+                    <tr>
+
+                        <td colspan="5">
+
+                            No tenants registered.
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/config/storage.js"></script>
+<script src="../js/modules/tenant.js"></script>
+
+</body>
+
+</html>

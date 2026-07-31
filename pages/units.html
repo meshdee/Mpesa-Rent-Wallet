@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Units | M-PESA Rent Wallet</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard-shell">
+
+    <aside class="sidebar">
+
+        <div class="brand-block">
+
+            <p class="eyebrow">Safaricom Inspired</p>
+
+            <h1>M-PESA Rent Wallet</h1>
+
+            <p class="muted">Unit Management</p>
+
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html">🏠 Dashboard</a>
+
+            <a href="properties.html">🏢 Properties</a>
+
+            <a href="units.html" class="active">🚪 Units</a>
+
+            <a href="tenants.html">👥 Tenants</a>
+
+        </nav>
+
+    </aside>
+
+    <main class="dashboard-main">
+
+        <h2>Unit Management</h2>
+
+        <p class="muted">
+            Create and manage rental units.
+        </p>
+
+        <section class="card">
+
+            <h3>Create Unit</h3>
+
+            <label>Property</label>
+
+            <select id="unitProperty">
+
+                <option value="">Select Property</option>
+
+            </select>
+
+            <label>Unit Number</label>
+
+            <input
+                id="unitNumber"
+                type="text"
+                placeholder="A001">
+
+            <label>Bedrooms</label>
+
+            <input
+                id="bedrooms"
+                type="number"
+                min="1"
+                value="1">
+
+            <label>Monthly Rent</label>
+
+            <input
+                id="unitRent"
+                type="number"
+                min="0">
+
+            <br><br>
+
+            <button id="createUnitBtn">
+
+                Create Unit
+
+            </button>
+
+        </section>
+
+        <br>
+
+        <section class="card">
+
+            <h3>Registered Units</h3>
+
+            <table class="data-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Property</th>
+
+                        <th>Unit</th>
+
+                        <th>Bedrooms</th>
+
+                        <th>Rent</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="unitsTableBody">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/modules/unit.js"></script>
+
+</body>
+
+</html>

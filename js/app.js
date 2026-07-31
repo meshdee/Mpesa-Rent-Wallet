@@ -1,455 +1,1344 @@
-const STORAGE_KEYS = {
-  user: "mpesa_rent_wallet_user_v7",
-  session: "mpesa_rent_wallet_session_v7"
+// ===========================================
+// M-PESA Rent Wallet
+// Version 10.1 Stable
+// app.js
+// CHUNK 1
+// ===========================================
+
+"use strict";
+
+console.log("Initializing M-PESA Rent Wallet...");
+
+// ===========================================
+// API Configuration
+// ===========================================
+
+const API_BASE = "/api";
+
+// ===========================================
+// Local Storage Keys
+// ===========================================
+
+const STORAGE = window.STORAGE;
+
+// ===========================================
+// Global State
+// ===========================================
+
+let user = null;
+
+let wallet = null;
+
+let landlord = null;
+
+let session = {
+
+    isLoggedIn: false,
+
+    userId: null,
+
+    landlordId: null
+
 };
 
-const defaultSession = {
-  isLoggedIn: false,
-  userId: null
-};
-
-let session = loadSession();
-let user = loadUser();
-let wallet = {
-  rentGoal: 25000,
-  dueDate: "",
-  walletBalance: 0,
-  transactions: []
-};
+// ===========================================
+// DOM Elements
+// ===========================================
 
 const elements = {
-  authView: document.getElementById("authView"),
-  appView: document.getElementById("appView"),
-  welcomeLine: document.getElementById("welcomeLine"),
 
-  showLoginBtn: document.getElementById("showLoginBtn"),
-  showRegisterBtn: document.getElementById("showRegisterBtn"),
-  loginForm: document.getElementById("loginForm"),
-  registerForm: document.getElementById("registerForm"),
+    authView: document.getElementById("authView"),
 
-  loginId: document.getElementById("loginId"),
-  loginPassword: document.getElementById("loginPassword"),
+    appView: document.getElementById("appView"),
 
-  fullName: document.getElementById("fullName"),
-  phoneNumber: document.getElementById("phoneNumber"),
-  emailAddress: document.getElementById("emailAddress"),
-  registerPassword: document.getElementById("registerPassword"),
-  confirmPassword: document.getElementById("confirmPassword"),
+    loginForm: document.getElementById("loginForm"),
 
-  logoutBtn: document.getElementById("logoutBtn"),
-  greeting: document.getElementById("greeting"),
-  userNameLine: document.getElementById("userNameLine"),
-  userMetaLine: document.getElementById("userMetaLine"),
-  sessionStatus: document.getElementById("sessionStatus"),
+    registerForm: document.getElementById("registerForm"),
 
-  profileName: document.getElementById("profileName"),
-  profilePhone: document.getElementById("profilePhone"),
-  profileEmail: document.getElementById("profileEmail"),
+    showLoginBtn: document.getElementById("showLoginBtn"),
 
-  rentGoalInput: document.getElementById("rentGoalInput"),
-  dueDateInput: document.getElementById("dueDateInput"),
-  saveSettingsBtn: document.getElementById("saveSettingsBtn"),
+    showRegisterBtn: document.getElementById("showRegisterBtn"),
 
-  savedAmount: document.getElementById("savedAmount"),
-  remainingAmount: document.getElementById("remainingAmount"),
-  progressPercent: document.getElementById("progressPercent"),
-  progressFill: document.getElementById("progressFill"),
-  saveAmountInput: document.getElementById("saveAmountInput"),
-  saveRentBtn: document.getElementById("saveRentBtn"),
-  resetWalletBtn: document.getElementById("resetWalletBtn"),
+    loginId: document.getElementById("loginId"),
 
-  historyList: document.getElementById("historyList"),
-  historyCount: document.getElementById("historyCount")
+    loginPassword: document.getElementById("loginPassword"),
+
+    fullName: document.getElementById("fullName"),
+
+    phoneNumber: document.getElementById("phoneNumber"),
+
+    emailAddress: document.getElementById("emailAddress"),
+
+    registerPassword: document.getElementById("registerPassword"),
+
+    confirmPassword: document.getElementById("confirmPassword"),
+
+    logoutBtn: document.getElementById("logoutBtn"),
+
+    tenantDashboard: document.getElementById("tenantDashboard"),
+
+    landlordDashboard: document.getElementById("landlordDashboard"),
+
+    tenantWorkspaceBtn: document.getElementById("tenantWorkspaceBtn"),
+
+    landlordWorkspaceBtn: document.getElementById("landlordWorkspaceBtn")
+
 };
 
-function loadSession() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEYS.session);
-    if (!raw) return { ...defaultSession };
-    const parsed = JSON.parse(raw);
-    return {
-      ...defaultSession,
-      ...parsed,
-      isLoggedIn: Boolean(parsed.isLoggedIn),
-      userId: parsed.userId || null
-    };
-  } catch {
-    return { ...defaultSession };
-  }
+// ===========================================
+// Utility
+// ===========================================
+
+function show(element){
+
+    if(element){
+
+        element.classList.remove("hidden");
+
+    }
+
 }
 
-function saveSession() {
-  localStorage.setItem(STORAGE_KEYS.session, JSON.stringify(session));
+function hide(element){
+
+    if(element){
+
+        element.classList.add("hidden");
+
+    }
+
 }
 
-function loadUser() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEYS.user);
-    if (!raw) return null;
-    return JSON.parse(raw);
-  } catch {
-    return null;
-  }
+// ===========================================
+// Local Storage
+// ===========================================
+
+function saveSession(){
+
+    localStorage.setItem(
+
+        STORAGE.SESSION,
+
+        JSON.stringify(session)
+
+    );
+
 }
 
-function saveUser() {
-  if (user) {
-    localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(user));
-  }
+function loadSession(){
+
+    const stored = localStorage.getItem(
+
+        STORAGE.SESSION
+
+    );
+
+    if(!stored){
+
+        return;
+
+    }
+
+    try{
+
+        session = JSON.parse(stored);
+
+    }
+
+    catch{
+
+        session = {
+
+            isLoggedIn:false,
+
+            userId:null,
+
+            landlordId:null
+
+        };
+
+    }
+
 }
 
-function clearAuthStorage() {
-  localStorage.removeItem(STORAGE_KEYS.user);
-  localStorage.removeItem(STORAGE_KEYS.session);
-}
+function clearSession(){
 
-function money(value) {
-  return `KES ${Number(value).toLocaleString("en-US")}`;
-}
+    localStorage.removeItem(
 
-function formatDateTime(isoString) {
-  return new Date(isoString).toLocaleString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    second: "2-digit"
-  });
-}
+        STORAGE.SESSION
 
-function getGreeting() {
-  const currentHour = new Date().getHours();
-  if (currentHour < 12) return "Good morning";
-  if (currentHour < 17) return "Good afternoon";
-  return "Good evening";
-}
-
-function setVisibleApp(isLoggedIn) {
-  elements.authView.classList.toggle("hidden", isLoggedIn);
-  elements.appView.classList.toggle("hidden", !isLoggedIn);
-}
-
-function showLoginTab() {
-  elements.loginForm.classList.remove("hidden");
-  elements.registerForm.classList.add("hidden");
-  elements.showLoginBtn.classList.add("active");
-  elements.showRegisterBtn.classList.remove("active");
-}
-
-function showRegisterTab() {
-  elements.registerForm.classList.remove("hidden");
-  elements.loginForm.classList.add("hidden");
-  elements.showRegisterBtn.classList.add("active");
-  elements.showLoginBtn.classList.remove("active");
-}
-
-async function apiFetch(url, options = {}) {
-  const response = await fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {})
-    },
-    ...options
-  });
-
-  const data = await response.json();
-  if (!response.ok || data.success === false) {
-    throw new Error(data.message || "Something went wrong.");
-  }
-
-  return data;
-}
-
-async function loadWalletFromServer() {
-  if (!user?.id) return;
-  const data = await apiFetch(`/api/wallet/${user.id}`);
-  wallet = data.wallet;
-  renderWallet();
-}
-
-function renderAuthView() {
-  const currentHour = new Date().getHours();
-  let greeting = "Welcome";
-  if (currentHour < 12) greeting = "Good morning";
-  else if (currentHour < 17) greeting = "Good afternoon";
-  else greeting = "Good evening";
-
-  elements.welcomeLine.textContent = greeting;
-}
-
-function renderWallet() {
-  const percentage = wallet.rentGoal > 0
-    ? Math.min((wallet.walletBalance / wallet.rentGoal) * 100, 100)
-    : 0;
-
-  const remaining = Math.max(wallet.rentGoal - wallet.walletBalance, 0);
-
-  elements.greeting.textContent = `${getGreeting()}!`;
-  elements.userNameLine.textContent = `Welcome back, ${user?.fullName || "Tenant"}`;
-  elements.userMetaLine.textContent = `Logged in as ${user?.phone || "Unknown"} • ${user?.email || "No email"}`;
-  elements.sessionStatus.textContent = "Connected to backend";
-
-  elements.profileName.textContent = user?.fullName || "-";
-  elements.profilePhone.textContent = user?.phone || "-";
-  elements.profileEmail.textContent = user?.email || "-";
-
-  elements.rentGoalInput.value = wallet.rentGoal;
-  elements.dueDateInput.value = wallet.dueDate;
-
-  elements.savedAmount.textContent = money(wallet.walletBalance);
-  elements.remainingAmount.textContent = money(remaining);
-  elements.progressPercent.textContent = `${percentage.toFixed(1)}%`;
-  elements.progressFill.style.width = `${percentage}%`;
-
-  elements.historyList.innerHTML = "";
-  elements.historyCount.textContent = `${wallet.transactions.length} transaction${wallet.transactions.length === 1 ? "" : "s"}`;
-
-  if (wallet.transactions.length === 0) {
-    const emptyItem = document.createElement("li");
-    emptyItem.innerHTML = `
-      <span class="history-amount">No transactions yet</span>
-      <span class="history-time">Start saving to see history here</span>
-    `;
-    elements.historyList.appendChild(emptyItem);
-  } else {
-    wallet.transactions.forEach((tx) => {
-      const item = document.createElement("li");
-      item.innerHTML = `
-        <span class="history-amount">Saved ${money(tx.amount)}</span>
-        <span class="history-time">${formatDateTime(tx.timestamp)}</span>
-      `;
-      elements.historyList.appendChild(item);
-    });
-  }
-}
-
-function renderAll() {
-  const loggedIn = session.isLoggedIn && user;
-  setVisibleApp(loggedIn);
-
-  if (!loggedIn) {
-    renderAuthView();
-    showLoginTab();
-    return;
-  }
-
-  renderWallet();
-}
-
-async function registerUser(event) {
-  event.preventDefault();
-
-  const payload = {
-    fullName: elements.fullName.value.trim(),
-    phone: elements.phoneNumber.value.trim(),
-    email: elements.emailAddress.value.trim(),
-    password: elements.registerPassword.value,
-    confirmPassword: elements.confirmPassword.value
-  };
-
-  if (!payload.fullName || !payload.phone || !payload.email || !payload.password || !payload.confirmPassword) {
-    alert("Please fill in all registration fields.");
-    return;
-  }
-
-  if (payload.password !== payload.confirmPassword) {
-    alert("Passwords do not match.");
-    return;
-  }
-
-  try {
-    const data = await apiFetch("/api/auth/register", {
-      method: "POST",
-      body: JSON.stringify({
-        fullName: payload.fullName,
-        phone: payload.phone,
-        email: payload.email,
-        password: payload.password
-      })
-    });
-
-    user = data.user;
-    wallet = data.wallet;
+    );
 
     session = {
-      isLoggedIn: true,
-      userId: user.id
+
+        isLoggedIn:false,
+
+        userId:null,
+
+        landlordId:null
+
     };
 
-    saveUser();
-    saveSession();
-
-    elements.registerForm.reset();
-    renderAll();
-  } catch (error) {
-    alert(error.message);
-  }
 }
 
-async function loginUser(event) {
-  event.preventDefault();
+// ===========================================
+// API Helper
+// ===========================================
 
-  const loginId = elements.loginId.value.trim();
-  const password = elements.loginPassword.value;
+async function apiFetch(endpoint, options={}){
 
-  if (!loginId || !password) {
-    alert("Enter your phone number/email and password.");
-    return;
-  }
+    const response = await fetch(
 
-  try {
-    const data = await apiFetch("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ loginId, password })
-    });
+        API_BASE + endpoint,
 
-    user = data.user;
-    wallet = data.wallet;
+        {
 
-    session = {
-      isLoggedIn: true,
-      userId: user.id
-    };
+            headers:{
 
-    saveUser();
-    saveSession();
+                "Content-Type":"application/json",
 
-    elements.loginForm.reset();
-    renderAll();
-  } catch (error) {
-    alert(error.message);
-  }
-}
+                ...(options.headers || {})
 
-async function logoutUser() {
-  try {
-    await apiFetch("/api/auth/logout", {
-      method: "POST",
-      body: JSON.stringify({ userId: user?.id || null })
-    });
-  } catch {}
+            },
 
-  user = null;
-  wallet = {
-    rentGoal: 25000,
-    dueDate: "",
-    walletBalance: 0,
-    transactions: []
-  };
+            ...options
 
-  session = { ...defaultSession };
-  clearAuthStorage();
-  renderAll();
-}
+        }
 
-async function updateSettings() {
-  const newGoal = Number(elements.rentGoalInput.value);
-  const newDueDate = elements.dueDateInput.value;
+    );
 
-  if (!Number.isFinite(newGoal) || newGoal <= 0) {
-    alert("Please enter a valid rent goal.");
-    return;
-  }
+    const data = await response.json();
 
-  try {
-    const data = await apiFetch(`/api/wallet/${user.id}/settings`, {
-      method: "PUT",
-      body: JSON.stringify({
-        rentGoal: Math.round(newGoal),
-        dueDate: newDueDate
-      })
-    });
+    if(!response.ok){
 
-    wallet = data.wallet;
-    renderWallet();
-  } catch (error) {
-    alert(error.message);
-  }
-}
+        throw new Error(
 
-async function saveRent() {
-  const amount = Number(elements.saveAmountInput.value);
+            data.message ||
 
-  if (!Number.isFinite(amount) || amount <= 0) {
-    alert("Please enter a valid amount.");
-    return;
-  }
+            "Server Error"
 
-  try {
-    const data = await apiFetch(`/api/wallet/${user.id}/deposit`, {
-      method: "POST",
-      body: JSON.stringify({ amount })
-    });
+        );
 
-    wallet = data.wallet;
-    elements.saveAmountInput.value = "";
-    renderWallet();
-
-    if (wallet.walletBalance >= wallet.rentGoal) {
-      alert("Congratulations! Your rent goal has been reached.");
     }
-  } catch (error) {
-    alert(error.message);
-  }
+
+    return data;
+
 }
 
-async function resetWallet() {
-  const confirmReset = confirm("Reset wallet balance and transaction history?");
-  if (!confirmReset) return;
+// ===========================================
+// Authentication Tabs
+// ===========================================
 
-  try {
-    const data = await apiFetch(`/api/wallet/${user.id}`, {
-      method: "DELETE"
+function showLoginTab(){
+
+    show(elements.loginForm);
+
+    hide(elements.registerForm);
+
+}
+
+function showRegisterTab(){
+
+    hide(elements.loginForm);
+
+    show(elements.registerForm);
+
+}
+
+// ===========================================
+// Register
+// ===========================================
+
+async function registerUser(event){
+
+    event.preventDefault();
+
+    const fullName =
+
+        elements.fullName.value.trim();
+
+    const phone =
+
+        elements.phoneNumber.value.trim();
+
+    const email =
+
+        elements.emailAddress.value.trim();
+
+    const password =
+
+        elements.registerPassword.value;
+
+    const confirm =
+
+        elements.confirmPassword.value;
+
+    if(
+
+        !fullName ||
+
+        !phone ||
+
+        !email ||
+
+        !password ||
+
+        !confirm
+
+    ){
+
+        return alert("Complete all fields.");
+
+    }
+
+    if(password !== confirm){
+
+        return alert("Passwords do not match.");
+
+    }
+
+    try{
+
+        const response = await apiFetch(
+
+            "/auth/register",
+
+            {
+
+                method:"POST",
+
+                body:JSON.stringify({
+
+                    fullName,
+
+                    phone,
+
+                    email,
+
+                    password
+
+                })
+
+            }
+
+        );
+
+        alert(response.message);
+
+        elements.registerForm.reset();
+
+        showLoginTab();
+
+    }
+
+    catch(error){
+
+        alert(error.message);
+
+    }
+
+}
+
+// ===========================================
+// Login
+// ===========================================
+
+async function loginUser(event){
+
+    event.preventDefault();
+
+    const login =
+
+        elements.loginId.value.trim();
+
+    const password =
+
+        elements.loginPassword.value;
+
+    if(!login || !password){
+
+        return alert(
+
+            "Enter your login credentials."
+
+        );
+
+    }
+
+    try{
+
+        const response = await apiFetch(
+
+            "/auth/login",
+
+            {
+
+                method:"POST",
+
+                body:JSON.stringify({
+
+                    login,
+
+                    password
+
+                })
+
+            }
+
+        );
+
+        user = response.user;
+
+        session = {
+
+            isLoggedIn:true,
+
+            userId:user.id,
+
+            landlordId:null
+
+        };
+
+        saveSession();
+
+        localStorage.setItem(
+
+            STORAGE.USER_ID,
+
+            user.id
+
+        );
+
+        localStorage.setItem(
+
+            STORAGE.USER_EMAIL,
+
+            user.email
+
+        );
+
+        console.log("Login successful");
+
+        console.log(user);
+
+        switchToDashboard();
+
+    }
+
+    catch(error){
+
+        alert(error.message);
+
+    }
+
+}
+
+// ===========================================
+// CHUNK 2
+// Dashboard Engine
+// ===========================================
+
+function switchToDashboard(){
+
+    hide(elements.authView);
+
+    show(elements.appView);
+
+}
+
+function switchToAuth(){
+
+    show(elements.authView);
+
+    hide(elements.appView);
+
+}
+
+// ===========================================
+// Restore User Session
+// ===========================================
+
+async function restoreUserSession(){
+
+    loadSession();
+
+    console.log("Restored session:", session);
+
+    if(
+
+        !session.isLoggedIn ||
+
+        !session.userId
+
+    ){
+
+        switchToAuth();
+
+        return;
+
+    }
+
+    try{
+
+        const response = await apiFetch(
+
+            `/auth/profile/${session.userId}`
+
+        );
+
+        user = response.user;
+
+        console.log("Profile restored:", user);
+
+        switchToDashboard();
+
+    }
+
+    catch(error){
+
+        console.error(
+
+            "Unable to restore profile:",
+
+            error.message
+
+        );
+
+        clearSession();
+
+        switchToAuth();
+
+    }
+
+}
+
+// ===========================================
+// Logout
+// ===========================================
+
+async function logoutUser(){
+
+    try{
+
+        await apiFetch(
+
+            "/auth/logout",
+
+            {
+
+                method:"POST"
+
+            }
+
+        );
+
+    }
+
+    catch(error){
+
+        console.log(error.message);
+
+    }
+
+    clearSession();
+
+    localStorage.removeItem(
+
+        STORAGE.USER_ID
+
+    );
+
+    localStorage.removeItem(
+
+        STORAGE.USER_EMAIL
+
+    );
+
+    localStorage.removeItem(
+
+        STORAGE.LANDLORD_ID
+
+    );
+
+    user = null;
+
+    wallet = null;
+
+    landlord = null;
+
+    switchToAuth();
+
+}
+
+// ===========================================
+// Workspace
+// ===========================================
+
+function openTenantWorkspace(){
+
+    hide(elements.landlordDashboard);
+
+    show(elements.tenantDashboard);
+
+}
+
+function openLandlordWorkspace(){
+
+    hide(elements.tenantDashboard);
+
+    show(elements.landlordDashboard);
+
+}
+
+// ===========================================
+// Greeting
+// ===========================================
+
+function updateGreeting(){
+
+    const greeting =
+
+        document.getElementById("greeting");
+
+    if(!greeting){
+
+        return;
+
+    }
+
+    const hour = new Date().getHours();
+
+    if(hour < 12){
+
+        greeting.textContent =
+
+            "Good Morning";
+
+    }
+
+    else if(hour < 17){
+
+        greeting.textContent =
+
+            "Good Afternoon";
+
+    }
+
+    else{
+
+        greeting.textContent =
+
+            "Good Evening";
+
+    }
+
+}
+
+// ===========================================
+// Profile Rendering
+// ===========================================
+
+function renderUser(){
+
+    if(!user){
+
+        return;
+
+    }
+
+    const profileName =
+
+        document.getElementById("profileName");
+
+    const profilePhone =
+
+        document.getElementById("profilePhone");
+
+    const profileEmail =
+
+        document.getElementById("profileEmail");
+
+    const userNameLine =
+
+        document.getElementById("userNameLine");
+
+    if(profileName){
+
+        profileName.textContent =
+
+            user.fullName;
+
+    }
+
+    if(profilePhone){
+
+        profilePhone.textContent =
+
+            user.phone;
+
+    }
+
+    if(profileEmail){
+
+        profileEmail.textContent =
+
+            user.email;
+
+    }
+
+    if(userNameLine){
+
+        userNameLine.textContent =
+
+            user.fullName;
+
+    }
+
+}
+
+// ===========================================
+// Main Renderer
+// ===========================================
+
+function renderApplication(){
+
+    if(
+
+        !session.isLoggedIn ||
+
+        !user
+
+    ){
+
+        switchToAuth();
+
+        return;
+
+    }
+
+    switchToDashboard();
+
+    updateGreeting();
+
+    renderUser();
+
+}
+
+// ===========================================
+// Register Events
+// ===========================================
+
+function registerEventListeners(){
+
+    if(elements.showLoginBtn){
+
+        elements.showLoginBtn.addEventListener(
+
+            "click",
+
+            showLoginTab
+
+        );
+
+    }
+
+    if(elements.showRegisterBtn){
+
+        elements.showRegisterBtn.addEventListener(
+
+            "click",
+
+            showRegisterTab
+
+        );
+
+    }
+
+    if(elements.loginForm){
+
+        elements.loginForm.addEventListener(
+
+            "submit",
+
+            loginUser
+
+        );
+
+    }
+
+    if(elements.registerForm){
+
+        elements.registerForm.addEventListener(
+
+            "submit",
+
+            registerUser
+
+        );
+
+    }
+
+    if(elements.logoutBtn){
+
+        elements.logoutBtn.addEventListener(
+
+            "click",
+
+            logoutUser
+
+        );
+
+    }
+
+    if(elements.tenantWorkspaceBtn){
+
+        elements.tenantWorkspaceBtn.addEventListener(
+
+            "click",
+
+            openTenantWorkspace
+
+        );
+
+    }
+
+    if(elements.landlordWorkspaceBtn){
+
+        elements.landlordWorkspaceBtn.addEventListener(
+
+            "click",
+
+            openLandlordWorkspace
+
+        );
+
+    }
+
+}
+
+// ===========================================
+// CHUNK 3
+// Wallet Module
+// ===========================================
+
+const walletElements = {
+
+    rentGoalInput: document.getElementById("rentGoalInput"),
+
+    dueDateInput: document.getElementById("dueDateInput"),
+
+    saveAmountInput: document.getElementById("saveAmountInput"),
+
+    saveSettingsBtn: document.getElementById("saveSettingsBtn"),
+
+    saveRentBtn: document.getElementById("saveRentBtn"),
+
+    resetWalletBtn: document.getElementById("resetWalletBtn"),
+
+    savedAmount: document.getElementById("savedAmount"),
+
+    remainingAmount: document.getElementById("remainingAmount"),
+
+    progressPercent: document.getElementById("progressPercent"),
+
+    progressFill: document.getElementById("progressFill"),
+
+    historyList: document.getElementById("historyList"),
+
+    historyCount: document.getElementById("historyCount")
+
+};
+
+// ===========================================
+// Load Wallet
+// ===========================================
+
+async function loadWallet(){
+
+    if(!user){
+
+        return;
+
+    }
+
+    try{
+
+        const response = await apiFetch(
+
+            `/wallet/${user.id}`
+
+        );
+
+        wallet = response.wallet;
+
+    }
+
+    catch(error){
+
+        console.log("Creating default wallet...");
+
+        wallet = {
+
+            rentGoal:0,
+
+            savedAmount:0,
+
+            dueDate:"",
+
+            history:[]
+
+        };
+
+    }
+
+    renderWallet();
+
+}
+
+// ===========================================
+// Render Wallet
+// ===========================================
+
+function renderWallet(){
+
+    if(!wallet){
+
+        return;
+
+    }
+
+    const goal = Number(wallet.rentGoal || 0);
+
+    const saved = Number(wallet.savedAmount || 0);
+
+    const remaining = Math.max(
+
+        goal - saved,
+
+        0
+
+    );
+
+    const progress =
+
+        goal === 0
+
+        ? 0
+
+        : Math.round(
+
+            (saved / goal) * 100
+
+        );
+
+    if(walletElements.savedAmount){
+
+        walletElements.savedAmount.textContent =
+
+            `KES ${saved.toLocaleString()}`;
+
+    }
+
+    if(walletElements.remainingAmount){
+
+        walletElements.remainingAmount.textContent =
+
+            `KES ${remaining.toLocaleString()}`;
+
+    }
+
+    if(walletElements.progressPercent){
+
+        walletElements.progressPercent.textContent =
+
+            `${progress}%`;
+
+    }
+
+    if(walletElements.progressFill){
+
+        walletElements.progressFill.style.width =
+
+            `${progress}%`;
+
+    }
+
+    if(walletElements.rentGoalInput){
+
+        walletElements.rentGoalInput.value =
+
+            goal;
+
+    }
+
+    if(walletElements.dueDateInput){
+
+        walletElements.dueDateInput.value =
+
+            wallet.dueDate || "";
+
+    }
+
+    renderHistory();
+
+}
+
+// ===========================================
+// Wallet History
+// ===========================================
+
+function renderHistory(){
+
+    if(!walletElements.historyList){
+
+        return;
+
+    }
+
+    walletElements.historyList.innerHTML = "";
+
+    const history = wallet.history || [];
+
+    if(walletElements.historyCount){
+
+        walletElements.historyCount.textContent =
+
+            `${history.length} Transactions`;
+
+    }
+
+    if(history.length === 0){
+
+        walletElements.historyList.innerHTML =
+
+            "<li>No transactions yet.</li>";
+
+        return;
+
+    }
+
+    history.forEach(item=>{
+
+        const li = document.createElement("li");
+
+        li.innerHTML =
+
+        `<strong>KES ${Number(item.amount).toLocaleString()}</strong>
+        <br>
+        <small>${item.date}</small>`;
+
+        walletElements.historyList.appendChild(li);
+
     });
 
-    wallet = data.wallet;
-    elements.saveAmountInput.value = "";
-    renderWallet();
-  } catch (error) {
-    alert(error.message);
-  }
 }
 
-function bindEvents() {
-  elements.showLoginBtn.addEventListener("click", showLoginTab);
-  elements.showRegisterBtn.addEventListener("click", showRegisterTab);
+// ===========================================
+// Save Wallet Settings
+// ===========================================
 
-  elements.loginForm.addEventListener("submit", loginUser);
-  elements.registerForm.addEventListener("submit", registerUser);
+async function saveWalletSettings(){
 
-  elements.logoutBtn.addEventListener("click", logoutUser);
+    if(!user){
 
-  elements.saveSettingsBtn.addEventListener("click", updateSettings);
-  elements.saveRentBtn.addEventListener("click", saveRent);
-  elements.resetWalletBtn.addEventListener("click", resetWallet);
+        return;
 
-  elements.saveAmountInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") saveRent();
-  });
-
-  elements.rentGoalInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") updateSettings();
-  });
-}
-
-async function initialize() {
-  bindEvents();
-  renderAuthView();
-
-  if (session.isLoggedIn && user) {
-    try {
-      await loadWalletFromServer();
-      renderAll();
-    } catch {
-      user = null;
-      session = { ...defaultSession };
-      clearAuthStorage();
-      renderAll();
     }
-  } else {
-    renderAll();
-  }
+
+    try{
+
+        const response = await apiFetch(
+
+            `/wallet/${user.id}/settings`,
+
+            {
+
+                method:"PUT",
+
+                body:JSON.stringify({
+
+                    rentGoal:Number(
+
+                        walletElements.rentGoalInput.value
+
+                    ),
+
+                    dueDate:
+
+                        walletElements.dueDateInput.value
+
+                })
+
+            }
+
+        );
+
+        wallet = response.wallet;
+
+        renderWallet();
+
+        alert("Wallet updated.");
+
+    }
+
+    catch(error){
+
+        alert(error.message);
+
+    }
+
 }
 
-initialize();
+// ===========================================
+// Save Rent
+// ===========================================
+
+async function saveRent(){
+
+    if(!user){
+
+        return;
+
+    }
+
+    const amount = Number(
+
+        walletElements.saveAmountInput.value
+
+    );
+
+    if(amount <= 0){
+
+        return alert("Enter amount.");
+
+    }
+
+    try{
+
+        const response = await apiFetch(
+
+            `/wallet/${user.id}/save`,
+
+            {
+
+                method:"POST",
+
+                body:JSON.stringify({
+
+                    amount
+
+                })
+
+            }
+
+        );
+
+        wallet = response.wallet;
+
+        walletElements.saveAmountInput.value = "";
+
+        renderWallet();
+
+        alert("Amount saved.");
+
+    }
+
+    catch(error){
+
+        alert(error.message);
+
+    }
+
+}
+
+// ===========================================
+// Reset Wallet
+// ===========================================
+
+async function resetWallet(){
+
+    if(!confirm(
+
+        "Reset Rent Wallet?"
+
+    )){
+
+        return;
+
+    }
+
+    try{
+
+        const response = await apiFetch(
+
+            `/wallet/${user.id}/reset`,
+
+            {
+
+                method:"POST"
+
+            }
+
+        );
+
+        wallet = response.wallet;
+
+        renderWallet();
+
+    }
+
+    catch(error){
+
+        alert(error.message);
+
+    }
+
+}
+
+// ===========================================
+// Wallet Event Listeners
+// ===========================================
+
+function registerWalletEvents(){
+
+    if(walletElements.saveSettingsBtn){
+
+        walletElements.saveSettingsBtn.addEventListener(
+
+            "click",
+
+            saveWalletSettings
+
+        );
+
+    }
+
+    if(walletElements.saveRentBtn){
+
+        walletElements.saveRentBtn.addEventListener(
+
+            "click",
+
+            saveRent
+
+        );
+
+    }
+
+    if(walletElements.resetWalletBtn){
+
+        walletElements.resetWalletBtn.addEventListener(
+
+            "click",
+
+            resetWallet
+
+        );
+
+    }
+
+}
+
+// ===========================================
+// CHUNK 4
+// Application Engine
+// ===========================================
+
+// ===========================================
+// Refresh Dashboard
+// ===========================================
+
+async function refreshDashboard(){
+
+    if(!session.isLoggedIn){
+
+        return;
+
+    }
+
+    await loadWallet();
+
+    renderApplication();
+
+}
+
+// ===========================================
+// Application Startup
+// ===========================================
+
+async function startApplication(){
+
+    console.log("Initializing M-PESA Rent Wallet...");
+
+    registerEventListeners();
+
+    registerWalletEvents();
+
+    await restoreUserSession();
+
+    if(session.isLoggedIn){
+
+        await refreshDashboard();
+
+    }
+
+    else{
+
+        switchToAuth();
+
+    }
+
+}
+
+// ===========================================
+// Global Helpers
+// ===========================================
+
+window.logoutUser = logoutUser;
+
+window.refreshDashboard = refreshDashboard;
+
+window.renderApplication = renderApplication;
+
+window.loadWallet = loadWallet;
+
+// ===========================================
+// DOM Ready
+// ===========================================
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    async ()=>{
+
+        try{
+
+            await startApplication();
+
+            console.log("M-PESA Rent Wallet Ready.");
+
+        }
+
+        catch(error){
+
+            console.error(
+
+                "Application failed to start.",
+
+                error
+
+            );
+
+            switchToAuth();
+
+        }
+
+    }
+
+);
+
+// ===========================================
+// END OF FILE
+// VERSION 10.1 STABLE
+// ===========================================

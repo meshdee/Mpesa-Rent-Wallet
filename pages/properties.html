@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Properties | M-PESA Rent Wallet</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<div class="dashboard-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand-block">
+            <p class="eyebrow">Safaricom Inspired</p>
+            <h1>M-PESA Rent Wallet</h1>
+            <p class="muted">Property Management</p>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html">🏠 Dashboard</a>
+
+            <a href="properties.html" class="active">
+                🏢 Properties
+            </a>
+
+            <a href="tenants.html">
+                👥 Tenants
+            </a>
+
+            <a href="profile.html">
+                👤 Profile
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main -->
+
+    <main class="dashboard-main">
+
+        <header class="dashboard-topbar">
+
+            <div>
+
+                <h2>Property Management</h2>
+
+                <p class="muted">
+
+                    Register, manage and monitor all rental properties.
+
+                </p>
+
+            </div>
+
+        </header>
+
+        <!-- Statistics -->
+
+        <section class="stats-grid">
+
+            <article class="stat-card">
+
+                <span>Total Properties</span>
+
+                <strong id="totalProperties">
+                    0
+                </strong>
+
+            </article>
+
+            <article class="stat-card">
+
+                <span>Total Units</span>
+
+                <strong id="totalUnits">
+                    0
+                </strong>
+
+            </article>
+
+            <article class="stat-card">
+
+                <span>Monthly Revenue</span>
+
+                <strong id="expectedRevenue">
+                    KES 0
+                </strong>
+
+            </article>
+
+        </section>
+
+        <!-- Add Property -->
+
+        <section class="card">
+
+            <h3>Add Property</h3>
+
+            <label>Property Name</label>
+
+            <input
+                id="propertyName"
+                type="text"
+                placeholder="Green Court Apartments">
+
+            <label>Location</label>
+
+            <input
+                id="propertyLocation"
+                type="text"
+                placeholder="Bungoma">
+
+            <label>Number of Units</label>
+
+            <input
+                id="propertyUnits"
+                type="number"
+                min="1">
+
+            <label>Monthly Rent Per Unit</label>
+
+            <input
+                id="monthlyRent"
+                type="number"
+                min="1">
+
+            <button
+                id="createPropertyBtn">
+
+                Create Property
+
+            </button>
+
+        </section>
+
+        <!-- Search -->
+
+        <section class="card">
+
+            <input
+                id="searchProperty"
+                type="text"
+                placeholder="Search property...">
+
+        </section>
+
+        <!-- Table -->
+
+        <section class="card">
+
+            <table class="data-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Code</th>
+
+                        <th>Name</th>
+
+                        <th>Location</th>
+
+                        <th>Units</th>
+
+                        <th>Rent</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="propertiesTableBody">
+
+                    <tr>
+
+                        <td colspan="6">
+
+                            No properties found.
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/property.js"></script>
+<script src="../js/config/storage.js"></script>
+<script src="../js/modules/property.js"></script>
+
+</body>
+</html>

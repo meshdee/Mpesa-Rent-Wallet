@@ -316,6 +316,75 @@ app.get("/api/wallet/:userId", async (req, res) => {
   }
 });
 
+// ===========================================
+// GET WALLET TRANSACTION HISTORY
+// ===========================================
+
+app.get(
+    "/api/wallet/:userId/transactions",
+    async (req, res) => {
+
+        const { userId } = req.params;
+
+        console.log("-------------------------------------------");
+        console.log("LOADING WALLET TRANSACTION HISTORY");
+        console.log("User ID:", userId);
+        console.log("-------------------------------------------");
+
+        try {
+
+            const [transactions] =
+                await pool.query(
+                    `SELECT
+                        id,
+                        userId,
+                        amount,
+                        createdAt
+                     FROM transactions
+                     WHERE userId = ?
+                     ORDER BY createdAt DESC`,
+                    [userId]
+                );
+
+
+            console.log(
+                "Transactions found:",
+                transactions.length
+            );
+
+
+            res.json({
+
+                success: true,
+
+                transactions
+
+            });
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Transaction History Error:",
+                error
+            );
+
+
+            res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Unable to load transaction history."
+
+            });
+
+        }
+
+    }
+);
+
 /* ===========================================================
    PROPERTY MANAGEMENT ROUTES (Version 9.0)
 =========================================================== */

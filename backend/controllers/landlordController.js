@@ -1,15 +1,36 @@
-const db = require("../database/connection");
-const { v4: uuidv4 } = require("uuid");
+// ===========================================
+// M-PESA Rent Wallet
+// Landlord Controller
+// Version 11.8 Enterprise
+// ===========================================
+
+"use strict";
+
+const connectDatabase =
+    require("../database/connection");
+
+const { v4: uuidv4 } =
+    require("uuid");
+
+console.log(
+    "✅ Landlord Controller Version 11.8 Enterprise Loaded"
+);
+
 
 // ===========================================
-// Register Landlord
+// REGISTER LANDLORD
 // ===========================================
 
 exports.registerLandlord = async (req, res) => {
 
+    console.log("-------------------------------------------");
+    console.log("REGISTER LANDLORD REQUEST");
+    console.log("-------------------------------------------");
+
     try {
 
-        const pool = await db();
+        const db =
+            await connectDatabase();
 
         const {
             userId,
@@ -19,45 +40,101 @@ exports.registerLandlord = async (req, res) => {
             email
         } = req.body;
 
+
+        console.log("User ID:", userId);
+
+
+        // ===================================
+        // Validate User ID
+        // ===================================
+
         if (!userId) {
 
             return res.status(400).json({
 
                 success: false,
 
-                message: "User ID is required."
+                message:
+                    "User ID is required."
 
             });
 
         }
 
-        // Check if user is already registered as a landlord
 
-        const [existing] = await pool.execute(
+        // ===================================
+        // Check Existing Landlord
+        // ===================================
 
-            "SELECT id FROM landlords WHERE userId = ?",
+        const [existingRows] =
+            await db.execute(
 
-            [userId]
+                `SELECT
+                    id,
+                    userId,
+                    businessName,
+                    nationalId,
+                    phone,
+                    email,
+                    createdAt
 
-        );
+                 FROM landlords
 
-        if (existing.length > 0) {
+                 WHERE userId = ?
+
+                 LIMIT 1`,
+
+                [
+
+                    userId
+
+                ]
+
+            );
+
+
+        if (existingRows.length > 0) {
+
+            console.log(
+                "Landlord already exists:",
+                existingRows[0].id
+            );
+
 
             return res.status(409).json({
 
                 success: false,
 
-                message: "This user is already registered as a landlord."
+                message:
+                    "This user is already registered as a landlord.",
+
+                landlordId:
+                    existingRows[0].id,
+
+                landlord:
+                    existingRows[0]
 
             });
 
         }
 
-        const landlordId = uuidv4();
 
-        await pool.execute(
+        // ===================================
+        // Create Landlord ID
+        // ===================================
+
+        const landlordId =
+            uuidv4();
+
+
+        // ===================================
+        // Create Landlord
+        // ===================================
+
+        await db.execute(
 
             `INSERT INTO landlords
+
             (
                 id,
                 userId,
@@ -66,24 +143,43 @@ exports.registerLandlord = async (req, res) => {
                 phone,
                 email
             )
-            VALUES (?,?,?,?,?,?)`,
+
+            VALUES
+            (
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?
+            )`,
 
             [
+
                 landlordId,
                 userId,
                 businessName || null,
                 nationalId || null,
                 phone || null,
                 email || null
+
             ]
 
         );
 
-        res.status(201).json({
+
+        console.log(
+            "✅ Landlord created:",
+            landlordId
+        );
+
+
+        return res.status(201).json({
 
             success: true,
 
-            message: "Landlord registered successfully.",
+            message:
+                "Landlord registered successfully.",
 
             landlordId
 
@@ -93,13 +189,18 @@ exports.registerLandlord = async (req, res) => {
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "REGISTER LANDLORD ERROR:",
+            error
+        );
 
-        res.status(500).json({
+
+        return res.status(500).json({
 
             success: false,
 
-            message: "Could not register landlord."
+            message:
+                "Could not register landlord."
 
         });
 
@@ -107,34 +208,85 @@ exports.registerLandlord = async (req, res) => {
 
 };
 
+
 // ===========================================
-// Get Landlord
+// GET LANDLORD BY USER ID
 // ===========================================
 
 exports.getLandlord = async (req, res) => {
 
+    console.log("-------------------------------------------");
+    console.log("GET LANDLORD REQUEST");
+    console.log("-------------------------------------------");
+
     try {
 
-        const pool = await db();
+        const db =
+            await connectDatabase();
 
-        const { userId } = req.params;
+        const { userId } =
+            req.params;
 
-        const [rows] = await pool.execute(
 
-            `SELECT
-                id,
-                userId,
-                businessName,
-                nationalId,
-                phone,
-                email,
-                createdAt
-            FROM landlords
-            WHERE userId = ?`,
+        // ===================================
+        // Validate User ID
+        // ===================================
 
-            [userId]
+        if (!userId) {
 
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    "User ID is required."
+
+            });
+
+        }
+
+
+        console.log(
+            "User ID:",
+            userId
         );
+
+
+        // ===================================
+        // Get Landlord
+        // ===================================
+
+        const [rows] =
+            await db.execute(
+
+                `SELECT
+
+                    id,
+                    userId,
+                    businessName,
+                    nationalId,
+                    phone,
+                    email,
+                    createdAt
+
+                 FROM landlords
+
+                 WHERE userId = ?
+
+                 LIMIT 1`,
+
+                [
+
+                    userId
+
+                ]
+
+            );
+
+
+        // ===================================
+        // Not Found
+        // ===================================
 
         if (rows.length === 0) {
 
@@ -142,17 +294,33 @@ exports.getLandlord = async (req, res) => {
 
                 success: false,
 
-                message: "Landlord not found."
+                message:
+                    "Landlord not found."
 
             });
 
         }
 
-        res.json({
+
+        const landlord =
+            rows[0];
+
+
+        console.log(
+            "Landlord Found:",
+            landlord.id
+        );
+
+
+        // ===================================
+        // Return Landlord
+        // ===================================
+
+        return res.json({
 
             success: true,
 
-            landlord: rows[0]
+            landlord
 
         });
 
@@ -160,13 +328,423 @@ exports.getLandlord = async (req, res) => {
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "GET LANDLORD ERROR:",
+            error
+        );
 
-        res.status(500).json({
+
+        return res.status(500).json({
 
             success: false,
 
-            message: "Could not load landlord."
+            message:
+                "Could not load landlord."
+
+        });
+
+    }
+
+};
+
+
+// ===========================================
+// UPDATE LANDLORD
+// ===========================================
+
+exports.updateLandlord = async (req, res) => {
+
+    console.log("-------------------------------------------");
+    console.log("UPDATE LANDLORD REQUEST");
+    console.log("-------------------------------------------");
+
+    try {
+
+        const db =
+            await connectDatabase();
+
+        const { userId } =
+            req.params;
+
+
+        const {
+
+            businessName,
+            nationalId,
+            phone,
+            email
+
+        } = req.body;
+
+
+        // ===================================
+        // Validate User ID
+        // ===================================
+
+        if (!userId) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    "User ID is required."
+
+            });
+
+        }
+
+
+        // ===================================
+        // Verify Landlord
+        // ===================================
+
+        const [existingRows] =
+            await db.execute(
+
+                `SELECT id
+
+                 FROM landlords
+
+                 WHERE userId = ?
+
+                 LIMIT 1`,
+
+                [
+
+                    userId
+
+                ]
+
+            );
+
+
+        if (existingRows.length === 0) {
+
+            return res.status(404).json({
+
+                success: false,
+
+                message:
+                    "Landlord not found."
+
+            });
+
+        }
+
+
+        // ===================================
+        // Update
+        // ===================================
+
+        await db.execute(
+
+            `UPDATE landlords
+
+             SET
+
+                businessName = ?,
+                nationalId = ?,
+                phone = ?,
+                email = ?
+
+             WHERE userId = ?`,
+
+            [
+
+                businessName || null,
+                nationalId || null,
+                phone || null,
+                email || null,
+                userId
+
+            ]
+
+        );
+
+
+        // ===================================
+        // Return Updated Landlord
+        // ===================================
+
+        const [rows] =
+            await db.execute(
+
+                `SELECT
+
+                    id,
+                    userId,
+                    businessName,
+                    nationalId,
+                    phone,
+                    email,
+                    createdAt
+
+                 FROM landlords
+
+                 WHERE userId = ?
+
+                 LIMIT 1`,
+
+                [
+
+                    userId
+
+                ]
+
+            );
+
+
+        console.log(
+            "✅ Landlord updated:",
+            rows[0].id
+        );
+
+
+        return res.json({
+
+            success: true,
+
+            message:
+                "Landlord information updated successfully.",
+
+            landlord:
+                rows[0]
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "UPDATE LANDLORD ERROR:",
+            error
+        );
+
+
+        return res.status(500).json({
+
+            success: false,
+
+            message:
+                "Could not update landlord."
+
+        });
+
+    }
+
+};
+
+
+// ===========================================
+// GET LANDLORD STATISTICS
+// ===========================================
+
+exports.getLandlordStatistics = async (req, res) => {
+
+    console.log("-------------------------------------------");
+    console.log("GET LANDLORD STATISTICS");
+    console.log("-------------------------------------------");
+
+    try {
+
+        const db =
+            await connectDatabase();
+
+        const { landlordId } =
+            req.params;
+
+
+        // ===================================
+        // Validate Landlord ID
+        // ===================================
+
+        if (!landlordId) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    "Landlord ID is required."
+
+            });
+
+        }
+
+
+        console.log(
+            "Landlord ID:",
+            landlordId
+        );
+
+
+        // ===================================
+        // Properties
+        // ===================================
+
+        const [propertyRows] =
+            await db.execute(
+
+                `SELECT COUNT(*) AS total
+
+                 FROM properties
+
+                 WHERE landlordId = ?`,
+
+                [
+
+                    landlordId
+
+                ]
+
+            );
+
+
+        // ===================================
+        // Units
+        // ===================================
+
+        const [unitRows] =
+            await db.execute(
+
+                `SELECT
+
+                    COUNT(*) AS total,
+
+                    COALESCE(
+                        SUM(
+                            CASE
+                                WHEN status = 'OCCUPIED'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ),
+                        0
+                    ) AS occupied,
+
+                    COALESCE(
+                        SUM(
+                            CASE
+                                WHEN status = 'VACANT'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ),
+                        0
+                    ) AS vacant
+
+                 FROM units u
+
+                 INNER JOIN properties p
+                    ON u.propertyId = p.id
+
+                 WHERE p.landlordId = ?`,
+
+                [
+
+                    landlordId
+
+                ]
+
+            );
+
+
+        // ===================================
+        // Tenants
+        // ===================================
+
+        const [tenantRows] =
+            await db.execute(
+
+                `SELECT
+
+                    COUNT(*) AS total,
+
+                    COALESCE(
+                        SUM(monthlyRent),
+                        0
+                    ) AS monthlyRent
+
+                 FROM tenants
+
+                 WHERE landlordId = ?`,
+
+                [
+
+                    landlordId
+
+                ]
+
+            );
+
+
+        const statistics = {
+
+            properties:
+                Number(
+                    propertyRows[0].total
+                ),
+
+            units:
+                Number(
+                    unitRows[0].total
+                ),
+
+            occupiedUnits:
+                Number(
+                    unitRows[0].occupied
+                ),
+
+            vacantUnits:
+                Number(
+                    unitRows[0].vacant
+                ),
+
+            tenants:
+                Number(
+                    tenantRows[0].total
+                ),
+
+            monthlyRent:
+                Number(
+                    tenantRows[0].monthlyRent
+                )
+
+        };
+
+
+        console.log(
+            "Landlord Statistics:",
+            statistics
+        );
+
+
+        return res.json({
+
+            success: true,
+
+            statistics
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "GET LANDLORD STATISTICS ERROR:",
+            error
+        );
+
+
+        return res.status(500).json({
+
+            success: false,
+
+            message:
+                "Could not load landlord statistics."
 
         });
 

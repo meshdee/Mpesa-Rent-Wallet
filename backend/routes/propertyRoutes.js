@@ -2,10 +2,37 @@ const express = require("express");
 
 const router = express.Router();
 
-const propertyController = require("../controllers/propertyController");
+const propertyController =
+    require("../controllers/propertyController");
 
-router.post("/", propertyController.createProperty);
+// ===========================================
+// CREATE PROPERTY
+// ===========================================
 
-router.get("/", propertyController.getProperties);
+router.post(
+    "/",
+    propertyController.createProperty
+);
+
+
+// ===========================================
+// GET PROPERTIES BY LANDLORD
+// ===========================================
+
+router.get(
+    "/:landlordId",
+    propertyController.getProperties
+);
+
+
+// ===========================================
+// DELETE PROPERTY
+// ===========================================
+
+router.delete(
+    "/:id",
+    propertyController.deleteProperty
+);
+
 
 module.exports = router;

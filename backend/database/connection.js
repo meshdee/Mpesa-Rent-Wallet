@@ -1,11 +1,23 @@
 // ===========================================
 // M-PESA Rent Wallet
-// Version 10.0 Stable
+// Database Connection
+// Version 10.1 Stable
 // backend/database/connection.js
 // ===========================================
 
+"use strict";
+
 const mysql = require("mysql2/promise");
-require("dotenv").config();
+const path = require("path");
+const dotenv = require("dotenv");
+
+// ===========================================
+// Load .env from PROJECT ROOT
+// ===========================================
+
+dotenv.config({
+    path: path.resolve(__dirname, "../../.env")
+});
 
 let pool = null;
 
@@ -16,12 +28,24 @@ let pool = null;
 async function connectDatabase() {
 
     if (pool) {
-
         return pool;
-
     }
 
     try {
+
+        console.log("");
+        console.log("====================================");
+        console.log("🔌 Connecting to MySQL...");
+        console.log("====================================");
+
+        console.log("DB_HOST     :", process.env.DB_HOST);
+        console.log("DB_USER     :", process.env.DB_USER);
+        console.log("DB_NAME     :", process.env.DB_NAME);
+        console.log("DB_PORT     :", process.env.DB_PORT);
+        console.log(
+            "DB_PASSWORD :",
+            process.env.DB_PASSWORD ? "Loaded ✅" : "Missing ❌"
+        );
 
         pool = mysql.createPool({
 
@@ -31,9 +55,11 @@ async function connectDatabase() {
 
             password: process.env.DB_PASSWORD || "",
 
-            database: process.env.DB_NAME || "mpesa_rent_wallet",
+            database:
+                process.env.DB_NAME || "mpesa_rent_wallet",
 
-            port: Number(process.env.DB_PORT || 3306),
+            port:
+                Number(process.env.DB_PORT || 3306),
 
             waitForConnections: true,
 
@@ -47,18 +73,15 @@ async function connectDatabase() {
 
         });
 
-        const connection = await pool.getConnection();
+        const connection =
+            await pool.getConnection();
 
         console.log("");
-
         console.log("====================================");
-
         console.log("✅ MySQL Connection Established");
-
         console.log("Database :", process.env.DB_NAME);
-
-        console.log("Host     :", process.env.DB_HOST || "localhost");
-
+        console.log("Host     :", process.env.DB_HOST);
+        console.log("User     :", process.env.DB_USER);
         console.log("====================================");
 
         connection.release();
@@ -70,14 +93,12 @@ async function connectDatabase() {
     catch (error) {
 
         console.error("");
-
         console.error("====================================");
-
         console.error("❌ Database Connection Failed");
-
         console.error(error.message);
-
         console.error("====================================");
+
+        pool = null;
 
         throw error;
 
@@ -97,12 +118,19 @@ async function closeDatabase() {
 
         pool = null;
 
-        console.log("Database connection pool closed.");
+        console.log(
+            "Database connection pool closed."
+        );
 
     }
 
 }
 
+// ===========================================
+// Export
+// ===========================================
+
 module.exports = connectDatabase;
 
-module.exports.closeDatabase = closeDatabase;
+module.exports.closeDatabase =
+    closeDatabase;

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>M-PESA Rent Wallet</title>
+
+    <script src="/js/theme.js"></script>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+</head>
+
+<body>
+
+<div class="dashboard-shell">
+
+    <!-- =========================================
+         SIDEBAR
+         ========================================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand-block">
+
+            <p class="eyebrow">
+                Safaricom Inspired
+            </p>
+
+            <h1>
+                M-PESA Rent Wallet
+            </h1>
+
+            <p class="muted">
+                Rent management
+            </p>
+
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard">
+                🏠 Dashboard
+            </a>
+
+            <a href="/properties">
+                🏢 Properties
+            </a>
+
+            <a href="/units">
+                🏘️ Units
+            </a>
+
+            <a href="/tenants">
+                👥 Tenants
+            </a>
+
+            <a
+                href="/wallet"
+                class="active"
+            >
+                💰 Rent Wallet
+            </a>
+
+            <a href="/landlord">
+                👤 Landlord
+            </a>
+
+            <a href="/profile">
+                🧑 Profile
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- =========================================
+         MAIN CONTENT
+         ========================================= -->
+
+    <main class="dashboard-main">
+
+        <h2>
+            M-PESA Rent Wallet
+        </h2>
+
+        <p class="muted">
+            Plan, save and manage your monthly rent.
+        </p>
+
+
+        <!-- =====================================
+             WALLET STATUS
+             ===================================== -->
+
+        <section class="card">
+
+            <h3>
+                Wallet Status
+            </h3>
+
+            <p id="walletStatus">
+                Loading...
+            </p>
+
+        </section>
+
+
+        <br>
+
+
+        <!-- =====================================
+     RENT SUMMARY
+     ===================================== -->
+
+<section class="card rent-summary-card">
+
+    <h3>
+        Rent Summary
+    </h3>
+
+    <div class="rent-summary-grid">
+
+        <div class="rent-summary-item">
+
+            <span class="muted">
+                Monthly Rent Goal
+            </span>
+
+            <strong id="walletRentGoal">
+                KES 0
+            </strong>
+
+        </div>
+
+
+        <div class="rent-summary-item">
+
+            <span class="muted">
+                Amount Saved
+            </span>
+
+            <strong id="walletSavedAmount">
+                KES 0
+            </strong>
+
+        </div>
+
+
+        <div class="rent-summary-item">
+
+            <span class="muted">
+                Remaining
+            </span>
+
+            <strong id="walletRemaining">
+                KES 0
+            </strong>
+
+        </div>
+
+
+        <div class="rent-summary-item">
+
+            <span class="muted">
+                Due Date
+            </span>
+
+            <strong id="walletDueDate">
+                Not set
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+        <!-- =====================================
+     WALLET SETTINGS
+     ===================================== -->
+
+<section class="card wallet-settings-card">
+
+    <h3>
+        Wallet Settings
+    </h3>
+
+    <p class="muted">
+        Set your monthly rent target and payment date.
+    </p>
+
+
+    <div class="wallet-settings-form">
+
+        <div class="wallet-setting-field">
+
+            <label for="walletRentGoalInput">
+                Monthly Rent Goal
+            </label>
+
+            <input
+                id="walletRentGoalInput"
+                type="number"
+                min="0"
+                step="1"
+                placeholder="Enter monthly rent"
+            >
+
+        </div>
+
+
+        <div class="wallet-setting-field">
+
+            <label for="walletDueDateInput">
+                Rent Due Date
+            </label>
+
+            <input
+                id="walletDueDateInput"
+                type="date"
+            >
+
+        </div>
+
+
+        <button
+            id="saveWalletSettingsBtn"
+            type="button"
+            class="wallet-settings-button"
+        >
+            Save Wallet Settings
+        </button>
+
+    </div>
+
+</section>
+
+
+       <!-- =====================================
+     SAVE RENT
+     ===================================== -->
+
+<section class="card save-rent-card">
+
+    <h3>
+        Save Rent
+    </h3>
+
+    <p class="muted">
+        Add money towards your monthly rent goal.
+    </p>
+
+    <div class="save-rent-form">
+
+        <div class="save-rent-input">
+
+            <label for="walletSaveAmountInput">
+                Amount to Save
+            </label>
+
+            <input
+                id="walletSaveAmountInput"
+                type="number"
+                min="1"
+                step="1"
+                placeholder="Enter amount"
+            >
+
+        </div>
+
+
+        <button
+            id="saveRentBtn"
+            type="button"
+            class="save-rent-button"
+        >
+            Save Rent
+        </button>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     TRANSACTION HISTORY
+     ===================================== -->
+
+<section class="card">
+
+    <div class="section-head">
+
+        <div>
+
+            <h3>
+                Transaction History
+            </h3>
+
+            <p class="muted">
+                Your recent rent savings.
+            </p>
+
+        </div>
+
+        <span
+            class="count-pill"
+            id="historyCount"
+        >
+            0 transactions
+        </span>
+
+    </div>
+
+
+    <ul
+        class="history-list"
+        id="historyList"
+    ></ul>
+
+</section>
+
+
+        <!-- =====================================
+             WALLET MANAGEMENT
+             ===================================== -->
+
+        <section class="card">
+
+            <h3>
+                Wallet Management
+            </h3>
+
+            <p class="muted">
+                Reset the current wallet information.
+            </p>
+
+
+            <button
+                id="resetWalletBtn"
+                type="button"
+            >
+                Reset Wallet
+            </button>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================
+     JAVASCRIPT
+     ========================================= -->
+
+<script src="../js/config/storage.js"></script>
+
+<script src="../js/modules/wallet.js"></script>
+
+<script src="/js/mobile-nav.js"></script>
+
+<script src="/js/offline-status.js"></script>
+
+</body>
+
+</html>

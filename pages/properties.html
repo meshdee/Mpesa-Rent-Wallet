@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Properties | M-PESA Rent Wallet</title>
 
+    <script src="/js/theme.js"></script>
+
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
@@ -23,27 +25,37 @@
 
         <nav class="sidebar-nav">
 
-            <a href="dashboard.html">🏠 Dashboard</a>
+    <a href="/dashboard" class="nav-link">
+        🏠 Dashboard
+    </a>
 
-            <a href="properties.html" class="active">
-                🏢 Properties
-            </a>
+    <a href="/properties" class="nav-link">
+        🏢 Properties
+    </a>
 
-            <a href="tenants.html">
-                👥 Tenants
-            </a>
+    <a href="/units" class="nav-link">
+        🏘 Units
+    </a>
 
-            <a href="profile.html">
-                👤 Profile
-            </a>
+    <a href="/tenants" class="nav-link">
+        👥 Tenants
+    </a>
 
-        </nav>
+    <a href="/landlord" class="nav-link">
+        👤 Landlord
+    </a>
+
+    <a href="/profile" class="nav-link">
+        🙍 Profile
+    </a>
+
+</nav>
 
     </aside>
 
     <!-- Main -->
 
-    <main class="dashboard-main">
+    <main class="dashboard-main properties-page">
 
         <header class="dashboard-topbar">
 
@@ -201,7 +213,8 @@
 
 <script src="../js/property.js"></script>
 <script src="../js/config/storage.js"></script>
-<script src="../js/modules/property.js"></script>
+<script src="/js/mobile-nav.js"></script>
+<script src="/js/offline-status.js"></script>
 
 </body>
 </html>

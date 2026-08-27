@@ -1,626 +1,6726 @@
-:root{
-  --green:#00A651;
-  --green-dark:#008845;
-  --bg:#f4f7f6;
-  --card:#ffffff;
-  --text:#18312d;
-  --muted:#6b7a76;
-  --border:#e5ece9;
-  --shadow:0 10px 30px rgba(11, 34, 30, .08);
-  --radius:20px;
-  --sidebar:#0f1f1b;
-  --sidebar-2:#132722;
-  --white:#ffffff;
-  --table-head:#f3f7f5;
+:root {
+    --green: #00A651;
+    --green-dark: #008845;
+    --bg: #f4f7f6;
+    --card: #ffffff;
+    --text: #18312d;
+    --muted: #6b7a76;
+    --border: #e5ece9;
+    --shadow: 0 10px 30px rgba(11, 34, 30, 0.08);
+    --radius: 20px;
+    --sidebar: #0f1f1b;
+    --sidebar-2: #132722;
+    --white: #ffffff;
+    --table-head: #f3f7f5;
 }
 
-*{
-  box-sizing:border-box;
+
+/* ==========================================
+   GLOBAL
+   ========================================== */
+
+* {
+    box-sizing: border-box;
 }
 
-html, body{
-  margin:0;
-  padding:0;
-  min-height:100%;
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
 }
 
-body{
-  font-family:Arial, Helvetica, sans-serif;
-  background:linear-gradient(180deg, #eef8f3 0%, var(--bg) 24%, #eef2f1 100%);
-  color:var(--text);
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(
+        180deg,
+        #eef8f3 0%,
+        var(--bg) 24%,
+        #eef2f1 100%
+    );
+    color: var(--text);
 }
 
-.hidden{
-  display:none !important;
+.hidden {
+    display: none !important;
 }
 
-a{
-  color:inherit;
-  text-decoration:none;
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
 button,
-input{
-  font:inherit;
+input {
+    font: inherit;
 }
 
-button{
-  border:none;
-  border-radius:14px;
-  padding:13px 18px;
-  background:var(--green);
-  color:#fff;
-  font-size:1rem;
-  font-weight:700;
-  cursor:pointer;
-  transition:transform .15s ease, background .15s ease, box-shadow .15s ease;
-  box-shadow:0 10px 18px rgba(0,166,81,.18);
+button {
+    border: none;
+    border-radius: 14px;
+    padding: 13px 18px;
+    background: var(--green);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        box-shadow 0.15s ease;
+    box-shadow: 0 10px 18px rgba(0, 166, 81, 0.18);
 }
 
-button:hover{
-  background:var(--green-dark);
-  transform:translateY(-1px);
+button:hover {
+    background: var(--green-dark);
+    transform: translateY(-1px);
 }
 
-button.secondary{
-  background:#e8f2ee;
-  color:#245348;
-  box-shadow:none;
+button.secondary {
+    background: #e8f2ee;
+    color: #245348;
+    box-shadow: none;
 }
 
-button.secondary:hover{
-  background:#d9ece5;
+button.secondary:hover {
+    background: #dcece5;
 }
 
-button.full-width{
-  width:100%;
+button.full-width {
+    width: 100%;
 }
 
-input{
-  width:100%;
-  padding:14px 16px;
-  border:1px solid #cfdad6;
-  border-radius:14px;
-  font-size:1rem;
-  outline:none;
-  background:#fff;
+input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #cfdad6;
+    border-radius: 14px;
+    font-size: 1rem;
+    outline: none;
+    background: #ffffff;
 }
 
-input:focus{
-  border-color:var(--green);
-  box-shadow:0 0 0 4px rgba(0,166,81,.12);
+input:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 4px rgba(0, 166, 81, 0.12);
 }
 
-label{
-  display:block;
-  margin:16px 0 8px;
-  font-weight:700;
-  font-size:.95rem;
+label {
+    display: block;
+    margin: 16px 0 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
 }
 
-.muted{
-  color:var(--muted);
-  margin:0;
-  line-height:1.5;
+.muted {
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.5;
 }
 
-.eyebrow{
-  margin:0 0 6px 0;
-  text-transform:uppercase;
-  letter-spacing:.12em;
-  font-size:.78rem;
-  opacity:.9;
+.eyebrow {
+    margin: 0 0 6px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.78rem;
+    opacity: 0.9;
 }
 
-.greeting{
-  margin:0 0 6px 0;
-  color:var(--green-dark);
-  font-weight:700;
+.greeting {
+    margin: 0 0 6px 0;
+    color: var(--green-dark);
+    font-weight: 700;
 }
 
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:24px;
+
+/* ==========================================
+   CARDS
+   ========================================== */
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    transition: all 0.25s ease;
 }
 
-.actions{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-top:18px;
+.card:hover {
+    transform: translateY(-2px);
 }
 
-.count-pill{
-  background:#eef8f3;
-  color:#1f6144;
-  border:1px solid #d7ece0;
-  padding:9px 14px;
-  border-radius:999px;
-  font-weight:700;
-  white-space:nowrap;
+
+/* ==========================================
+   ACTIONS
+   ========================================== */
+
+.actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 18px;
 }
 
-.section-head{
-  display:flex;
-  justify-content:space-between;
-  gap:16px;
-  align-items:center;
-  margin-bottom:16px;
+.actions button {
+    min-width: 180px;
 }
 
-/* Login / auth view */
-.app-shell{
-  max-width:1200px;
-  margin:0 auto;
-  padding:24px;
+
+/* ==========================================
+   COUNT PILL
+   ========================================== */
+
+.count-pill {
+    background: #eef8f3;
+    color: #1f6144;
+    border: 1px solid #d7ece0;
+    padding: 9px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    white-space: nowrap;
 }
 
-.topbar{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:16px;
-  margin-bottom:24px;
-  padding:22px 24px;
-  border-radius:24px;
-  background:linear-gradient(135deg, var(--green) 0%, #12b35f 100%);
-  color:#fff;
-  box-shadow:var(--shadow);
+
+/* ==========================================
+   SECTION HEAD
+   ========================================== */
+
+.section-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 16px;
 }
 
-.topbar h1{
-  margin:0;
-  font-size:2rem;
+
+/* ==========================================
+   LOGIN / AUTH
+   ========================================== */
+
+.app-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
 }
 
-.subtitle{
-  margin:8px 0 0 0;
-  opacity:.92;
+.topbar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 22px 24px;
+    border-radius: 24px;
+    background: linear-gradient(
+        135deg,
+        var(--green) 0%,
+        #12b35f 100%
+    );
+    color: #ffffff;
+    box-shadow: var(--shadow);
 }
 
-.topbar-badge{
-  align-self:center;
-  background:rgba(255,255,255,.16);
-  border:1px solid rgba(255,255,255,.22);
-  padding:12px 16px;
-  border-radius:999px;
-  font-weight:700;
-  white-space:nowrap;
+.topbar h1 {
+    margin: 0;
+    font-size: 2rem;
 }
 
-.topbar-badge.light{
-  background:#eef8f3;
-  border-color:#d7ece0;
-  color:#1f6144;
+.subtitle {
+    margin: 8px 0 0 0;
+    opacity: 0.92;
 }
 
-.auth-grid{
-  display:grid;
-  grid-template-columns:1fr 1.1fr;
-  gap:20px;
+.topbar-badge {
+    align-self: center;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 12px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    white-space: nowrap;
 }
 
-.auth-intro{
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  gap:18px;
-  min-height:100%;
+.topbar-badge.light {
+    background: #eef8f3;
+    border-color: #d7ece0;
+    color: #1f6144;
 }
 
-.auth-note{
-  border:1px solid var(--border);
-  background:#f8fbfa;
-  border-radius:18px;
-  padding:18px;
+.auth-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 20px;
 }
 
-.auth-note strong{
-  display:block;
-  margin-bottom:8px;
+.auth-intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+    min-height: 100%;
 }
 
-.auth-card h3{
-  margin:0 0 14px 0;
+.auth-note {
+    border: 1px solid var(--border);
+    background: #f8fbfa;
+    border-radius: 18px;
+    padding: 18px;
 }
 
-.tabs{
-  display:flex;
-  gap:10px;
-  margin-bottom:18px;
+.auth-note strong {
+    display: block;
+    margin-bottom: 8px;
 }
 
-.tab{
-  background:#e8f2ee;
-  color:#245348;
-  box-shadow:none;
+.auth-card h3 {
+    margin: 0 0 14px 0;
 }
 
-.tab.active{
-  background:var(--green);
-  color:#fff;
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
 }
 
-.form-panel{
-  display:block;
+.tab {
+    background: #e8f2ee;
+    color: #245348;
+    box-shadow: none;
 }
 
-/* Dashboard layout */
-.dashboard-shell{
-  min-height:100vh;
-  display:flex;
-  background:linear-gradient(180deg, #eef8f3 0%, var(--bg) 24%, #eef2f1 100%);
+.tab.active {
+    background: var(--green);
+    color: #ffffff;
 }
 
-.sidebar{
-  width:280px;
-  background:linear-gradient(180deg, var(--sidebar) 0%, var(--sidebar-2) 100%);
-  color:var(--white);
-  padding:24px;
-  display:flex;
-  flex-direction:column;
-  gap:24px;
-  box-shadow:var(--shadow);
+.form-panel {
+    display: block;
 }
 
-.brand-block h1{
-  margin:0;
-  font-size:1.55rem;
+
+/* ==========================================
+   DASHBOARD SHELL
+   ========================================== */
+
+.dashboard-shell {
+    min-height: 100vh;
+    display: flex;
+    background: linear-gradient(
+        180deg,
+        #eef8f3 0%,
+        var(--bg) 24%,
+        #eef2f1 100%
+    );
 }
 
-.sidebar-nav{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
+
+/* ==========================================
+   SIDEBAR
+   ========================================== */
+
+.sidebar {
+    width: 280px;
+    min-height: 100vh;
+    background: linear-gradient(
+        180deg,
+        var(--sidebar) 0%,
+        var(--sidebar-2) 100%
+    );
+    color: var(--white);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-shadow: var(--shadow);
 }
 
-.nav-link{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:12px 14px;
-  border-radius:14px;
-  color:#e7f4ef;
-  background:transparent;
-  transition:background .15s ease, color .15s ease, transform .15s ease;
+.brand-block h1 {
+    margin: 0;
+    font-size: 1.55rem;
 }
 
-.nav-link:hover{
-  background:rgba(255,255,255,.08);
-  transform:translateX(2px);
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.nav-link.active{
-  background:rgba(0,166,81,.18);
-  color:#fff;
-  border:1px solid rgba(0,166,81,.25);
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    color: #e7f4ef;
+    background: transparent;
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
 }
 
-.sidebar-footer{
-  margin-top:auto;
-  padding-top:10px;
-  border-top:1px solid rgba(255,255,255,.08);
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(2px);
 }
 
-.sidebar-footer .muted{
-  color:#b9c9c3;
-  margin-bottom:6px;
+.nav-link.active {
+    background: rgba(0, 166, 81, 0.18);
+    color: #ffffff;
+    border: 1px solid rgba(0, 166, 81, 0.25);
 }
 
-.dashboard-main{
-  flex:1;
-  padding:24px;
-  display:flex;
-  flex-direction:column;
-  gap:20px;
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.dashboard-topbar{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:16px;
-  padding:22px 24px;
-  border-radius:24px;
-  background:#fff;
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
+.sidebar-footer .muted {
+    color: #b9c9c3;
+    margin-bottom: 6px;
 }
 
-.dashboard-topbar h2{
-  margin:0;
-  font-size:1.8rem;
+.sidebar-footer strong {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 1rem;
 }
 
-.topbar-actions{
-  display:flex;
-  align-items:center;
-  gap:12px;
+
+/* ==========================================
+   MAIN DASHBOARD
+   ========================================== */
+
+.dashboard-main {
+    flex: 1;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
 }
 
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:20px;
+
+/* ==========================================
+   DASHBOARD TOPBAR
+   ========================================== */
+
+.dashboard-topbar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 24px;
+    border-radius: 24px;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
 }
 
-.stat-card{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:22px;
-  box-shadow:var(--shadow);
+.dashboard-topbar h2 {
+    margin: 0;
+    font-size: 1.8rem;
 }
 
-.stat-label{
-  display:block;
-  font-size:.82rem;
-  color:var(--muted);
-  margin-bottom:6px;
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.stat-card strong{
-  display:block;
-  font-size:1.8rem;
-  margin-bottom:8px;
+
+/* ==========================================
+   STATISTICS
+   ========================================== */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
-.content-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
+.stat-card {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: var(--shadow);
 }
 
-.content-grid .card h3{
-  margin-top:0;
+.stat-label {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 6px;
 }
 
-.table-wrap{
-  overflow:auto;
-  border-radius:18px;
-  border:1px solid var(--border);
+.stat-card strong {
+    display: block;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    color: var(--green);
 }
 
-.data-table{
-  width:100%;
-  border-collapse:collapse;
-  background:#fff;
-  min-width:760px;
+
+/* ==========================================
+   CONTENT GRID
+   ========================================== */
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
-.data-table thead th{
-  background:var(--table-head);
-  text-align:left;
-  padding:14px 16px;
-  font-size:.92rem;
-  border-bottom:1px solid var(--border);
+.content-grid .card h3 {
+    margin-top: 0;
 }
 
-.data-table tbody td{
-  padding:14px 16px;
-  border-bottom:1px solid #edf1ef;
+
+/* ==========================================
+   TABLE
+   ========================================== */
+
+.table-wrap {
+    overflow: auto;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    max-height: 500px;
 }
 
-.data-table tbody tr:hover{
-  background:#fcfefe;
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    min-width: 760px;
 }
 
-.empty-state{
-  text-align:center;
-  color:var(--muted);
-  padding:22px 16px !important;
+.data-table thead th {
+    background: var(--table-head);
+    text-align: left;
+    padding: 14px 16px;
+    font-size: 0.92rem;
+    border-bottom: 1px solid var(--border);
 }
 
-.activity-list{
-  list-style:none;
-  margin:0;
-  padding:0;
-  display:grid;
-  gap:12px;
+.data-table tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #edf1ef;
+    white-space: nowrap;
 }
 
-.activity-list li{
-  padding:14px 16px;
-  border:1px solid var(--border);
-  border-radius:16px;
-  background:#fbfcfc;
+.data-table tbody tr:nth-child(even) {
+    background: #fafdfb;
 }
 
-/* Existing tenant dashboard bits */
-.dashboard{
-  display:grid;
-  gap:20px;
+.data-table tbody tr:hover {
+    background: #f0f8f4;
 }
 
-.hero-card{
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  align-items:flex-start;
+.data-table td,
+.data-table th {
+    white-space: nowrap;
 }
 
-.hero-actions{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-end;
-  gap:10px;
+.empty-state {
+    text-align: center;
+    color: var(--muted);
+    padding: 22px 16px !important;
 }
 
-.profile-grid{
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:14px;
+
+/* ==========================================
+   ACTIVITY
+   ========================================== */
+
+.activity-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+}
+
+.activity-list li {
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: #fbfcfc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* ==========================================
+   EXISTING TENANT DASHBOARD
+   ========================================== */
+
+.dashboard {
+    display: grid;
+    gap: 20px;
+}
+
+.hero-card {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.hero-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+
+/* ==========================================
+   PROFILE GRID
+   ========================================== */
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
 }
 
 .profile-grid > div,
-.wallet-meta > div{
-  background:#f8fbfa;
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:14px 16px;
+.wallet-meta > div {
+    background: #f8fbfa;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px 16px;
 }
 
-.grid-2{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
+.profile-grid strong {
+    display: block;
+    word-break: break-word;
 }
 
-.wallet-meta{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  margin:16px 0 18px;
+
+/* ==========================================
+   TWO COLUMN GRID
+   ========================================== */
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
-.progress-wrap{
-  margin:8px 0 18px;
+
+/* ==========================================
+   WALLET
+   ========================================== */
+
+.wallet-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 16px 0 18px;
 }
 
-.progress-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:10px;
-  font-size:.95rem;
+.progress-wrap {
+    margin: 8px 0 18px;
 }
 
-.progress-bar{
-  height:16px;
-  background:#e5ece9;
-  border-radius:999px;
-  overflow:hidden;
+.progress-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
 }
 
-.progress-fill{
-  height:100%;
-  width:0%;
-  border-radius:999px;
-  background:linear-gradient(90deg, #00a651 0%, #15c56a 100%);
-  transition:width .35s ease;
+.progress-bar {
+    height: 16px;
+    background: #e5ece9;
+    border-radius: 999px;
+    overflow: hidden;
 }
 
-.history-list{
-  list-style:none;
-  padding:0;
-  margin:0;
-  display:grid;
-  gap:12px;
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(
+        90deg,
+        #00a651 0%,
+        #15c56a 100%
+    );
+    transition: width 0.35s ease;
 }
 
-.history-list li{
-  padding:14px 16px;
-  border:1px solid var(--border);
-  border-radius:16px;
-  background:#fbfcfc;
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  align-items:flex-start;
+
+/* ==========================================
+   HISTORY
+   ========================================== */
+
+.history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 12px;
 }
 
-.history-amount{
-  font-weight:800;
+.history-list li {
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: #fbfcfc;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
 }
 
-.history-time{
-  color:var(--muted);
-  font-size:.9rem;
-  white-space:nowrap;
+.history-amount {
+    font-weight: 800;
 }
 
-/* Responsive */
-@media (max-width: 1100px){
-  .dashboard-shell{
-    flex-direction:column;
-  }
-
-  .sidebar{
-    width:100%;
-  }
+.history-time {
+    color: var(--muted);
+    font-size: 0.9rem;
+    white-space: nowrap;
 }
 
-@media (max-width: 920px){
-  .auth-grid,
-  .grid-2,
-  .content-grid,
-  .stats-grid{
-    grid-template-columns:1fr;
-  }
 
-  .hero-card{
-    flex-direction:column;
-  }
+/* ==========================================
+   WORKSPACE VISIBILITY
+   IMPORTANT: KEEP OUTSIDE MEDIA QUERIES
+   ========================================== */
 
-  .hero-actions{
-    align-items:flex-start;
-  }
-
-  .profile-grid{
-    grid-template-columns:1fr;
-  }
-
-  .dashboard-topbar{
-    flex-direction:column;
-  }
-}
-
-@media (max-width: 640px){
-  .app-shell,
-  .dashboard-main{
-    padding:14px;
-  }
-
-  .topbar{
-    padding:18px;
-    flex-direction:column;
-  }
-
-  .topbar-badge{
-    align-self:flex-start;
-  }
-
-  .card,
-  .stat-card{
-    padding:18px;
-  }
-
-  .section-head{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .wallet-meta{
-    grid-template-columns:1fr;
-  }
-
-  .history-list li{
-    flex-direction:column;
-  }
-
-  .topbar-actions{
-    align-self:stretch;
-  }
-
-  .sidebar{
-    padding:18px;
-  }
-  body.workspace-tenant #tenantDashboard {
-  display: block !important;
+body.workspace-tenant #tenantDashboard {
+    display: block !important;
 }
 
 body.workspace-tenant #landlordDashboard {
-  display: none !important;
+    display: none !important;
 }
 
 body.workspace-landlord #tenantDashboard {
-  display: none !important;
+    display: none !important;
 }
 
 body.workspace-landlord #landlordDashboard {
-  display: block !important;
+    display: block !important;
 }
+
+
+/* ==========================================
+   PLACEHOLDER
+   ========================================== */
+
+input::placeholder {
+    color: #8b9b96;
+}
+
+
+/* ==========================================
+   SMOOTH APPEARANCE
+   ========================================== */
+
+.card,
+.stat-card,
+.sidebar,
+.dashboard-topbar {
+    animation: fadeIn 0.35s ease;
+}
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================
+   RESPONSIVE NAVIGATION
+   ========================================== */
+
+.mobile-menu-btn {
+    display: none;
+}
+
+/* ==========================================
+   TABLET / NARROW DESKTOP
+   ========================================== */
+
+@media (max-width: 1100px) {
+
+    .dashboard-shell {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px;
+        min-height: 100vh;
+    }
+
+}
+
+
+/* ==========================================
+   MOBILE DASHBOARD
+   ========================================== */
+
+@media (max-width: 700px) {
+
+
+    /* Main application shell */
+
+    .dashboard-shell {
+        display: block;
+        min-height: 100vh;
+    }
+
+
+    /* Sidebar is controlled by mobile-nav.js */
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+    }
+
+
+    /* Main content */
+
+    .dashboard-main {
+        width: 100%;
+        padding: 16px;
+        margin: 0;
+    }
+
+
+    /* Top bar */
+
+    .dashboard-topbar {
+        padding: 14px 0;
+        margin-bottom: 16px;
+    }
+
+
+    .dashboard-topbar h2 {
+        font-size: 22px;
+        line-height: 1.2;
+    }
+
+
+    .dashboard-topbar .muted {
+        font-size: 13px;
+    }
+
+
+    /* Statistics */
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+
+    .stat-card {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+
+    .stat-card strong {
+        font-size: 24px;
+    }
+
+
+    /* Cards */
+
+    .card {
+        width: 100%;
+        padding: 16px;
+        margin-bottom: 16px;
+        border-radius: 16px;
+    }
+
+
+    /* Forms */
+
+    input,
+    select,
+    textarea,
+    button {
+        width: 100%;
+        min-height: 46px;
+        font-size: 16px;
+    }
+
+
+    /* Prevent iPhone/Android input zoom */
+
+    input,
+    select,
+    textarea {
+        font-size: 16px;
+    }
+
+
+    /* Tables */
+
+    .data-table {
+        width: 100%;
+        min-width: 650px;
+    }
+
+
+    .card:has(.data-table) {
+        overflow-x: auto;
+    }
+
+    .properties-page .card:has(.data-table) {
+    overflow-x: visible;
+    }
+
+    /* ==========================================
+   UNITS — MOBILE CARDS
+   ========================================== */
+
+.units-page .data-table {
+    display: block;
+    width: 100%;
+    min-width: 0 !important;
+    table-layout: auto;
+    border: 0;
+    overflow: visible;
+}
+
+.units-page .data-table thead {
+    display: none;
+}
+
+.units-page .data-table tbody {
+    display: block;
+    width: 100%;
+}
+
+.units-page .data-table tbody tr.unit-row {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    margin: 0 0 14px 0;
+    padding: 14px 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8e5;
+    border-radius: 16px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.06);
+
+    overflow: hidden;
+}
+
+.units-page .data-table tbody tr.unit-row td {
+    display: flex;
+
+    width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 8px 0;
+
+    border: 0;
+
+    white-space: normal;
+    overflow: visible;
+}
+
+.units-page .data-table tbody tr.unit-row td::before {
+    content: attr(data-label);
+
+    flex: 0 0 auto;
+
+    margin-right: 14px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    color: #68736e;
+}
+
+.units-page .data-table tbody tr.unit-row td:first-child {
+    padding-top: 0;
+}
+
+.units-page .unit-property {
+    font-weight: 600;
+    text-align: right;
+}
+
+.units-page .unit-number {
+    color: #00A651;
+    font-size: 16px;
+}
+
+.units-page .unit-bedrooms {
+    font-weight: 600;
+}
+
+.units-page .unit-rent {
+    font-weight: 700;
+    color: #00A651;
+}
+
+.units-page .unit-status {
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background: #e8f8ef;
+    color: #087a3d;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.units-page .card:has(.data-table) {
+    overflow-x: visible !important;
+}
+
+
+/* Empty state */
+
+.units-page .data-table tbody tr:not(.unit-row) {
+    display: block;
+    width: 100%;
+}
+
+.units-page .data-table tbody tr:not(.unit-row) td.empty-state {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 20px;
+
+    text-align: center;
+}
+
+ /* ==========================================
+   PROPERTIES — MOBILE CARDS
+   ========================================== */
+
+.properties-page .data-table {
+    display: block;
+    width: 100%;
+    min-width: 0 !important;
+    table-layout: auto;
+    border: 0;
+    overflow: visible;
+}
+
+.properties-page .data-table thead {
+    display: none;
+}
+
+.properties-page .data-table tbody {
+    display: block;
+    width: 100%;
+}
+
+.properties-page .data-table tbody tr.property-row {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    margin: 0 0 14px 0;
+    padding: 14px 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8e5;
+    border-radius: 16px;
+
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+
+    overflow: hidden;
+}
+
+.properties-page .data-table tbody tr.property-row td {
+    display: flex;
+
+    width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 8px 0;
+
+    border: 0;
+
+    white-space: normal;
+    overflow: visible;
+}
+
+.properties-page .data-table tbody tr.property-row td::before {
+    content: attr(data-label);
+
+    flex: 0 0 auto;
+
+    margin-right: 14px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    color: #68736e;
+}
+
+.properties-page .data-table tbody tr.property-row td:first-child {
+    padding-top: 0;
+}
+
+.properties-page .data-table tbody tr.property-row td:last-child {
+    margin-top: 8px;
+    padding-top: 14px;
+    padding-bottom: 0;
+
+    border-top: 1px solid #edf1ef;
+}
+
+.properties-page .property-code {
+    font-weight: 700;
+    color: #00A651;
+}
+
+.properties-page .property-name {
+    font-weight: 700;
+    color: #111814;
+
+    text-align: right;
+}
+
+.properties-page .property-location {
+    text-align: right;
+}
+
+.properties-page .property-units {
+    font-weight: 600;
+}
+
+.properties-page .property-rent {
+    font-weight: 700;
+    color: #00A651;
+}
+
+.properties-page .delete-property-btn {
+    width: 100%;
+    min-height: 44px;
+}
+
+
+/* Prevent the Properties container from creating
+   a horizontal scrollbar */
+
+.properties-page .card:has(.data-table),
+.properties-page .data-table {
+    overflow-x: visible !important;
+}
+
+
+/* Empty-state row */
+
+.properties-page .data-table tbody tr:not(.property-row) {
+    display: block;
+    width: 100%;
+}
+
+.properties-page .data-table tbody tr:not(.property-row) td.empty-state {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 20px;
+
+    text-align: center;
+}
+
+
+    /* General grids */
+
+    .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+
+    /* Buttons */
+
+    .actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+
+    /* Touch-friendly controls */
+
+    button,
+    .nav-link {
+        min-height: 46px;
+    }
+
+}
+
+
+/* ==========================================
+   MOBILE / SMALL PWA WINDOW
+   ========================================== */
+
+@media (max-width: 768px) {
+
+    .dashboard-shell {
+        position: relative;
+        display: block;
+        min-height: 100vh;
+    }
+
+    /* Hide normal sidebar */
+    .sidebar {
+        display: none;
+    }
+
+    /* Show three-dot button */
+    .mobile-menu-btn {
+        display: flex;
+
+        position: fixed;
+
+        top: 14px;
+        right: 14px;
+
+        width: 44px;
+        height: 44px;
+
+        align-items: center;
+        justify-content: center;
+
+        padding: 0;
+
+        border-radius: 12px;
+
+        background: #0f1f1b;
+        color: #ffffff;
+
+        font-size: 28px;
+        line-height: 1;
+
+        z-index: 2000;
+
+        box-shadow:
+            0 6px 18px
+            rgba(0, 0, 0, 0.18);
+    }
+
+    .mobile-menu-btn:hover {
+        transform: none;
+    }
+
+    .dashboard-main {
+        width: 100%;
+        padding: 14px;
+    }
+
+}
+
+
+/* ==========================================
+   MOBILE NAVIGATION OPEN
+   ========================================== */
+
+@media (max-width: 768px) {
+
+    .dashboard-shell.mobile-menu-open .sidebar {
+
+        display: flex;
+
+        position: fixed;
+
+        top: 0;
+        left: 0;
+
+        width: min(300px, 85vw);
+        height: 100vh;
+        min-height: 100vh;
+
+        z-index: 1999;
+
+        overflow-y: auto;
+
+        box-shadow:
+            8px 0 30px
+            rgba(0, 0, 0, 0.25);
+    }
+
+}
+
+/* ==========================================
+   M-PESA RENT WALLET
+   RESPONSIVE MOBILE NAVIGATION
+   ========================================== */
+
+/* Three-dot button hidden on desktop */
+.mobile-menu-btn {
+    display: none;
+}
+
+
+/* ==========================================
+   TABLET / NARROW WINDOW
+   ========================================== */
+
+@media (max-width: 768px) {
+
+    /* Keep dashboard content full width */
+    .dashboard-shell {
+        position: relative;
+        display: block;
+        min-height: 100vh;
+    }
+
+    /* Hide full sidebar */
+    .dashboard-shell .sidebar {
+        display: none;
+    }
+
+    /* Three-dot menu */
+    .mobile-menu-btn {
+        display: flex;
+
+        position: fixed;
+
+        top: 12px;
+        right: 12px;
+
+        width: 42px;
+        height: 42px;
+
+        align-items: center;
+        justify-content: center;
+
+        padding: 0;
+
+        border: none;
+        border-radius: 10px;
+
+        background: #0f1f1b;
+        color: #ffffff;
+
+        font-size: 28px;
+        line-height: 1;
+
+        cursor: pointer;
+
+        z-index: 3000;
+
+        box-shadow:
+            0 4px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Main dashboard */
+    .dashboard-main {
+        width: 100%;
+        padding: 14px;
+    }
+
+
+    /* ======================================
+       MENU OPEN
+       ====================================== */
+
+    .dashboard-shell.mobile-menu-open
+    .sidebar {
+
+        display: flex;
+
+        position: fixed;
+
+        top: 0;
+        left: 0;
+
+        width: min(300px, 85vw);
+        height: 100vh;
+
+        min-height: 100vh;
+
+        z-index: 2999;
+
+        overflow-y: auto;
+
+        box-shadow:
+            8px 0 30px
+            rgba(0, 0, 0, 0.30);
+    }
+
+}
+
+/* ==========================================
+   PWA NETWORK STATUS
+   ========================================== */
+
+.network-status {
+
+    position: fixed;
+
+    bottom: 16px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    padding: 8px 14px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    z-index: 4000;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.15);
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.network-status.online {
+
+    background: #e8f8ef;
+    color: #087a3d;
+
+}
+
+.network-status.offline {
+
+    background: #fff3df;
+    color: #9a5b00;
+
+}
+
+/* ==========================================
+   M-PESA RENT WALLET
+   PWA SPLASH SCREEN
+   ========================================== */
+
+.pwa-splash {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: #00A651;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 99999;
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transition:
+        opacity 0.5s ease,
+        visibility 0.5s ease;
+
+}
+
+
+.pwa-splash.hidden {
+
+    opacity: 0;
+
+    visibility: hidden;
+
+}
+
+
+.pwa-splash-content {
+
+    text-align: center;
+
+    color: white;
+
+    padding: 30px;
+
+}
+
+
+.pwa-splash-icon {
+
+    width: 140px;
+
+    height: 140px;
+
+    object-fit: contain;
+
+    margin-bottom: 24px;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.18);
+
+}
+
+
+.pwa-splash-content h1 {
+
+    margin: 0;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.5px;
+
+}
+
+
+.pwa-splash-content p {
+
+    margin-top: 10px;
+
+    margin-bottom: 28px;
+
+    font-size: 15px;
+
+    opacity: 0.92;
+
+}
+
+
+.pwa-splash-loader {
+
+    width: 42px;
+
+    height: 42px;
+
+    margin: 0 auto;
+
+    border: 3px solid rgba(255, 255, 255, 0.35);
+
+    border-top-color: white;
+
+    border-radius: 50%;
+
+    animation:
+        pwaSplashSpin 0.8s linear infinite;
+
+}
+
+
+@keyframes pwaSplashSpin {
+
+    from {
+
+        transform: rotate(0deg);
+
+    }
+
+    to {
+
+        transform: rotate(360deg);
+
+    }
+
+}
+
+/* =====================================================
+   DASHBOARD — MOBILE RESPONSIVE LAYOUT
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+    /* -----------------------------------------------
+       PAGE / SHELL
+       ----------------------------------------------- */
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .dashboard-shell {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        max-width: 100%;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+
+    /* -----------------------------------------------
+       SIDEBAR
+       ----------------------------------------------- */
+
+    .dashboard-shell .sidebar {
+        flex-shrink: 0;
+    }
+
+
+    /* -----------------------------------------------
+       MAIN DASHBOARD
+       ----------------------------------------------- */
+
+    .dashboard-shell .dashboard-main {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 16px;
+        overflow-x: hidden;
+    }
+
+
+    /* -----------------------------------------------
+       TOPBAR
+       ----------------------------------------------- */
+
+    .dashboard-shell .dashboard-topbar {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        width: 100%;
+    }
+
+    .dashboard-shell .topbar-actions {
+        width: 100%;
+    }
+
+    .dashboard-shell .topbar-actions .count-pill {
+        display: inline-flex;
+        max-width: 100%;
+    }
+
+
+    /* -----------------------------------------------
+       STATISTICS
+       ----------------------------------------------- */
+
+    .dashboard-shell .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        width: 100%;
+    }
+
+    .dashboard-shell .stat-card {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+
+    /* -----------------------------------------------
+       MANAGEMENT ACTIONS
+       ----------------------------------------------- */
+
+    .dashboard-shell .content-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        width: 100%;
+    }
+
+
+    /* -----------------------------------------------
+       CARDS
+       ----------------------------------------------- */
+
+    .dashboard-shell .card {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+
+    /* -----------------------------------------------
+       FORM INPUTS
+       ----------------------------------------------- */
+
+    .dashboard-shell input,
+    .dashboard-shell select,
+    .dashboard-shell textarea {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+
+    /* -----------------------------------------------
+       ACTION BUTTONS
+       ----------------------------------------------- */
+
+    .dashboard-shell .actions {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .dashboard-shell .actions button {
+        width: 100%;
+        min-height: 44px;
+    }
+
+
+    /* -----------------------------------------------
+       SECTION HEADERS
+       ----------------------------------------------- */
+
+    .dashboard-shell .section-head {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+
+    /* ===============================================
+   REGISTERED PROPERTIES — MOBILE CARDS
+   =============================================== */
+
+.dashboard-shell .table-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+}
+
+.dashboard-shell .data-table {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+}
+
+/* Hide desktop table headings */
+
+.dashboard-shell .data-table thead {
+    display: none;
+}
+
+/* Turn each property row into a card */
+
+.dashboard-shell .data-table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dashboard-shell .data-table tbody tr {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px;
+    border: 1px solid #dce7e2;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* Individual property fields */
+
+.dashboard-shell .data-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    min-width: 0;
+    padding: 9px 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+/* Field labels */
+
+.dashboard-shell .data-table tbody td::before {
+    font-size: 12px;
+    font-weight: 600;
+    color: #66736f;
+    flex-shrink: 0;
+}
+
+/* ==========================================
+   TENANT MOBILE CARDS
+   ========================================== */
+
+@media (max-width: 700px) {
+
+    #tenantTableBody tr {
+        display: block;
+        margin-bottom: 14px;
+        padding: 14px;
+        border: 1px solid #dce6e2;
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    #tenantTableBody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+
+        width: 100%;
+        padding: 8px 0;
+
+        border: none;
+        text-align: right;
+    }
+
+    #tenantTableBody td:nth-child(1)::before {
+        content: "Tenant";
+    }
+
+    #tenantTableBody td:nth-child(2)::before {
+        content: "Phone";
+    }
+
+    #tenantTableBody td:nth-child(3)::before {
+        content: "Property";
+    }
+
+    #tenantTableBody td:nth-child(4)::before {
+        content: "Unit";
+    }
+
+    #tenantTableBody td:nth-child(5)::before {
+        content: "Monthly Rent";
+    }
+
+    #tenantTableBody td:nth-child(6)::before {
+        content: "Actions";
+    }
+
+    #tenantTableBody td::before {
+        display: inline-block;
+        flex-shrink: 0;
+
+        font-size: 12px;
+        font-weight: 600;
+        color: #66736f;
+
+        text-align: left;
+    }
+
+    #tenantTableBody td:last-child {
+        margin-top: 6px;
+        padding-top: 12px;
+        border-top: 1px solid #e5ebe8;
+    }
+
+    #tenantTableBody td:last-child button {
+        flex: 1;
+    }
+
+}
+
+/* Values */
+
+.dashboard-shell .data-table tbody td {
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-shell .data-table tbody td:first-child {
+    font-weight: 600;
+}
+
+.dashboard-shell .data-table tbody td:nth-child(2) {
+    font-weight: 600;
+}
+
+/* Empty state */
+
+.dashboard-shell .data-table tbody td.empty-state {
+    display: block;
+    text-align: center;
+    padding: 20px;
+}
+
+.dashboard-shell .data-table tbody td.empty-state::before {
+    content: none;
+}
+    /* -----------------------------------------------
+       ACTIVITY
+       ----------------------------------------------- */
+
+    .dashboard-shell .activity-list {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+
+    /* -----------------------------------------------
+       TEXT
+       ----------------------------------------------- */
+
+    .dashboard-shell h1,
+    .dashboard-shell h2,
+    .dashboard-shell h3,
+    .dashboard-shell p {
+        max-width: 100%;
+        overflow-wrap: break-word;
+    }
+
+}
+
+/* ==========================================
+   RENT WALLET — MOBILE FIRST
+   ========================================== */
+
+@media (max-width: 640px) {
+
+    /* Wallet hero */
+
+    #tenantDashboard .hero-card {
+        padding: 18px;
+        gap: 18px;
+    }
+
+    #tenantDashboard .hero-card h2 {
+        font-size: 1.45rem;
+        line-height: 1.2;
+    }
+
+
+    /* Profile information */
+
+    #tenantDashboard .profile-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    #tenantDashboard .profile-grid > div {
+        padding: 13px 14px;
+    }
+
+
+    /* Wallet settings and overview */
+
+    #tenantDashboard .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+
+    /* Saved / Remaining */
+
+    #tenantDashboard .wallet-meta {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin: 14px 0 16px;
+    }
+
+    #tenantDashboard .wallet-meta > div {
+        padding: 14px;
+    }
+
+
+    /* Progress */
+
+    #tenantDashboard .progress-wrap {
+        margin: 10px 0 18px;
+    }
+
+    #tenantDashboard .progress-head {
+        font-size: 0.9rem;
+    }
+
+    #tenantDashboard .progress-bar {
+        height: 14px;
+    }
+
+
+    /* Wallet input */
+
+    #tenantDashboard input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+
+    /* Wallet actions */
+
+    #tenantDashboard .actions {
+        width: 100%;
+    }
+
+    #tenantDashboard .actions button {
+        width: 100%;
+        min-width: 0;
+    }
+
+}
+
+/* ==========================================
+   RENT WALLET — RENT SUMMARY
+   ========================================== */
+
+.rent-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.rent-summary-item {
+    padding: 16px;
+    border: 1px solid #e1e9e5;
+    border-radius: 14px;
+    background: #f8faf9;
+}
+
+.rent-summary-item .muted {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 12px;
+}
+
+.rent-summary-item strong {
+    display: block;
+    font-size: 18px;
+    line-height: 1.25;
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 640px) {
+
+    .rent-summary-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .rent-summary-item {
+        padding: 13px;
+    }
+
+    .rent-summary-item strong {
+        font-size: 16px;
+    }
+
+}
+
+
+@media (max-width: 380px) {
+
+    .rent-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* ==========================================
+   RENT WALLET — SAVE RENT
+   ========================================== */
+
+.save-rent-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.save-rent-input {
+    flex: 1;
+}
+
+.save-rent-input label {
+    display: block;
+    margin-bottom: 7px;
+}
+
+.save-rent-input input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.save-rent-button {
+    min-width: 150px;
+    min-height: 46px;
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 640px) {
+
+    .save-rent-form {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .save-rent-input {
+        width: 100%;
+    }
+
+    .save-rent-input input {
+        width: 100%;
+        min-height: 46px;
+        font-size: 16px;
+    }
+
+    .save-rent-button {
+        width: 100%;
+        min-width: 0;
+        min-height: 48px;
+        font-size: 16px;
+    }
+
+}
+
+/* ==========================================
+   RENT WALLET — WALLET SETTINGS
+   ========================================== */
+
+.wallet-settings-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    align-items: end;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.wallet-setting-field {
+    min-width: 0;
+}
+
+.wallet-setting-field label {
+    display: block;
+    margin-bottom: 7px;
+}
+
+.wallet-setting-field input {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 46px;
+}
+
+.wallet-settings-button {
+    min-height: 46px;
+    white-space: nowrap;
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 640px) {
+
+    .wallet-settings-form {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .wallet-setting-field {
+        width: 100%;
+    }
+
+    .wallet-setting-field input {
+        width: 100%;
+        min-height: 48px;
+        font-size: 16px;
+    }
+
+    .wallet-settings-button {
+        width: 100%;
+        min-height: 48px;
+        font-size: 16px;
+        white-space: normal;
+    }
+
+}
+
+/* ==========================================
+   TRANSACTION HISTORY — MOBILE FIRST
+   ========================================== */
+
+.history-list {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+}
+
+.history-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    padding: 14px 16px;
+
+    border: 1px solid #e1e9e5;
+    border-radius: 14px;
+
+    background: #f8faf9;
+
+    margin-bottom: 10px;
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 640px) {
+
+    .history-list li {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+
+        padding: 14px;
+    }
+
+    .history-list li > * {
+        width: 100%;
+    }
+
+}
+
+/* ===========================================
+   RECEIPT MODAL
+   =========================================== */
+
+.receipt-modal {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+}
+
+
+/* ===========================================
+   RECEIPT OVERLAY
+   =========================================== */
+
+.receipt-overlay {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    z-index: 1;
+}
+
+
+/* ===========================================
+   RECEIPT CONTAINER
+   =========================================== */
+
+.receipt-container {
+    position: relative;
+
+    width: min(100%, 460px);
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    z-index: 2;
+}
+
+
+/* ===========================================
+   RECEIPT CARD
+   =========================================== */
+
+.receipt-card {
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    padding: 28px;
+
+    box-sizing: border-box;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ===========================================
+   RECEIPT HEADER
+   =========================================== */
+
+.receipt-header {
+    text-align: center;
+
+    margin-bottom: 24px;
+}
+
+.receipt-brand {
+    margin: 0;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    color: #00a859;
+}
+
+.receipt-header h2 {
+    margin: 6px 0 4px;
+
+    font-size: 26px;
+}
+
+
+/* ===========================================
+   RECEIPT STATUS
+   =========================================== */
+
+.receipt-status {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-bottom: 24px;
+
+    color: #008f4c;
+
+    font-weight: 700;
+}
+
+.receipt-status span {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    background: #e6f5ee;
+}
+
+
+/* ===========================================
+   RECEIPT AMOUNT
+   =========================================== */
+
+.receipt-amount {
+    text-align: center;
+
+    padding: 20px 10px;
+
+    margin-bottom: 24px;
+
+    border-radius: 16px;
+
+    background: #f3f9f6;
+}
+
+.receipt-amount p {
+    margin: 0 0 6px;
+}
+
+.receipt-amount h1 {
+    margin: 0;
+
+    font-size: 34px;
+}
+
+
+/* ===========================================
+   RECEIPT DETAILS
+   =========================================== */
+
+.receipt-details {
+    border-top: 1px solid #e2e8e5;
+}
+
+.receipt-details > div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #e2e8e5;
+}
+
+.receipt-details span {
+    font-size: 13px;
+
+    color: #64748b;
+}
+
+.receipt-details strong {
+    font-size: 14px;
+
+    word-break: break-word;
+}
+
+
+/* ===========================================
+   RECEIPT FOOTER
+   =========================================== */
+
+.receipt-footer {
+    text-align: center;
+
+    padding-top: 20px;
+}
+
+.receipt-footer p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+/* ===========================================
+   RECEIPT ACTIONS
+   =========================================== */
+
+.receipt-actions {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 14px;
+}
+
+.receipt-actions button {
+    flex: 1;
+}
+
+
+/* ===========================================
+   MOBILE RECEIPT
+   =========================================== */
+
+@media (max-width: 640px) {
+
+    .receipt-modal {
+        padding: 12px;
+    }
+
+    .receipt-container {
+        width: 100%;
+        max-height: 94vh;
+    }
+
+    .receipt-card {
+        padding: 22px;
+        border-radius: 18px;
+    }
+
+    .receipt-header h2 {
+        font-size: 23px;
+    }
+
+    .receipt-amount h1 {
+        font-size: 30px;
+    }
+
+    .receipt-actions {
+        flex-direction: column;
+    }
+
+}
+
+
+/* ===========================================
+   PRINT RECEIPT
+   =========================================== */
+
+@media print {
+
+    body * {
+        visibility: hidden;
+    }
+
+    #printableReceipt,
+    #printableReceipt * {
+        visibility: visible;
+    }
+
+    #printableReceipt {
+        position: absolute;
+
+        left: 0;
+        top: 0;
+
+        width: 100%;
+
+        box-shadow: none;
+
+        border-radius: 0;
+    }
+
+    .receipt-modal {
+        position: static;
+
+        display: block;
+
+        padding: 0;
+    }
+
+    .receipt-overlay,
+    .receipt-actions {
+        display: none !important;
+    }
+
+}
+
+/* =========================================================
+   M-PESA RENT WALLET
+   Premium Network UI Theme
+   ========================================================= */
+
+:root {
+
+    --mpesa-green: #00a651;
+    --mpesa-green-dark: #008f45;
+    --mpesa-green-light: #eaf8f0;
+
+    --mpesa-red: #e5232e;
+    --mpesa-red-light: #fff0f1;
+
+    --text-dark: #101820;
+    --text: #263238;
+    --text-muted: #718096;
+
+    --white: #ffffff;
+    --background: #f5f8f7;
+    --border: #e2e9e6;
+
+    --success: #00a651;
+    --danger: #e5232e;
+
+    --shadow:
+        0 8px 30px rgba(16, 24, 32, 0.07);
+
+    --shadow-hover:
+        0 14px 40px rgba(16, 24, 32, 0.12);
+
+    --radius: 18px;
+    --radius-small: 12px;
+
+    --sidebar-width: 260px;
+
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    color: var(--text);
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #f5f8f7 100%
+        );
+
+    position: relative;
+
+    overflow-x: hidden;
+
+}
+
+
+/* =========================================================
+   SUBTLE NETWORK BACKGROUND
+   ========================================================= */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -2;
+
+    pointer-events: none;
+
+    opacity: 0.65;
+
+    background-image:
+
+        linear-gradient(
+            25deg,
+            transparent 48%,
+            rgba(0, 166, 81, 0.10) 49%,
+            rgba(0, 166, 81, 0.10) 50%,
+            transparent 51%
+        ),
+
+        linear-gradient(
+            145deg,
+            transparent 48%,
+            rgba(229, 35, 46, 0.08) 49%,
+            rgba(229, 35, 46, 0.08) 50%,
+            transparent 51%
+        );
+
+    background-size:
+        280px 280px,
+        340px 340px;
+
+}
+
+
+/* Network nodes */
+
+body::after {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -1;
+
+    pointer-events: none;
+
+    opacity: 0.55;
+
+    background-image:
+
+        radial-gradient(
+            circle at 8% 20%,
+            rgba(0, 166, 81, 0.55) 0 3px,
+            transparent 4px
+        ),
+
+        radial-gradient(
+            circle at 25% 12%,
+            rgba(229, 35, 46, 0.45) 0 3px,
+            transparent 4px
+        ),
+
+        radial-gradient(
+            circle at 42% 25%,
+            rgba(0, 166, 81, 0.45) 0 3px,
+            transparent 4px
+        ),
+
+        radial-gradient(
+            circle at 68% 10%,
+            rgba(229, 35, 46, 0.45) 0 3px,
+            transparent 4px
+        ),
+
+        radial-gradient(
+            circle at 88% 28%,
+            rgba(0, 166, 81, 0.45) 0 3px,
+            transparent 4px
+        ),
+
+        radial-gradient(
+            circle at 15% 72%,
+            rgba(229, 35, 46, 0.40) 0 3px,
+            transparent 4px
+        ),
+
+        radial-gradient(
+            circle at 75% 76%,
+            rgba(0, 166, 81, 0.45) 0 3px,
+            transparent 4px
+        );
+
+}
+
+
+/* =========================================================
+   PAGE STRUCTURE
+   ========================================================= */
+
+.app-layout {
+
+    min-height: 100vh;
+
+    display: flex;
+
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+
+    width: var(--sidebar-width);
+
+    min-height: 100vh;
+
+    background: rgba(
+        255,
+        255,
+        255,
+        0.96
+    );
+
+    border-right:
+        1px solid
+        var(--border);
+
+    padding: 28px 20px;
+
+    position: sticky;
+
+    top: 0;
+
+    align-self: flex-start;
+
+    z-index: 50;
+
+}
+
+
+/* Logo */
+
+.logo,
+.brand-logo {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 35px;
+
+}
+
+
+.logo img,
+.brand-logo img {
+
+    max-width: 180px;
+
+    height: auto;
+
+}
+
+
+/* Sidebar links */
+
+.sidebar a,
+.sidebar button {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 13px 15px;
+
+    margin-bottom: 7px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: var(--text);
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+
+.sidebar a:hover,
+.sidebar button:hover {
+
+    background: var(--mpesa-green-light);
+
+    color: var(--mpesa-green);
+
+    transform: translateX(2px);
+
+}
+
+
+.sidebar a.active,
+.sidebar button.active {
+
+    background:
+        linear-gradient(
+            135deg,
+            #eaf8f0,
+            #f2fbf6
+        );
+
+    color: var(--mpesa-green);
+
+    font-weight: 700;
+
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.main-content,
+.main {
+
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 35px;
+
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar,
+.header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.page-title {
+
+    margin: 0;
+
+    color: var(--text-dark);
+
+    font-size: 30px;
+
+    font-weight: 750;
+
+    letter-spacing: -0.6px;
+
+}
+
+
+.page-subtitle,
+.muted {
+
+    color: var(--text-muted);
+
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.card {
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.96
+        );
+
+    border:
+        1px solid
+        rgba(
+            226,
+            233,
+            230,
+            0.9
+        );
+
+    border-radius:
+        var(--radius);
+
+    padding: 25px;
+
+    box-shadow:
+        var(--shadow);
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+}
+
+
+.card:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        var(--shadow-hover);
+
+}
+
+
+/* subtle green accent */
+
+.card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 42px;
+
+    height: 3px;
+
+    background:
+        var(--mpesa-green);
+
+    border-radius:
+        0 0 5px 0;
+
+}
+
+
+/* =========================================================
+   DASHBOARD GRID
+   ========================================================= */
+
+.dashboard-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
+    gap: 18px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.dashboard-grid-2 {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 20px;
+
+}
+
+
+/* =========================================================
+   STAT CARDS
+   ========================================================= */
+
+.stat-card {
+
+    min-height: 170px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+}
+
+
+.stat-card h3 {
+
+    margin:
+        0 0 8px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: var(--text);
+
+}
+
+
+.stat-card h2 {
+
+    margin: 0;
+
+    font-size: 28px;
+
+    color: var(--text-dark);
+
+    letter-spacing: -0.5px;
+
+}
+
+
+.stat-card.green h2 {
+
+    color:
+        var(--mpesa-green);
+
+}
+
+
+.stat-card.red h2 {
+
+    color:
+        var(--mpesa-red);
+
+}
+
+
+/* =========================================================
+   STATUS PILLS
+   ========================================================= */
+
+.status,
+.badge,
+.count-pill {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: fit-content;
+
+    padding:
+        6px 12px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+}
+
+
+.status.success,
+.badge.success {
+
+    color:
+        var(--mpesa-green);
+
+    background:
+        var(--mpesa-green-light);
+
+}
+
+
+.status.danger,
+.badge.danger {
+
+    color:
+        var(--mpesa-red);
+
+    background:
+        var(--mpesa-red-light);
+
+}
+
+
+.count-pill {
+
+    color:
+        var(--mpesa-green);
+
+    background:
+        var(--mpesa-green-light);
+
+    border:
+        1px solid
+        rgba(
+            0,
+            166,
+            81,
+            0.12
+        );
+
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+button,
+.btn {
+
+    border: none;
+
+    border-radius:
+        12px;
+
+    padding:
+        12px 20px;
+
+    font-size:
+        14px;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    transition:
+        all 0.2s ease;
+
+}
+
+
+button:hover,
+.btn:hover {
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+button:active,
+.btn:active {
+
+    transform:
+        translateY(0);
+
+}
+
+
+button:disabled,
+.btn:disabled {
+
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+}
+
+
+/* Primary */
+
+button,
+.btn-primary {
+
+    background:
+        var(--mpesa-green);
+
+    color:
+        #ffffff;
+
+    box-shadow:
+        0 6px 18px
+        rgba(
+            0,
+            166,
+            81,
+            0.20
+        );
+
+}
+
+
+button:hover,
+.btn-primary:hover {
+
+    background:
+        var(--mpesa-green-dark);
+
+    box-shadow:
+        0 8px 22px
+        rgba(
+            0,
+            166,
+            81,
+            0.28
+        );
+
+}
+
+
+/* Red */
+
+.btn-danger {
+
+    background:
+        var(--mpesa-red);
+
+    color:
+        #ffffff;
+
+}
+
+
+/* Secondary */
+
+.btn-secondary {
+
+    background:
+        #eef5f2;
+
+    color:
+        var(--mpesa-green);
+
+}
+
+
+/* Outline */
+
+.btn-outline {
+
+    background:
+        #ffffff;
+
+    color:
+        var(--mpesa-green);
+
+    border:
+        1px solid
+        var(--mpesa-green);
+
+}
+
+
+/* =========================================================
+   FORM ELEMENTS
+   ========================================================= */
+
+label {
+
+    display: block;
+
+    margin:
+        16px 0 7px;
+
+    font-size:
+        13px;
+
+    font-weight:
+        650;
+
+    color:
+        var(--text);
+
+}
+
+
+input,
+select,
+textarea {
+
+    width: 100%;
+
+    min-height: 46px;
+
+    padding:
+        11px 13px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        11px;
+
+    background:
+        #ffffff;
+
+    color:
+        var(--text-dark);
+
+    font-family:
+        inherit;
+
+    font-size:
+        14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+
+    border-color:
+        var(--mpesa-green);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            0,
+            166,
+            81,
+            0.10
+        );
+
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.progress {
+
+    width: 100%;
+
+    height: 9px;
+
+    overflow: hidden;
+
+    background:
+        #e9efec;
+
+    border-radius:
+        999px;
+
+}
+
+
+.progress-bar {
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00a651,
+            #42c96f
+        );
+
+    border-radius:
+        inherit;
+
+    transition:
+        width 0.5s ease;
+
+}
+
+
+/* =========================================================
+   TRANSACTION HISTORY
+   ========================================================= */
+
+.history-list {
+
+    list-style:
+        none;
+
+    margin:
+        18px 0 0;
+
+    padding:
+        0;
+
+}
+
+
+.history-list li {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    padding:
+        16px;
+
+    margin-bottom:
+        10px;
+
+    background:
+        #fbfdfc;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        14px;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+
+.history-list li:hover {
+
+    background:
+        #ffffff;
+
+    transform:
+        translateX(3px);
+
+}
+
+
+.history-info {
+
+    min-width:
+        0;
+
+}
+
+
+.history-info strong {
+
+    display:
+        block;
+
+    color:
+        var(--text-dark);
+
+    font-size:
+        14px;
+
+}
+
+
+.history-info small {
+
+    display:
+        block;
+
+    margin-top:
+        4px;
+
+    color:
+        var(--text-muted);
+
+}
+
+
+.history-amount {
+
+    color:
+        var(--mpesa-green);
+
+    font-size:
+        16px;
+
+    font-weight:
+        750;
+
+    white-space:
+        nowrap;
+
+}
+
+
+.receipt-btn {
+
+    background:
+        var(--mpesa-green-light);
+
+    color:
+        var(--mpesa-green);
+
+    padding:
+        10px 15px;
+
+}
+
+
+/* =========================================================
+   RECEIPT
+   ========================================================= */
+
+.receipt {
+
+    max-width:
+        760px;
+
+    margin:
+        30px auto;
+
+    background:
+        #ffffff;
+
+    border-radius:
+        20px;
+
+    padding:
+        35px;
+
+    box-shadow:
+        0 15px 50px
+        rgba(
+            16,
+            24,
+            32,
+            0.12
+        );
+
+}
+
+
+.receipt-header {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    padding-bottom:
+        20px;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+}
+
+
+.receipt-title {
+
+    color:
+        var(--mpesa-green);
+
+    font-size:
+        22px;
+
+    font-weight:
+        800;
+
+}
+
+
+.receipt-success {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+    color:
+        var(--mpesa-green);
+
+    background:
+        var(--mpesa-green-light);
+
+    padding:
+        7px 13px;
+
+    border-radius:
+        999px;
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+}
+
+
+.receipt-amount {
+
+    margin:
+        28px 0;
+
+    font-size:
+        42px;
+
+    font-weight:
+        800;
+
+    color:
+        var(--text-dark);
+
+}
+
+
+.receipt-row {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    padding:
+        13px 0;
+
+    border-bottom:
+        1px solid
+        #edf1ef;
+
+}
+
+
+.receipt-row span:first-child {
+
+    color:
+        var(--text-muted);
+
+}
+
+
+.receipt-row span:last-child {
+
+    color:
+        var(--text-dark);
+
+    font-weight:
+        650;
+
+    text-align:
+        right;
+
+}
+
+
+/* =========================================================
+   RENTAL / PROPERTY CARD
+   ========================================================= */
+
+.property-card {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        18px;
+
+}
+
+
+.property-icon {
+
+    width:
+        70px;
+
+    height:
+        70px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        16px;
+
+    background:
+        var(--mpesa-green-light);
+
+    color:
+        var(--mpesa-green);
+
+    font-size:
+        30px;
+
+}
+
+
+.property-card h3 {
+
+    margin:
+        0 0 5px;
+
+    font-size:
+        20px;
+
+}
+
+
+.property-card p {
+
+    margin:
+        4px 0;
+
+    color:
+        var(--text-muted);
+
+}
+
+
+/* =========================================================
+   SECTION HEAD
+   ========================================================= */
+
+.section-head {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+}
+
+
+.section-head h3 {
+
+    margin:
+        0 0 5px;
+
+}
+
+
+.section-head p {
+
+    margin:
+        0;
+
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal {
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    z-index:
+        1000;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        20px;
+
+    background:
+        rgba(
+            16,
+            24,
+            32,
+            0.45
+        );
+
+    backdrop-filter:
+        blur(4px);
+
+}
+
+
+.modal-content {
+
+    width:
+        min(
+            100%,
+            760px
+        );
+
+    max-height:
+        90vh;
+
+    overflow:
+        auto;
+
+    background:
+        #ffffff;
+
+    border-radius:
+        20px;
+
+    padding:
+        30px;
+
+    box-shadow:
+        0 25px 80px
+        rgba(
+            0,
+            0,
+            0,
+            0.20
+        );
+
+}
+
+
+/* =========================================================
+   MOBILE NAV
+   ========================================================= */
+
+.mobile-menu-btn {
+
+    display:
+        none;
+
+    width:
+        44px;
+
+    height:
+        44px;
+
+    padding:
+        0;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        12px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .dashboard-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+    }
+
+    .main-content,
+    .main {
+
+        padding:
+            25px;
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    :root {
+
+        --sidebar-width:
+            0px;
+
+    }
+
+
+    .app-layout {
+
+        display:
+            block;
+
+    }
+
+
+    .sidebar {
+
+        position:
+            fixed;
+
+        left:
+            -280px;
+
+        top:
+            0;
+
+        width:
+            260px;
+
+        height:
+            100vh;
+
+        transition:
+            left 0.25s ease;
+
+        box-shadow:
+            10px 0 40px
+            rgba(
+                0,
+                0,
+                0,
+                0.12
+            );
+
+    }
+
+
+    .sidebar.open {
+
+        left:
+            0;
+
+    }
+
+
+    .mobile-menu-btn {
+
+        display:
+            flex;
+
+    }
+
+
+    .main-content,
+    .main {
+
+        width:
+            100%;
+
+        padding:
+            18px;
+
+    }
+
+
+    .dashboard-grid {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            14px;
+
+    }
+
+
+    .dashboard-grid-2 {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .topbar,
+    .header {
+
+        align-items:
+            flex-start;
+
+    }
+
+
+    .page-title {
+
+        font-size:
+            25px;
+
+    }
+
+
+    .card {
+
+        padding:
+            19px;
+
+        border-radius:
+            15px;
+
+    }
+
+
+    .stat-card h2 {
+
+        font-size:
+            25px;
+
+    }
+
+
+    .history-list li {
+
+        align-items:
+            flex-start;
+
+        flex-wrap:
+            wrap;
+
+    }
+
+
+    .history-amount {
+
+        margin-left:
+            auto;
+
+    }
+
+
+    .receipt {
+
+        margin:
+            10px auto;
+
+        padding:
+            22px;
+
+        border-radius:
+            15px;
+
+    }
+
+
+    .receipt-header {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .receipt-amount {
+
+        font-size:
+            34px;
+
+    }
+
+
+    .receipt-row {
+
+        flex-direction:
+            column;
+
+        gap:
+            4px;
+
+    }
+
+
+    .receipt-row span:last-child {
+
+        text-align:
+            left;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .main-content,
+    .main {
+
+        padding:
+            13px;
+
+    }
+
+
+    .card {
+
+        padding:
+            16px;
+
+    }
+
+
+    .page-title {
+
+        font-size:
+            22px;
+
+    }
+
+
+    .section-head {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    button,
+    .btn {
+
+        width:
+            100%;
+
+    }
+
+
+    .history-list li {
+
+        display:
+            block;
+
+    }
+
+
+    .history-amount {
+
+        display:
+            block;
+
+        margin:
+            10px 0;
+
+    }
+
+
+    .receipt {
+
+        padding:
+            18px;
+
+    }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+
+    outline:
+        3px solid
+        rgba(
+            0,
+            166,
+            81,
+            0.25
+        );
+
+    outline-offset:
+        2px;
+
+}
+
+
+/* =========================================================
+   RED / GREEN NETWORK ACCENTS
+   ========================================================= */
+
+.network-green {
+
+    color:
+        var(--mpesa-green);
+
+}
+
+
+.network-red {
+
+    color:
+        var(--mpesa-red);
+
+}
+
+
+.network-dot {
+
+    width:
+        7px;
+
+    height:
+        7px;
+
+    border-radius:
+        50%;
+
+    display:
+        inline-block;
+
+    background:
+        var(--mpesa-green);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(
+            0,
+            166,
+            81,
+            0.08
+        );
+
+}
+
+
+.network-dot.red {
+
+    background:
+        var(--mpesa-red);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(
+            229,
+            35,
+            46,
+            0.08
+        );
+
+}
+
+
+/* =========================================================
+   PRINT RECEIPT
+   ========================================================= */
+
+@media print {
+
+    body {
+
+        background:
+            #ffffff !important;
+
+    }
+
+
+    body::before,
+    body::after {
+
+        display:
+            none !important;
+
+    }
+
+
+    .sidebar,
+    .topbar,
+    .mobile-menu-btn,
+    button,
+    .btn,
+    .no-print {
+
+        display:
+            none !important;
+
+    }
+
+
+    .main-content,
+    .main {
+
+        padding:
+            0 !important;
+
+    }
+
+
+    .receipt {
+
+        width:
+            100%;
+
+        max-width:
+            none;
+
+        margin:
+            0;
+
+        padding:
+            20px;
+
+        box-shadow:
+            none;
+
+        border:
+            none;
+
+    }
+
+}
+
+/* =========================================================
+   SAFARICOM GREEN SIDEBAR
+   ========================================================= */
+
+.sidebar {
+
+    background:
+        linear-gradient(
+            180deg,
+            #00a651 0%,
+            #008f45 100%
+        );
+
+    border-right:
+        none;
+
+    color:
+        #ffffff;
+
+    box-shadow:
+        8px 0 30px
+        rgba(
+            0,
+            80,
+            40,
+            0.15
+        );
+
+}
+
+
+/* =========================================================
+   SIDEBAR LOGO AREA
+   ========================================================= */
+
+.sidebar .logo,
+.sidebar .brand-logo {
+
+    color:
+        #ffffff;
+
+}
+
+
+/* =========================================================
+   SIDEBAR NAVIGATION
+   ========================================================= */
+
+.sidebar a,
+.sidebar button {
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.92
+        );
+
+    background:
+        transparent;
+
+}
+
+
+/* Hover */
+
+.sidebar a:hover,
+.sidebar button:hover {
+
+    color:
+        #ffffff;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.14
+        );
+
+    transform:
+        translateX(3px);
+
+}
+
+
+/* Active page */
+
+.sidebar a.active,
+.sidebar button.active {
+
+    color:
+        #ffffff;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.20
+        );
+
+    font-weight:
+        700;
+
+    box-shadow:
+        inset 4px 0 0
+        #ffffff;
+
+}
+
+
+/* =========================================================
+   SIDEBAR ICONS
+   ========================================================= */
+
+.sidebar a svg,
+.sidebar button svg {
+
+    color:
+        currentColor;
+
+}
+
+
+.sidebar a.active svg,
+.sidebar button.active svg {
+
+    color:
+        #ffffff;
+
+}
+
+
+/* =========================================================
+   SIDEBAR DIVIDERS
+   ========================================================= */
+
+.sidebar hr {
+
+    border:
+        none;
+
+    border-top:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.18
+        );
+
+}
+
+
+/* =========================================================
+   SIDEBAR MUTED TEXT
+   ========================================================= */
+
+.sidebar .muted,
+.sidebar small {
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.70
+        );
+
+}
+
+
+/* =========================================================
+   SIDEBAR LOGOUT / SECONDARY BUTTON
+   ========================================================= */
+
+.sidebar .btn-secondary {
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.12
+        );
+
+    color:
+        #ffffff;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.18
+        );
+
+}
+
+
+.sidebar .btn-secondary:hover {
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.20
+        );
+
+}
+
+
+/* =========================================================
+   MOBILE SIDEBAR
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .sidebar {
+
+        background:
+            linear-gradient(
+                180deg,
+                #00a651 0%,
+                #008f45 100%
+            );
+
+    }
+
+}
+
+/* =========================================================
+   SETTINGS PAGE
+   ========================================================= */
+
+.settings-section {
+
+    margin-bottom:
+        22px;
+
+}
+
+
+.theme-options,
+.mode-options {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+
+    gap:
+        15px;
+
+    margin-top:
+        22px;
+
+}
+
+
+.theme-option,
+.mode-option {
+
+    position:
+        relative;
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    gap:
+        13px;
+
+    padding:
+        18px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        15px;
+
+    background:
+        #ffffff;
+
+    cursor:
+        pointer;
+
+    transition:
+        all 0.2s ease;
+
+}
+
+
+.theme-option:hover,
+.mode-option:hover {
+
+    border-color:
+        var(--mpesa-green);
+
+    background:
+        var(--mpesa-green-light);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.theme-option input,
+.mode-option input {
+
+    width:
+        18px;
+
+    min-width:
+        18px;
+
+    height:
+        18px;
+
+    min-height:
+        18px;
+
+    margin:
+        2px 0 0;
+
+    accent-color:
+        var(--mpesa-green);
+
+}
+
+
+.theme-option-content,
+.mode-option > div {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        5px;
+
+}
+
+
+.theme-option-content strong,
+.mode-option strong {
+
+    color:
+        var(--text-dark);
+
+}
+
+
+.theme-option-content span,
+.mode-option span {
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        13px;
+
+    line-height:
+        1.5;
+
+}
+
+
+/* Selected option */
+
+.theme-option:has(
+    input:checked
+),
+.mode-option:has(
+    input:checked
+) {
+
+    border-color:
+        var(--mpesa-green);
+
+    background:
+        var(--mpesa-green-light);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(
+            0,
+            166,
+            81,
+            0.08
+        );
+
+}
+
+
+/* Application settings rows */
+
+.settings-row {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    padding:
+        17px 0;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+}
+
+
+.settings-row:last-child {
+
+    border-bottom:
+        none;
+
+}
+
+
+.settings-row strong {
+
+    color:
+        var(--text-dark);
+
+}
+
+
+.settings-row p {
+
+    margin:
+        5px 0 0;
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   SETTINGS MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .theme-options,
+    .mode-options {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .settings-row {
+
+        align-items:
+            flex-start;
+
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .settings-section {
+
+        padding:
+            16px;
+
+    }
+
+
+    .settings-row {
+
+        flex-direction:
+            column;
+
+    }
+
+}
+
+/* =========================================================
+   DARK THEME
+   ========================================================= */
+
+html[data-theme="dark"] body {
+
+    background:
+        #101715;
+
+    color:
+        #e7eeeb;
+
+}
+
+
+html[data-theme="dark"] .main-content,
+html[data-theme="dark"] .main {
+
+    background:
+        #101715;
+
+}
+
+
+html[data-theme="dark"] .card {
+
+    background:
+        #18211e;
+
+    border-color:
+        #28352f;
+
+    box-shadow:
+        0 8px 30px
+        rgba(
+            0,
+            0,
+            0,
+            0.25
+        );
+
+}
+
+
+html[data-theme="dark"] .page-title,
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] strong {
+
+    color:
+        #f3f7f5;
+
+}
+
+
+html[data-theme="dark"] .muted,
+html[data-theme="dark"] .page-subtitle {
+
+    color:
+        #9aaba4;
+
+}
+
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+
+    background:
+        #111916;
+
+    color:
+        #f3f7f5;
+
+    border-color:
+        #304039;
+
+}
+
+
+html[data-theme="dark"] .theme-option,
+html[data-theme="dark"] .mode-option {
+
+    background:
+        #141d19;
+
+    border-color:
+        #304039;
+
+}
+
+
+html[data-theme="dark"] .theme-option:hover,
+html[data-theme="dark"] .mode-option:hover {
+
+    background:
+        rgba(
+            0,
+            166,
+            81,
+            0.12
+        );
+
+}
+
+
+html[data-theme="dark"] .history-list li {
+
+    background:
+        #141d19;
+
+    border-color:
+        #304039;
+
+}
+
+
+html[data-theme="dark"] .settings-row {
+
+    border-color:
+        #304039;
+
+}
+
+/* =========================================================
+   PROFILE MENU
+   ========================================================= */
+
+.profile-menu {
+    position: relative;
+    margin-top: 8px;
+}
+
+
+.profile-trigger {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 14px 18px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+
+.profile-trigger:hover {
+
+    background:
+        rgba(255, 255, 255, 0.12);
+
+}
+
+
+.profile-arrow {
+
+    margin-left: auto;
+
+    font-size: 13px;
+
+    transition:
+        transform 0.2s ease;
+
+}
+
+
+.profile-dropdown {
+
+    display: none;
+
+    margin:
+        4px 12px 10px 12px;
+
+    padding:
+        6px;
+
+    border-radius:
+        12px;
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 10px 25px
+        rgba(0, 0, 0, 0.18);
+
+}
+
+
+.profile-dropdown.show {
+
+    display: block;
+
+}
+
+
+.profile-dropdown a,
+.profile-dropdown button {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding:
+        11px 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color:
+        #17352d;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+}
+
+
+.profile-dropdown a:hover,
+.profile-dropdown button:hover {
+
+    background:
+        #eaf7f0;
+
+    color:
+        #008f45;
+
+}
+
+
+/* Rotate arrow when menu opens */
+
+.profile-menu:has(
+    .profile-dropdown.show
+) .profile-arrow {
+
+    transform:
+        rotate(180deg);
+
+}
+
+/* =========================================================
+   PROFILE SETTINGS
+   ========================================================= */
+
+.settings-section {
+    margin-bottom: 24px;
+}
+
+
+.settings-group {
+    margin-top: 26px;
+}
+
+
+.settings-group h4 {
+    margin: 0 0 6px;
+}
+
+
+.settings-group > .muted {
+    margin-bottom: 16px;
+}
+
+
+.settings-options {
+    display: grid;
+    grid-template-columns: repeat(
+        3,
+        minmax(0, 1fr)
+    );
+
+    gap: 14px;
+}
+
+
+.settings-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    padding: 16px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease,
+        transform .2s ease;
+}
+
+
+.settings-option:hover {
+    border-color: #00a651;
+
+    background: #f0faf5;
+
+    transform: translateY(-2px);
+}
+
+
+.settings-option input {
+    margin-top: 3px;
+
+    accent-color: #00a651;
+}
+
+
+.settings-option-icon {
+    font-size: 20px;
+}
+
+
+.settings-option-content {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+
+.settings-option-content strong {
+    font-size: 14px;
+}
+
+
+.settings-option-content small {
+    color: var(--text-muted);
+
+    line-height: 1.5;
+
+    font-size: 12px;
+}
+
+
+.settings-option:has(
+    input:checked
+) {
+    border-color: #00a651;
+
+    background: #eaf8f0;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(0, 166, 81, .08);
+}
+
+
+/* =========================================================
+   DARK THEME - PROFILE SETTINGS
+   ========================================================= */
+
+html[data-theme="dark"] .settings-option {
+
+    background: #141d19;
+
+    border-color: #304039;
+}
+
+
+html[data-theme="dark"] .settings-option:hover {
+
+    background:
+        rgba(0, 166, 81, .12);
+
+    border-color:
+        #00a651;
+}
+
+
+html[data-theme="dark"]
+.settings-option:has(input:checked) {
+
+    background:
+        rgba(0, 166, 81, .16);
+
+    border-color:
+        #00a651;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .settings-options {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+/* =========================================================
+   SIDEBAR USER ACCOUNT MENU
+   ========================================================= */
+
+.sidebar-footer {
+    position: relative;
+}
+
+
+.sidebar-user-trigger {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    transition:
+        background 0.2s ease;
+}
+
+
+.sidebar-user-trigger:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+
+.sidebar-user-avatar {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    flex-shrink: 0;
+}
+
+
+.sidebar-user-details {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+
+.sidebar-user-details small {
+    font-size: 11px;
+
+    opacity: 0.7;
+}
+
+
+.sidebar-user-details strong {
+    font-size: 14px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.sidebar-user-arrow {
+    margin-left: auto;
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+/* =========================================================
+   USER MENU
+   ========================================================= */
+
+.sidebar-user-menu {
+    display: none;
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: calc(100% + 8px);
+
+    padding: 7px;
+
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 14px 35px rgba(0, 0, 0, 0.25);
+
+    z-index: 1000;
+}
+
+
+.sidebar-user-menu.show {
+    display: block;
+}
+
+
+.sidebar-user-menu a,
+.sidebar-user-menu button {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 11px 12px;
+
+    border: 0;
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: #17352d;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+}
+
+
+.sidebar-user-menu a:hover,
+.sidebar-user-menu button:hover {
+    background: #eaf7f0;
+
+    color: #008f45;
+}
+
+
+/* Arrow */
+
+.sidebar-footer.user-menu-open
+.sidebar-user-arrow {
+    transform: rotate(180deg);
+}
+
+:root {
+
+    --page-bg: #f3f7f5;
+
+    --surface: #ffffff;
+
+    --surface-soft: #f7faf8;
+
+    --text: #17352d;
+
+    --text-muted: #667d74;
+
+    --border: #d9e4df;
+
+    --primary: #00a651;
+
+    --primary-dark: #008f45;
+
+    --sidebar-bg: #00a651;
+
+    --sidebar-text: #ffffff;
+
+    --shadow:
+        0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="dark"] {
+
+    --page-bg: #07110d;
+
+    --surface: #101c17;
+
+    --surface-soft: #14231d;
+
+    --text: #f1f7f4;
+
+    --text-muted: #9fb5ab;
+
+    --border: #294039;
+
+    --primary: #00a651;
+
+    --primary-dark: #00c763;
+
+    --sidebar-bg: #063b27;
+
+    --sidebar-text: #ffffff;
+
+    --shadow:
+        0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================================================
+   M-PESA RENT WALLET
+   GLOBAL DARK THEME
+   ========================================================= */
+
+html[data-theme="dark"] {
+
+    color-scheme: dark;
+
+}
+
+
+/* =========================================================
+   GLOBAL PAGE
+   ========================================================= */
+
+html[data-theme="dark"] body {
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(0, 174, 71, 0.10),
+            transparent 35%
+        ),
+        #07130f;
+
+    color: #f1f7f4;
+
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+html[data-theme="dark"] .dashboard-main {
+
+    background: transparent;
+
+}
+
+
+/* =========================================================
+   TOPBAR
+   ========================================================= */
+
+html[data-theme="dark"] .dashboard-topbar {
+
+    background: #101d19;
+
+    border-color: #294139;
+
+    color: #f1f7f4;
+
+    box-shadow:
+        0 12px 30px
+        rgba(0, 0, 0, 0.25);
+
+}
+
+
+html[data-theme="dark"] .dashboard-topbar h2 {
+
+    color: #ffffff;
+
+}
+
+
+html[data-theme="dark"] .dashboard-topbar .muted {
+
+    color: #9db4aa;
+
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+html[data-theme="dark"] .card {
+
+    background: #101d19;
+
+    border-color: #294139;
+
+    color: #f1f7f4;
+
+    box-shadow:
+        0 12px 30px
+        rgba(0, 0, 0, 0.28);
+
+}
+
+
+html[data-theme="dark"] .card h3 {
+
+    color: #ffffff;
+
+}
+
+
+html[data-theme="dark"] .card p {
+
+    color: #9db4aa;
+
+}
+
+
+/* =========================================================
+   STAT CARDS
+   ========================================================= */
+
+html[data-theme="dark"] .stat-card {
+
+    background: #14241f;
+
+    border-color: #30483f;
+
+    color: #f1f7f4;
+
+}
+
+
+html[data-theme="dark"] .stat-card strong {
+
+    color: #ffffff;
+
+}
+
+
+html[data-theme="dark"] .stat-label {
+
+    color: #9db4aa;
+
+}
+
+
+/* =========================================================
+   FORM INPUTS
+   ========================================================= */
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+
+    background: #0d1915;
+
+    color: #f4faf7;
+
+    border-color: #30483f;
+
+}
+
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+
+    color: #71877e;
+
+}
+
+
+html[data-theme="dark"] input:focus,
+html[data-theme="dark"] select:focus,
+html[data-theme="dark"] textarea:focus {
+
+    border-color: #00a846;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(0, 168, 70, 0.15);
+
+}
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+html[data-theme="dark"] label {
+
+    color: #f1f7f4;
+
+}
+
+
+/* =========================================================
+   MUTED TEXT
+   ========================================================= */
+
+html[data-theme="dark"] .muted {
+
+    color: #9db4aa;
+
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+   ========================================================= */
+
+html[data-theme="dark"] .section-head h3 {
+
+    color: #ffffff;
+
+}
+
+
+/* =========================================================
+   TRANSACTION HISTORY
+   ========================================================= */
+
+html[data-theme="dark"] .history-item {
+
+    background: #14241f;
+
+    border-color: #30483f;
+
+    color: #f1f7f4;
+
+}
+
+
+html[data-theme="dark"] .history-item strong {
+
+    color: #ffffff;
+
+}
+
+
+html[data-theme="dark"] .history-item .muted {
+
+    color: #9db4aa;
+
+}
+
+
+/* =========================================================
+   SETTINGS OPTIONS
+   ========================================================= */
+
+html[data-theme="dark"] .settings-option {
+
+    background: #101d19;
+
+    border-color: #30483f;
+
+    color: #f1f7f4;
+
+}
+
+
+html[data-theme="dark"] .settings-option:hover {
+
+    border-color: #00a846;
+
+    background: #13261f;
+
+}
+
+
+html[data-theme="dark"] .settings-option strong {
+
+    color: #ffffff;
+
+}
+
+
+html[data-theme="dark"] .settings-option small {
+
+    color: #9db4aa;
+
+}
+
+
+/* =========================================================
+   COUNT PILLS
+   ========================================================= */
+
+html[data-theme="dark"] .count-pill {
+
+    background: #123b2a;
+
+    color: #69e5a0;
+
+    border-color: #286447;
+
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+html[data-theme="dark"] a {
+
+    color: #75e6a5;
+
+}
+
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+html[data-theme="dark"] .modal,
+html[data-theme="dark"] .modal-content {
+
+    background: #101d19;
+
+    color: #f1f7f4;
+
+    border-color: #30483f;
+
+}
+
+
+/* =========================================================
+   RECEIPTS
+   ========================================================= */
+
+html[data-theme="dark"] .receipt {
+
+    background: #101d19;
+
+    color: #f1f7f4;
+
+    border-color: #30483f;
+
+}
+
+
+html[data-theme="dark"] .receipt h1,
+html[data-theme="dark"] .receipt h2,
+html[data-theme="dark"] .receipt h3 {
+
+    color: #ffffff;
+
+}
+
+
+/* =========================================================
+   TABLES
+   ========================================================= */
+
+html[data-theme="dark"] table {
+
+    color: #f1f7f4;
+
+}
+
+
+html[data-theme="dark"] th {
+
+    background: #14241f;
+
+    color: #ffffff;
+
+}
+
+
+html[data-theme="dark"] td {
+
+    border-color: #30483f;
+
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+/*
+   IMPORTANT:
+   The sidebar intentionally remains
+   Safaricom green in both themes.
+*/
+
+html[data-theme="dark"] .sidebar {
+
+    background:
+        linear-gradient(
+            180deg,
+            #00a846 0%,
+            #009640 100%
+        );
+
+}
+
+
+/* =========================================================
+   SIDEBAR TEXT
+   ========================================================= */
+
+html[data-theme="dark"] .sidebar .muted {
+
+    color: rgba(255, 255, 255, 0.75);
+
+}
+
+
+/* =========================================================
+   SIDEBAR ACTIVE ITEM
+   ========================================================= */
+
+html[data-theme="dark"] .sidebar .nav-link.active {
+
+    background:
+        rgba(255, 255, 255, 0.18);
+
+    border-left-color: #ffffff;
+
+}
+
+
+/* =========================================================
+   ONLINE STATUS
+   ========================================================= */
+
+html[data-theme="dark"] .offline-status,
+html[data-theme="dark"] .online-status {
+
+    box-shadow:
+        0 8px 20px
+        rgba(0, 0, 0, 0.35);
+
+}
+
+/* =========================================================
+   M-PESA RENT WALLET
+   DARK MODE — SYSTEM DESIGN LAYER
+   ========================================================= */
+
+html[data-theme="dark"] {
+    --dark-bg: #0b0f0d;
+    --dark-surface: #121815;
+    --dark-surface-2: #171e1a;
+    --dark-input: #0e1411;
+    --dark-border: #29352f;
+
+    --dark-text: #f5f7f6;
+    --dark-muted: #9aa9a2;
+
+    --mpesa-green: #00a846;
+    --mpesa-green-bright: #00c853;
+}
+
+
+/* PAGE */
+
+html[data-theme="dark"] body {
+    background: var(--dark-bg) !important;
+    color: var(--dark-text) !important;
+}
+
+
+/* MAIN AREA */
+
+html[data-theme="dark"] .dashboard-main {
+    background: var(--dark-bg) !important;
+    color: var(--dark-text) !important;
+}
+
+
+/* TOPBAR */
+
+html[data-theme="dark"] .dashboard-topbar {
+    background: var(--dark-surface) !important;
+    border: 1px solid var(--dark-border) !important;
+    color: var(--dark-text) !important;
+}
+
+
+/* ALL CARDS */
+
+html[data-theme="dark"] .card {
+    background: var(--dark-surface) !important;
+    border: 1px solid var(--dark-border) !important;
+    color: var(--dark-text) !important;
+}
+
+
+/* CARD HEADINGS */
+
+html[data-theme="dark"] .card h1,
+html[data-theme="dark"] .card h2,
+html[data-theme="dark"] .card h3,
+html[data-theme="dark"] .card h4 {
+    color: var(--dark-text) !important;
+}
+
+
+/* MUTED TEXT */
+
+html[data-theme="dark"] .muted,
+html[data-theme="dark"] .card .muted {
+    color: var(--dark-muted) !important;
+}
+
+
+/* STAT CARDS */
+
+html[data-theme="dark"] .stat-card {
+    background: var(--dark-surface-2) !important;
+    border: 1px solid var(--dark-border) !important;
+    color: var(--dark-text) !important;
+}
+
+
+/* FORM CONTROLS */
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+    background: var(--dark-input) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid var(--dark-border) !important;
+}
+
+
+/* PLACEHOLDERS */
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+    color: #687870 !important;
+}
+
+
+/* LABELS */
+
+html[data-theme="dark"] label,
+html[data-theme="dark"] .stat-label {
+    color: var(--dark-text) !important;
+}
+
+
+/* =========================================================
+   TABLES — IMPORTANT
+   ========================================================= */
+
+html[data-theme="dark"] table {
+    background: var(--dark-surface) !important;
+    color: var(--dark-text) !important;
+    border-color: var(--dark-border) !important;
+}
+
+
+html[data-theme="dark"] thead,
+html[data-theme="dark"] thead tr {
+    background: #17211c !important;
+}
+
+
+html[data-theme="dark"] th {
+    background: #17211c !important;
+    color: #ffffff !important;
+    border-color: var(--dark-border) !important;
+}
+
+
+html[data-theme="dark"] tbody,
+html[data-theme="dark"] tbody tr {
+    background: var(--dark-surface) !important;
+}
+
+
+html[data-theme="dark"] tbody tr:nth-child(even) {
+    background: var(--dark-surface-2) !important;
+}
+
+
+html[data-theme="dark"] td {
+    background: transparent !important;
+    color: #e7eee9 !important;
+    border-color: var(--dark-border) !important;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+html[data-theme="dark"] button {
+    color: #ffffff;
+}
+
+
+html[data-theme="dark"] button:not(.secondary) {
+    background: var(--mpesa-green) !important;
+}
+
+
+html[data-theme="dark"] button:not(.secondary):hover {
+    background: var(--mpesa-green-bright) !important;
+}
+
+
+/* SECONDARY BUTTON */
+
+html[data-theme="dark"] button.secondary {
+    background: #1b2721 !important;
+    color: #dce7e1 !important;
+    border: 1px solid var(--dark-border) !important;
+}
+
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+html[data-theme="dark"] .settings-option {
+    background: var(--dark-surface) !important;
+    border: 1px solid var(--dark-border) !important;
+    color: var(--dark-text) !important;
+}
+
+
+html[data-theme="dark"] .settings-option:hover {
+    background: var(--dark-surface-2) !important;
+    border-color: var(--mpesa-green) !important;
+}
+
+
+/* =========================================================
+   SIDEBAR — KEEP SAFARICOM GREEN
+   ========================================================= */
+
+html[data-theme="dark"] .sidebar {
+    background: #00a846 !important;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+html[data-theme="dark"] a {
+    color: #7be5a8;
+}
+
+
+/* =========================================================
+   ONLINE STATUS
+   ========================================================= */
+
+html[data-theme="dark"] .online-status,
+html[data-theme="dark"] .offline-status {
+    background: #e9f8f0 !important;
+    color: #087a3c !important;
+}
+
+/* =========================================================
+   M-PESA RENT WALLET
+   DARK MODE — INNER COMPONENT SURFACES
+   ========================================================= */
+
+
+/* =========================================================
+   RECENT ACTIVITY
+   ========================================================= */
+
+html[data-theme="dark"] .recent-activity,
+html[data-theme="dark"] .activity-list,
+html[data-theme="dark"] .activity-item,
+html[data-theme="dark"] .recent-activity-item {
+
+    background: #121815 !important;
+    color: #f5f7f6 !important;
+    border-color: #29352f !important;
+
+}
+
+
+/* Empty activity message */
+
+html[data-theme="dark"] .recent-activity p,
+html[data-theme="dark"] .activity-list p {
+
+    background: transparent !important;
+    color: #9aa9a2 !important;
+
+}
+
+
+/* =========================================================
+   RENT SUMMARY
+   ========================================================= */
+
+html[data-theme="dark"] .rent-summary,
+html[data-theme="dark"] .rent-summary-card,
+html[data-theme="dark"] .wallet-summary,
+html[data-theme="dark"] .wallet-summary-card,
+html[data-theme="dark"] .rent-summary-container {
+
+    background: #121815 !important;
+    color: #f5f7f6 !important;
+    border-color: #29352f !important;
+
+}
+
+
+/* =========================================================
+   LANDLORD ACCOUNT SUMMARY
+   ========================================================= */
+
+html[data-theme="dark"] .landlord-summary,
+html[data-theme="dark"] .landlord-summary-card,
+html[data-theme="dark"] .account-summary,
+html[data-theme="dark"] .account-summary-card {
+
+    background: #121815 !important;
+    color: #f5f7f6 !important;
+    border-color: #29352f !important;
+
+}
+
+
+/* =========================================================
+   PROFILE INFORMATION
+   ========================================================= */
+
+html[data-theme="dark"] .profile-grid > div {
+
+    background: #121815 !important;
+    color: #f5f7f6 !important;
+    border-color: #29352f !important;
+
+}
+
+
+html[data-theme="dark"] .profile-grid strong {
+
+    color: #f5f7f6 !important;
+
+}
+
+
+html[data-theme="dark"] .profile-grid .stat-label {
+
+    color: #9aa9a2 !important;
+
+}
+
+
+/* =========================================================
+   GENERIC SUMMARY / INFORMATION BOXES
+   ========================================================= */
+
+html[data-theme="dark"] .summary,
+html[data-theme="dark"] .summary-card,
+html[data-theme="dark"] .info-card,
+html[data-theme="dark"] .information-card,
+html[data-theme="dark"] .account-card {
+
+    background: #121815 !important;
+    color: #f5f7f6 !important;
+    border-color: #29352f !important;
+
+}
+
+
+/* =========================================================
+   WHITE INNER PANELS
+   ========================================================= */
+
+/*
+   Some older components may have their background
+   explicitly defined as white. These rules ensure that
+   ordinary content panels inside dashboard cards inherit
+   the dark theme.
+*/
+
+html[data-theme="dark"] .dashboard-main .panel,
+html[data-theme="dark"] .dashboard-main .content-panel,
+html[data-theme="dark"] .dashboard-main .inner-card,
+html[data-theme="dark"] .dashboard-main .surface {
+
+    background: #121815 !important;
+    color: #f5f7f6 !important;
+    border-color: #29352f !important;
+
+}
+
+
+/* =========================================================
+   EMPTY STATES
+   ========================================================= */
+
+html[data-theme="dark"] .empty-state {
+
+    background: #121815 !important;
+    color: #9aa9a2 !important;
+    border-color: #29352f !important;
+
+}
+
+
+/* =========================================================
+   INLINE WHITE SURFACES
+   ========================================================= */
+
+/*
+   This catches components that were explicitly styled
+   with a white background.
+*/
+
+html[data-theme="dark"] .dashboard-main [style*="background: white"],
+html[data-theme="dark"] .dashboard-main [style*="background:white"],
+html[data-theme="dark"] .dashboard-main [style*="background-color: white"],
+html[data-theme="dark"] .dashboard-main [style*="background-color:white"] {
+
+    background: #121815 !important;
+    color: #f5f7f6 !important;
+
+}
+
+/* =========================================================
+   M-PESA RENT WALLET
+   DARK MODE — RENT SUMMARY
+   ========================================================= */
+
+html[data-theme="dark"] .rent-summary-card {
+    background: #121815 !important;
+    color: #f5f7f6 !important;
+    border-color: #29352f !important;
+}
+
+
+/* Rent summary grid */
+
+html[data-theme="dark"] .rent-summary-grid {
+    background: transparent !important;
+}
+
+
+/* Individual summary boxes */
+
+html[data-theme="dark"] .rent-summary-item {
+    background: #171e1a !important;
+    color: #f5f7f6 !important;
+    border: 1px solid #29352f !important;
+    border-radius: 14px;
+}
+
+
+/* Labels */
+
+html[data-theme="dark"] .rent-summary-item .muted {
+    background: transparent !important;
+    color: #9aa9a2 !important;
+}
+
+
+/* Values */
+
+html[data-theme="dark"] .rent-summary-item strong {
+    background: transparent !important;
+    color: #ffffff !important;
+}
+
+
+/* Wallet goal/value elements */
+
+html[data-theme="dark"] #walletRentGoal,
+html[data-theme="dark"] #walletSavedAmount,
+html[data-theme="dark"] #walletRemaining,
+html[data-theme="dark"] #walletDueDate {
+
+    background: transparent !important;
+    color: #ffffff !important;
+
+}
+
+/* =========================================================
+   M-PESA RENT WALLET
+   RECEIPT — DARK MODE
+   ========================================================= */
+
+
+/* =========================================================
+   RECEIPT OVERLAY
+   ========================================================= */
+
+html[data-theme="dark"] .receipt-container {
+
+    background: rgba(0, 0, 0, 0.72) !important;
+
+}
+
+
+/* =========================================================
+   RECEIPT CARD
+   ========================================================= */
+
+html[data-theme="dark"] .receipt-card {
+
+    background: #121815 !important;
+
+    color: #f5f7f6 !important;
+
+    border: 1px solid #29352f !important;
+
+    box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.55) !important;
+
+}
+
+
+/* =========================================================
+   RECEIPT HEADER
+   ========================================================= */
+
+html[data-theme="dark"] .receipt-header {
+
+    background: transparent !important;
+
+    color: #f5f7f6 !important;
+
+}
+
+
+html[data-theme="dark"] .receipt-brand {
+
+    background: transparent !important;
+
+    color: #00a651 !important;
+
+    font-weight: 800;
+
+}
+
+
+html[data-theme="dark"] .receipt-header h2 {
+
+    background: transparent !important;
+
+    color: #ffffff !important;
+
+}
+
+
+html[data-theme="dark"] .receipt-header .muted {
+
+    background: transparent !important;
+
+    color: #9aa9a2 !important;
+
+}
+
+
+/* =========================================================
+   SUCCESS STATUS
+   ========================================================= */
+
+html[data-theme="dark"] .receipt-status {
+
+    background: rgba(0, 166, 81, 0.10) !important;
+
+    color: #5be39a !important;
+
+    border: 1px solid rgba(0, 166, 81, 0.25) !important;
+
+}
+
+
+html[data-theme="dark"] .receipt-status span {
+
+    background: transparent !important;
+
+    color: #5be39a !important;
+
+}
+
+
+html[data-theme="dark"] .receipt-status strong {
+
+    background: transparent !important;
+
+    color: #5be39a !important;
+
+}
+
+
+/* =========================================================
+   AMOUNT
+   ========================================================= */
+
+html[data-theme="dark"] .receipt-amount {
+
+    background: transparent !important;
+
+    color: #ffffff !important;
+
+}
+
+
+html[data-theme="dark"] .receipt-amount .muted {
+
+    background: transparent !important;
+
+    color: #9aa9a2 !important;
+
+}
+
+
+html[data-theme="dark"] .receipt-amount h1 {
+
+    background: transparent !important;
+
+    color: #ffffff !important;
+
+}
+
+
+/* =========================================================
+   RECEIPT DETAILS
+   ========================================================= */
+
+html[data-theme="dark"] .receipt-details {
+
+    background: transparent !important;
+
+}
+
+
+html[data-theme="dark"] .receipt-details > div {
+
+    background: #171e1a !important;
+
+    color: #ffffff !important;
+
+    border-color: #29352f !important;
+
+}
+
+
+html[data-theme="dark"] .receipt-details span {
+
+    background: transparent !important;
+
+    color: #9aa9a2 !important;
+
+}
+
+
+html[data-theme="dark"] .receipt-details strong {
+
+    background: transparent !important;
+
+    color: #f5f7f6 !important;
+
+}
+
+
+/* =========================================================
+   RECEIPT FOOTER
+   ========================================================= */
+
+html[data-theme="dark"] .receipt-footer {
+
+    background: transparent !important;
+
+    color: #9aa9a2 !important;
+
+}
+
+
+html[data-theme="dark"] .receipt-footer p {
+
+    background: transparent !important;
+
+    color: #9aa9a2 !important;
+
+}
+
+
+/* =========================================================
+   RECEIPT ACTIONS
+   ========================================================= */
+
+html[data-theme="dark"] .receipt-actions {
+
+    background: transparent !important;
+
+}
+
+
+html[data-theme="dark"] .receipt-actions button {
+
+    border-color: #29352f !important;
+
+}
+
+
+/* Save PDF */
+
+html[data-theme="dark"] #savePdfReceiptBtn {
+
+    background: #00a651 !important;
+
+    color: #ffffff !important;
+
+    border-color: #00a651 !important;
+
+}
+
+
+/* Print + Close */
+
+html[data-theme="dark"] #printReceiptBtn,
+html[data-theme="dark"] #closeReceiptBtn {
+
+    background: #1b241f !important;
+
+    color: #f5f7f6 !important;
+
+    border-color: #34433b !important;
+
+}
+
+
+/* Hover */
+
+html[data-theme="dark"] #savePdfReceiptBtn:hover {
+
+    background: #008f45 !important;
+
+}
+
+
+html[data-theme="dark"] #printReceiptBtn:hover,
+html[data-theme="dark"] #closeReceiptBtn:hover {
+
+    background: #26322b !important;
+
 }

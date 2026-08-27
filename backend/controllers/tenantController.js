@@ -1,25 +1,40 @@
-const db = require("../database/connection");
-const { v4: uuidv4 } = require("uuid");
+// ===========================================
+// M-PESA Rent Wallet
+// Tenant Controller
+// Version 11.8 Enterprise
+// ===========================================
+
+"use strict";
+
+const connectDatabase =
+    require("../database/connection");
+
+const { v4: uuidv4 } =
+    require("uuid");
+
+console.log(
+    "✅ Tenant Controller Version 11.8 Enterprise Loaded"
+);
+
 
 // ===========================================
-// Register Tenant
+// CREATE TENANT
 // ===========================================
 
 exports.createTenant = async (req, res) => {
- console.log("================================");
- console.log("Tenant Registration Request");
- console.log(req.body);
- console.log("================================");
 
-    const pool = await db();
+    console.log("-------------------------------------------");
+    console.log("CREATE TENANT REQUEST");
+    console.log("-------------------------------------------");
 
-    const connection = await pool.getConnection();
+    let db;
 
     try {
 
-        await connection.beginTransaction();
+        db = await connectDatabase();
 
         const {
+
             landlordId,
             propertyId,
             unitId,
@@ -28,55 +43,247 @@ exports.createTenant = async (req, res) => {
             phone,
             email,
             monthlyRent
+
         } = req.body;
 
-        const id = uuidv4();
 
-        // Get selected unit
+        console.log("Landlord ID:", landlordId);
+        console.log("Property ID:", propertyId);
+        console.log("Unit ID:", unitId);
+        console.log("Tenant Name:", fullName);
 
-        const [unitRows] = await connection.execute(
 
-            `SELECT
-                unitNumber,
-                status
-             FROM units
-             WHERE id=?`,
+        // ===================================
+        // REQUIRED FIELDS
+        // ===================================
 
-            [unitId]
+        if (
 
-        );
+            !landlordId ||
+            !propertyId ||
+            !unitId ||
+            !fullName ||
+            !phone ||
+            !monthlyRent
 
-        if (unitRows.length === 0) {
-
-            await connection.rollback();
-
-            return res.status(404).json({
-
-                success: false,
-
-                message: "Selected unit does not exist."
-
-            });
-
-        }
-
-        if (unitRows[0].status === "OCCUPIED") {
-
-            await connection.rollback();
+        ) {
 
             return res.status(400).json({
 
                 success: false,
 
-                message: "Selected unit is already occupied."
+                message:
+                    "Please provide all required tenant information."
 
             });
 
         }
 
-        const unitNumber = unitRows[0].unitNumber;
 
-        await connection.execute(
+        // ===================================
+        // VERIFY PROPERTY OWNERSHIP
+        // ===================================
+
+        const [propertyRows] =
+            await db.execute(
+
+                `SELECT
+                    id,
+                    landlordId,
+                    propertyName
+                 FROM properties
+                 WHERE id = ?
+                 AND landlordId = ?
+                 LIMIT 1`,
+
+                [
+
+                    propertyId,
+                    landlordId
+
+                ]
+
+            );
+
+
+        if (propertyRows.length === 0) {
+
+            return res.status(403).json({
+
+                success: false,
+
+                message:
+                    "The selected property does not belong to this landlord account."
+
+            });
+
+        }
+
+
+        // ===================================
+        // VERIFY UNIT OWNERSHIP
+        // ===================================
+
+        const [unitRows] =
+            await db.execute(
+
+                `SELECT
+
+                    u.id,
+                    u.propertyId,
+                    u.unitNumber,
+                    u.status
+
+                 FROM units u
+
+                 INNER JOIN properties p
+                    ON u.propertyId = p.id
+
+                 WHERE u.id = ?
+                 AND u.propertyId = ?
+                 AND p.landlordId = ?
+
+                 LIMIT 1`,
+
+                [
+
+                    unitId,
+                    propertyId,
+                    landlordId
+
+                ]
+
+            );
+
+
+        if (unitRows.length === 0) {
+
+            return res.status(403).json({
+
+                success: false,
+
+                message:
+                    "The selected unit does not belong to the selected property."
+
+            });
+
+        }
+
+
+        const unit =
+            unitRows[0];
+
+
+        // ===================================
+        // CHECK UNIT AVAILABILITY
+        // ===================================
+
+        if (
+
+            unit.status &&
+            unit.status.toUpperCase() !== "VACANT"
+
+        ) {
+
+            return res.status(409).json({
+
+                success: false,
+
+                message:
+                    "The selected unit is no longer available."
+
+            });
+
+        }
+
+
+        // ===================================
+        // CHECK DUPLICATE NATIONAL ID
+        // ===================================
+
+        if (nationalId) {
+
+            const [existingIdRows] =
+                await db.execute(
+
+                    `SELECT id
+                     FROM tenants
+                     WHERE nationalId = ?
+                     LIMIT 1`,
+
+                    [
+
+                        nationalId
+
+                    ]
+
+                );
+
+
+            if (existingIdRows.length > 0) {
+
+                return res.status(409).json({
+
+                    success: false,
+
+                    message:
+                        "A tenant with this National ID already exists."
+
+                });
+
+            }
+
+        }
+
+
+        // ===================================
+        // CHECK DUPLICATE PHONE
+        // ===================================
+
+        const [existingPhoneRows] =
+            await db.execute(
+
+                `SELECT id
+                 FROM tenants
+                 WHERE phone = ?
+                 LIMIT 1`,
+
+                [
+
+                    phone
+
+                ]
+
+            );
+
+
+        if (existingPhoneRows.length > 0) {
+
+            return res.status(409).json({
+
+                success: false,
+
+                message:
+                    "A tenant with this phone number already exists."
+
+            });
+
+        }
+
+
+        // ===================================
+        // GENERATE TENANT ID
+        // ===================================
+
+        const tenantId =
+            uuidv4();
+
+
+        // ===================================
+        // CREATE TENANT
+        // ===================================
+
+        await db.execute(
 
             `INSERT INTO tenants
             (
@@ -88,43 +295,101 @@ exports.createTenant = async (req, res) => {
                 nationalId,
                 phone,
                 email,
-                unitNumber,
                 monthlyRent
             )
-            VALUES (?,?,?,?,?,?,?,?,?,?)`,
+
+            VALUES
+            (
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?
+            )`,
 
             [
-                id,
-                landlordId || null,
+
+                tenantId,
+                landlordId,
                 propertyId,
                 unitId,
                 fullName,
-                nationalId,
+                nationalId || null,
                 phone,
-                email,
-                unitNumber,
-                monthlyRent
+                email || null,
+                Number(monthlyRent)
+
             ]
 
         );
 
-        await connection.execute(
+
+        // ===================================
+        // MARK UNIT OCCUPIED
+        // ===================================
+
+        await db.execute(
 
             `UPDATE units
-             SET status='OCCUPIED'
-             WHERE id=?`,
+             SET status = 'OCCUPIED'
+             WHERE id = ?
+             AND propertyId = ?`,
 
-            [unitId]
+            [
+
+                unitId,
+                propertyId
+
+            ]
 
         );
 
-        await connection.commit();
 
-        res.json({
+        // ===================================
+        // SUCCESS
+        // ===================================
+
+        console.log(
+            "✅ Tenant created successfully:",
+            tenantId
+        );
+
+
+        return res.status(201).json({
 
             success: true,
 
-            message: "Tenant registered successfully."
+            message:
+                "Tenant registered successfully.",
+
+            tenant: {
+
+                id: tenantId,
+
+                landlordId,
+
+                propertyId,
+
+                unitId,
+
+                fullName,
+
+                nationalId:
+                    nationalId || null,
+
+                phone,
+
+                email:
+                    email || null,
+
+                monthlyRent:
+                    Number(monthlyRent)
+
+            }
 
         });
 
@@ -132,81 +397,154 @@ exports.createTenant = async (req, res) => {
 
     catch (error) {
 
-        await connection.rollback();
+        console.error(
+            "CREATE TENANT ERROR:",
+            error
+        );
 
-        console.error(error);
 
-        res.status(500).json({
+        return res.status(500).json({
 
             success: false,
 
-            message: "Could not register tenant."
+            message:
+                "Could not register tenant."
 
         });
 
     }
 
-    finally {
-
-        connection.release();
-
-    }
-
 };
 
+
 // ===========================================
-// Get All Tenants
+// GET TENANTS FOR CURRENT LANDLORD
 // ===========================================
 
 exports.getTenants = async (req, res) => {
 
+    console.log("-------------------------------------------");
+    console.log("LOAD LANDLORD TENANTS");
+    console.log("-------------------------------------------");
+
     try {
 
-        const pool = await db();
+        const db =
+            await connectDatabase();
 
-        const [rows] = await pool.execute(
 
-            `SELECT
+        const { landlordId } =
+            req.params;
 
-                t.id,
-                t.fullName,
-                t.phone,
-                t.email,
-                t.monthlyRent,
 
-                p.propertyName,
+        if (!landlordId) {
 
-                u.unitNumber,
-                u.status
+            return res.status(400).json({
 
-            FROM tenants t
+                success: false,
 
-            LEFT JOIN properties p
+                message:
+                    "Landlord ID is required."
 
-                ON t.propertyId = p.id
+            });
 
-            LEFT JOIN units u
+        }
 
-                ON t.unitId = u.id
 
-            ORDER BY p.propertyName,
-                     u.unitNumber`
-
+        console.log(
+            "Landlord ID:",
+            landlordId
         );
 
-        res.json(rows);
+
+        // ===================================
+        // GET TENANTS
+        // ===================================
+
+        const [rows] =
+            await db.execute(
+
+                `SELECT
+
+                    t.id,
+
+                    t.landlordId,
+
+                    t.propertyId,
+
+                    t.unitId,
+
+                    t.fullName,
+
+                    t.nationalId,
+
+                    t.phone,
+
+                    t.email,
+
+                    t.monthlyRent,
+
+                    t.createdAt,
+
+                    p.propertyName,
+
+                    u.unitNumber
+
+                 FROM tenants t
+
+                 INNER JOIN properties p
+                    ON t.propertyId = p.id
+
+                 INNER JOIN units u
+                    ON t.unitId = u.id
+
+                 WHERE t.landlordId = ?
+
+                 ORDER BY
+
+                    p.propertyName,
+                    u.unitNumber,
+                    t.fullName`,
+
+                [
+
+                    landlordId
+
+                ]
+
+            );
+
+
+        console.log(
+            "Tenants Found:",
+            rows.length
+        );
+
+
+        return res.json({
+
+            success: true,
+
+            tenants: rows
+
+        });
 
     }
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "GET TENANTS ERROR:",
+            error
+        );
 
-        res.status(500).json({
+
+        return res.status(500).json({
 
             success: false,
 
-            message: "Could not load tenants."
+            message:
+                "Could not load tenants."
 
         });
 
@@ -214,61 +552,142 @@ exports.getTenants = async (req, res) => {
 
 };
 
+
 // ===========================================
-// Delete Tenant
+// DELETE TENANT
 // ===========================================
 
 exports.deleteTenant = async (req, res) => {
 
-    const pool = await db();
-
-    const connection = await pool.getConnection();
+    console.log("-------------------------------------------");
+    console.log("DELETE TENANT");
+    console.log("-------------------------------------------");
 
     try {
 
-        await connection.beginTransaction();
+        const db =
+            await connectDatabase();
 
-        const { id } = req.params;
 
-        const [rows] = await connection.execute(
+        const { id } =
+            req.params;
 
-            `SELECT unitId
-             FROM tenants
-             WHERE id=?`,
 
-            [id]
+        if (!id) {
 
-        );
+            return res.status(400).json({
 
-        if (rows.length > 0 && rows[0].unitId) {
+                success: false,
 
-            await connection.execute(
+                message:
+                    "Tenant ID is required."
 
-                `UPDATE units
-                 SET status='VACANT'
-                 WHERE id=?`,
-
-                [rows[0].unitId]
-
-            );
+            });
 
         }
 
-        await connection.execute(
 
-            "DELETE FROM tenants WHERE id=?",
+        // ===================================
+        // FIND TENANT
+        // ===================================
 
-            [id]
+        const [tenantRows] =
+            await db.execute(
+
+                `SELECT
+
+                    id,
+                    landlordId,
+                    propertyId,
+                    unitId
+
+                 FROM tenants
+
+                 WHERE id = ?
+
+                 LIMIT 1`,
+
+                [
+
+                    id
+
+                ]
+
+            );
+
+
+        if (tenantRows.length === 0) {
+
+            return res.status(404).json({
+
+                success: false,
+
+                message:
+                    "Tenant not found."
+
+            });
+
+        }
+
+
+        const tenant =
+            tenantRows[0];
+
+
+        // ===================================
+        // DELETE TENANT
+        // ===================================
+
+        await db.execute(
+
+            `DELETE FROM tenants
+             WHERE id = ?`,
+
+            [
+
+                id
+
+            ]
 
         );
 
-        await connection.commit();
 
-        res.json({
+        // ===================================
+        // RETURN UNIT TO VACANT
+        // ===================================
+
+        await db.execute(
+
+            `UPDATE units
+
+             SET status = 'VACANT'
+
+             WHERE id = ?
+
+             AND propertyId = ?`,
+
+            [
+
+                tenant.unitId,
+                tenant.propertyId
+
+            ]
+
+        );
+
+
+        console.log(
+            "✅ Tenant deleted:",
+            id
+        );
+
+
+        return res.json({
 
             success: true,
 
-            message: "Tenant deleted successfully."
+            message:
+                "Tenant deleted successfully."
 
         });
 
@@ -276,23 +695,20 @@ exports.deleteTenant = async (req, res) => {
 
     catch (error) {
 
-        await connection.rollback();
+        console.error(
+            "DELETE TENANT ERROR:",
+            error
+        );
 
-        console.error(error);
 
-        res.status(500).json({
+        return res.status(500).json({
 
             success: false,
 
-            message: "Could not delete tenant."
+            message:
+                "Could not delete tenant."
 
         });
-
-    }
-
-    finally {
-
-        connection.release();
 
     }
 

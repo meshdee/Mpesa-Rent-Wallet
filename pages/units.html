@@ -9,6 +9,8 @@
 
     <title>Units | M-PESA Rent Wallet</title>
 
+    <script src="/js/theme.js"></script>
+
     <link rel="stylesheet" href="../css/style.css">
 
 </head>
@@ -31,19 +33,35 @@
 
         <nav class="sidebar-nav">
 
-            <a href="dashboard.html">🏠 Dashboard</a>
+    <a href="/dashboard" class="nav-link">
+        🏠 Dashboard
+    </a>
 
-            <a href="properties.html">🏢 Properties</a>
+    <a href="/properties" class="nav-link">
+        🏢 Properties
+    </a>
 
-            <a href="units.html" class="active">🚪 Units</a>
+    <a href="/units" class="nav-link">
+        🏘 Units
+    </a>
 
-            <a href="tenants.html">👥 Tenants</a>
+    <a href="/tenants" class="nav-link">
+        👥 Tenants
+    </a>
 
-        </nav>
+    <a href="/landlord" class="nav-link">
+        👤 Landlord
+    </a>
+
+    <a href="/profile" class="nav-link">
+        🙍 Profile
+    </a>
+
+</nav>
 
     </aside>
 
-    <main class="dashboard-main">
+    <main class="dashboard-main units-page">
 
         <h2>Unit Management</h2>
 
@@ -133,7 +151,10 @@
 
 </div>
 
+<script src="../js/config/storage.js"></script>
 <script src="../js/modules/unit.js"></script>
+<script src="/js/mobile-nav.js"></script>
+<script src="/js/offline-status.js"></script>
 
 </body>
 

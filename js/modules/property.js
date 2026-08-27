@@ -1,28 +1,40 @@
 // ===========================================
 // M-PESA Rent Wallet
-// Property Module (Version 9.5)
+// Property Module
+// Version 11.1
 // ===========================================
 
+"use strict";
+
+// ===========================================
 // Buttons
+// ===========================================
+
 const createPropertyBtn = document.getElementById("createPropertyBtn");
 
+// ===========================================
 // Inputs
+// ===========================================
+
 const propertyName = document.getElementById("propertyName");
 const propertyLocation = document.getElementById("propertyLocation");
 const propertyUnits = document.getElementById("propertyUnits");
 const monthlyRent = document.getElementById("monthlyRent");
 
+// ===========================================
 // Table
+// ===========================================
+
 const propertiesTableBody =
-document.getElementById("propertiesTableBody");
+    document.getElementById("propertiesTableBody");
 
 // ===========================================
-// Get Current Landlord
+// Current Landlord
 // ===========================================
 
 function getLandlordId() {
 
-    return localStorage.getItem("landlordId");
+    return localStorage.getItem(STORAGE.LANDLORD_ID);
 
 }
 
@@ -32,28 +44,103 @@ function getLandlordId() {
 
 async function loadProperties() {
 
+    console.log("====================================");
+    console.log("Loading properties...");
+    console.log("====================================");
+
+    if (!propertiesTableBody) {
+
+        console.error("❌ propertiesTableBody not found.");
+
+        return;
+
+    }
+
+    const landlordId = getLandlordId();
+
+    console.log("Current Landlord ID:", landlordId);
+
+    if (!landlordId) {
+
+        console.warn("No landlord registered.");
+
+        propertiesTableBody.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    Register as a landlord first.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
     try {
 
-        const response = await fetch("/api/properties");
+        const response = await fetch(
 
-        const properties = await response.json();
+            `/api/properties/${landlordId}`
+
+        );
+
+        console.log("HTTP Status:", response.status);
+
+        const result = await response.json();
+
+        console.log("====================================");
+        console.log("API RESULT");
+        console.log("====================================");
+        console.log(result);
+
+        console.log("====================================");
+        console.log("SUCCESS:", result.success);
+        console.log("Properties Array:", result.properties);
+        console.log(
+            "Properties Length:",
+            result.properties ? result.properties.length : 0
+        );
+        console.log("====================================");
+
+        const properties = result.properties || [];
+
+        // ===================================
+        // Update Dashboard Statistics
+        // ===================================
+
+        const propertiesCount =
+            document.getElementById("propertiesCount");
+
+        const propertyCountBadge =
+            document.getElementById("propertyCountBadge");
+
+        if (propertiesCount) {
+
+            propertiesCount.textContent = properties.length;
+
+        }
+
+        if (propertyCountBadge) {
+
+            propertyCountBadge.textContent =
+                `${properties.length} properties`;
+
+        }
+
+        // ===================================
+        // Build Table
+        // ===================================
 
         propertiesTableBody.innerHTML = "";
 
         if (properties.length === 0) {
 
             propertiesTableBody.innerHTML = `
-
                 <tr>
-
                     <td colspan="5">
-
                         No properties registered.
-
                     </td>
-
                 </tr>
-
             `;
 
             return;
@@ -62,111 +149,139 @@ async function loadProperties() {
 
         properties.forEach(property => {
 
+            console.log("Rendering Property:", property);
+
             propertiesTableBody.innerHTML += `
-
                 <tr>
-
                     <td>${property.propertyCode}</td>
-
                     <td>${property.propertyName}</td>
-
                     <td>${property.location}</td>
-
                     <td>${property.units}</td>
-
                     <td>KES ${Number(property.monthlyRent).toLocaleString()}</td>
-
                 </tr>
-
             `;
 
         });
 
+        console.log("✅ Property table rendered successfully.");
+
     }
 
     catch (error) {
 
-        console.error(error);
+        console.error("❌ loadProperties Error:", error);
+
+        propertiesTableBody.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    Unable to load properties.
+                </td>
+            </tr>
+        `;
 
     }
 
 }
-
 // ===========================================
 // Create Property
 // ===========================================
 
-createPropertyBtn.addEventListener("click", async () => {
+if (createPropertyBtn) {
 
-    const landlordId = getLandlordId();
+    createPropertyBtn.addEventListener(
 
-    if (!landlordId) {
+        "click",
 
-        alert("Please register a landlord first.");
+        async () => {
 
-        return;
+            const landlordId = getLandlordId();
 
-    }
+            if (!landlordId) {
 
-    const data = {
+                alert("Please register as a landlord first.");
 
-        landlordId,
+                return;
 
-        propertyName: propertyName.value.trim(),
+            }
 
-        location: propertyLocation.value.trim(),
+            const data = {
 
-        units: Number(propertyUnits.value),
+                landlordId,
 
-        monthlyRent: Number(monthlyRent.value)
+                propertyName: propertyName.value.trim(),
 
-    };
+                location: propertyLocation.value.trim(),
 
-    try {
+                units: Number(propertyUnits.value),
 
-        const response = await fetch("/api/properties", {
+                monthlyRent: Number(monthlyRent.value)
 
-            method: "POST",
+            };
 
-            headers: {
+            try {
 
-                "Content-Type": "application/json"
+                const response = await fetch(
 
-            },
+                    "/api/properties",
 
-            body: JSON.stringify(data)
+                    {
 
-        });
+                        method: "POST",
 
-        const result = await response.json();
+                        headers: {
 
-        alert(result.message);
+                            "Content-Type": "application/json"
 
-        if (result.success) {
+                        },
 
-            propertyName.value = "";
-            propertyLocation.value = "";
-            propertyUnits.value = "";
-            monthlyRent.value = "";
+                        body: JSON.stringify(data)
 
-            loadProperties();
+                    }
+
+                );
+
+                const result = await response.json();
+
+                alert(result.message);
+
+                if (result.success) {
+
+                    propertyName.value = "";
+
+                    propertyLocation.value = "";
+
+                    propertyUnits.value = "";
+
+                    monthlyRent.value = "";
+
+                    loadProperties();
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(error);
+
+                alert("Unable to create property.");
+
+            }
 
         }
 
-    }
+    );
 
-    catch (error) {
-
-        console.error(error);
-
-        alert("Unable to create property.");
-
-    }
-
-});
+}
 
 // ===========================================
 // Initialize
 // ===========================================
 
+// Make the function available to dashboard.js
+window.loadProperties = loadProperties;
+
+// Load immediately
 loadProperties();
+
+console.log("✅ Property Module Version 11.2 Loaded");

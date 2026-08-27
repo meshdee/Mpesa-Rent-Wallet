@@ -3,80 +3,782 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>Landlord Registration</title>
+    <title>M-PESA Rent Wallet | Landlord</title>
 
-<link rel="stylesheet" href="../css/style.css">
+    <script src="/js/theme.js"></script>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
 
 </head>
 
+
 <body>
+
+<!-- =========================================
+     DASHBOARD SHELL
+     ========================================= -->
 
 <div class="dashboard-shell">
 
+
+    <!-- =====================================
+         SIDEBAR
+         ===================================== -->
+
     <aside class="sidebar">
+
+
+        <!-- =================================
+             BRAND
+             ================================= -->
 
         <div class="brand-block">
 
-            <p class="eyebrow">Safaricom Inspired</p>
+            <p class="eyebrow">
+                Safaricom Inspired
+            </p>
 
-            <h1>M-PESA Rent Wallet</h1>
+            <h1>
+                M-PESA Rent Wallet
+            </h1>
 
-            <p class="muted">Landlord Management</p>
+            <p class="muted">
+                Landlord Management
+            </p>
 
         </div>
 
+
+        <!-- =================================
+             NAVIGATION
+             ================================= -->
+
         <nav class="sidebar-nav">
 
-            <a href="dashboard.html">🏠 Dashboard</a>
+            <a
+                href="/dashboard"
+                class="nav-link"
+            >
+                🏠 Dashboard
+            </a>
 
-            <a href="landlord.html" class="active">👤 Landlord</a>
 
-            <a href="properties.html">🏢 Properties</a>
+            <a
+                href="/properties"
+                class="nav-link"
+            >
+                🏢 Properties
+            </a>
 
-            <a href="units.html">🏘️ Units</a>
 
-            <a href="tenants.html">👥 Tenants</a>
+            <a
+                href="/units"
+                class="nav-link"
+            >
+                🏘 Units
+            </a>
+
+
+            <a
+                href="/tenants"
+                class="nav-link"
+            >
+                👥 Tenants
+            </a>
+
+
+            <a
+                href="/wallet"
+                class="nav-link"
+            >
+                💰 Rent Wallet
+            </a>
+
+
+            <a
+                href="/landlord"
+                class="nav-link active"
+            >
+                👤 Landlord
+            </a>
+
+
+            <a
+                href="/profile"
+                class="nav-link"
+            >
+                🙍 Profile
+            </a>
 
         </nav>
 
+
+        <!-- =================================
+             SIDEBAR FOOTER
+             ================================= -->
+
+        <div class="sidebar-footer">
+
+            <p class="muted">
+                Signed in as
+            </p>
+
+
+            <strong id="landlordSidebarName">
+                Current User
+            </strong>
+
+
+            <button
+                type="button"
+                class="secondary full-width"
+                onclick="window.location.href='/profile'"
+            >
+                My Profile
+            </button>
+
+        </div>
+
+
     </aside>
+
+
+
+    <!-- =====================================
+         MAIN LANDLORD WORKSPACE
+         ===================================== -->
 
     <main class="dashboard-main">
 
-        <h2>Register Landlord</h2>
 
-        <section class="card">
+        <!-- =================================
+             TOPBAR
+             ================================= -->
 
-            <label>Business Name</label>
-            <input id="businessName" type="text">
+        <header class="dashboard-topbar">
 
-            <label>National ID</label>
-            <input id="nationalId" type="text">
+            <div>
 
-            <label>Phone</label>
-            <input id="landlordPhone" type="text">
+                <p class="greeting">
+                    Landlord Management
+                </p>
 
-            <br><br>
 
-            <button id="registerLandlordBtn">
+                <h2>
+                    Landlord Account
+                </h2>
 
-                Register Landlord
 
-            </button>
+                <p class="muted">
+                    Manage your landlord registration,
+                    business information and rental portfolio.
+                </p>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <span
+                    class="count-pill"
+                    id="landlordStatusBadge"
+                >
+                    Landlord
+                </span>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================
+             PORTFOLIO OVERVIEW
+             ================================= -->
+
+        <section class="stats-grid">
+
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Properties
+                </span>
+
+
+                <strong id="landlordProperties">
+                    0
+                </strong>
+
+
+                <p class="muted">
+                    Registered rental properties
+                </p>
+
+            </article>
+
+
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Units
+                </span>
+
+
+                <strong id="landlordUnits">
+                    0
+                </strong>
+
+
+                <p class="muted">
+                    Rental units in portfolio
+                </p>
+
+            </article>
+
+
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Tenants
+                </span>
+
+
+                <strong id="landlordTenants">
+                    0
+                </strong>
+
+
+                <p class="muted">
+                    Registered tenants
+                </p>
+
+            </article>
+
 
         </section>
 
+
+
+        <!-- =================================
+             RENTAL PERFORMANCE
+             ================================= -->
+
+        <section class="stats-grid">
+
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Total Properties
+                </span>
+
+
+                <strong id="propertyCount">
+                    0
+                </strong>
+
+
+                <p class="muted">
+                    Active properties
+                </p>
+
+            </article>
+
+
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Total Units
+                </span>
+
+
+                <strong id="unitCount">
+                    0
+                </strong>
+
+
+                <p class="muted">
+                    Registered units
+                </p>
+
+            </article>
+
+
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Expected Monthly Rent
+                </span>
+
+
+                <strong id="monthlyRent">
+                    KES 0
+                </strong>
+
+
+                <p class="muted">
+                    Expected monthly collection
+                </p>
+
+            </article>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             PORTFOLIO OCCUPANCY
+             ================================= -->
+
+        <section class="card">
+
+
+            <div class="section-head">
+
+                <div>
+
+                    <h3>
+                        Portfolio Occupancy
+                    </h3>
+
+
+                    <p class="muted">
+                        Current rental unit availability.
+                    </p>
+
+                </div>
+
+
+                <span class="count-pill">
+                    Active
+                </span>
+
+            </div>
+
+
+
+            <div class="stats-grid">
+
+
+                <article class="stat-card">
+
+                    <span class="stat-label">
+                        Occupied Units
+                    </span>
+
+
+                    <strong id="occupiedUnits">
+                        0
+                    </strong>
+
+
+                    <p class="muted">
+                        Units currently occupied
+                    </p>
+
+                </article>
+
+
+
+                <article class="stat-card">
+
+                    <span class="stat-label">
+                        Vacant Units
+                    </span>
+
+
+                    <strong id="vacantUnits">
+                        0
+                    </strong>
+
+
+                    <p class="muted">
+                        Units currently available
+                    </p>
+
+                </article>
+
+
+
+                <article class="stat-card">
+
+                    <span class="stat-label">
+                        Portfolio Status
+                    </span>
+
+
+                    <strong>
+                        Active
+                    </strong>
+
+
+                    <p class="muted">
+                        Landlord workspace
+                    </p>
+
+                </article>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             LANDLORD INFORMATION
+             ================================= -->
+
+        <section class="card">
+
+
+            <div class="section-head">
+
+
+                <div>
+
+                    <h3>
+                        Landlord Information
+                    </h3>
+
+
+                    <p class="muted">
+                        Register or update your landlord
+                        and business information.
+                    </p>
+
+                </div>
+
+
+                <span
+                    class="count-pill"
+                    id="landlordFormStatus"
+                >
+                    Loading...
+                </span>
+
+
+            </div>
+
+
+
+            <!-- BUSINESS NAME -->
+
+            <label for="businessName">
+                Business Name
+            </label>
+
+
+            <input
+                id="businessName"
+                type="text"
+                placeholder="Enter business or landlord name"
+                autocomplete="organization"
+            >
+
+
+
+            <!-- NATIONAL ID -->
+
+            <label for="nationalId">
+                National ID
+            </label>
+
+
+            <input
+                id="nationalId"
+                type="text"
+                placeholder="Enter National ID"
+                autocomplete="off"
+            >
+
+
+
+            <!-- PHONE -->
+
+            <label for="landlordPhone">
+                Phone Number
+            </label>
+
+
+            <input
+                id="landlordPhone"
+                type="text"
+                placeholder="e.g. 0712345678"
+                autocomplete="tel"
+            >
+
+
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+
+                <button
+                    type="button"
+                    id="registerLandlordBtn"
+                >
+                    Save Changes
+                </button>
+
+
+                <button
+                    type="button"
+                    class="secondary"
+                    onclick="window.location.href='/profile'"
+                >
+                    View Profile
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             ACCOUNT SUMMARY
+             ================================= -->
+
+        <section class="card">
+
+
+            <div class="section-head">
+
+
+                <div>
+
+                    <h3>
+                        Account Summary
+                    </h3>
+
+
+                    <p class="muted">
+                        Information about your current
+                        landlord workspace.
+                    </p>
+
+                </div>
+
+
+                <span
+                    class="count-pill"
+                    id="landlordWorkspace"
+                >
+                    Landlord
+                </span>
+
+
+            </div>
+
+
+
+            <div class="profile-grid">
+
+
+                <div>
+
+                    <span class="stat-label">
+                        Landlord ID
+                    </span>
+
+
+                    <strong
+                        id="displayLandlordId"
+                        style="font-size:.82rem;word-break:break-all;"
+                    >
+                        Loading...
+                    </strong>
+
+                </div>
+
+
+
+                <div>
+
+                    <span class="stat-label">
+                        User ID
+                    </span>
+
+
+                    <strong
+                        id="displayUserId"
+                        style="font-size:.82rem;word-break:break-all;"
+                    >
+                        Loading...
+                    </strong>
+
+                </div>
+
+
+
+                <div>
+
+                    <span class="stat-label">
+                        Email
+                    </span>
+
+
+                    <strong id="displayLandlordEmail">
+                        Loading...
+                    </strong>
+
+                </div>
+
+
+
+                <div>
+
+                    <span class="stat-label">
+                        Account Status
+                    </span>
+
+
+                    <strong id="displayAccountStatus">
+                        Active
+                    </strong>
+
+                </div>
+
+
+
+                <div>
+
+                    <span class="stat-label">
+                        Workspace
+                    </span>
+
+
+                    <strong id="displayWorkspace">
+                        Landlord
+                    </strong>
+
+                </div>
+
+
+
+                <div>
+
+                    <span class="stat-label">
+                        System Version
+                    </span>
+
+
+                    <strong id="displaySystemVersion">
+                        Enterprise
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             QUICK ACTIONS
+             ================================= -->
+
+        <section class="card">
+
+
+            <h3>
+                Quick Actions
+            </h3>
+
+
+            <p class="muted">
+                Continue managing your rental ecosystem.
+            </p>
+
+
+
+            <div class="actions">
+
+
+                <button
+                    type="button"
+                    onclick="window.location.href='/properties'"
+                >
+                    🏢 Manage Properties
+                </button>
+
+
+                <button
+                    type="button"
+                    class="secondary"
+                    onclick="window.location.href='/units'"
+                >
+                    🏘 Manage Units
+                </button>
+
+
+                <button
+                    type="button"
+                    class="secondary"
+                    onclick="window.location.href='/tenants'"
+                >
+                    👥 Manage Tenants
+                </button>
+
+
+                <button
+                    type="button"
+                    class="secondary"
+                    onclick="window.location.href='/wallet'"
+                >
+                    💰 Open Rent Wallet
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
     </main>
+
 
 </div>
 
+
+
+<!-- =========================================
+     JAVASCRIPT
+     ========================================= -->
+
 <script src="../js/config/storage.js"></script>
 
-<script src="../js/modules/landlord.js"></script>
+<script src="../js/landlord.js"></script>
+
+<script src="/js/mobile-nav.js"></script>
+
+<script src="/js/offline-status.js"></script>
+
 
 </body>
 

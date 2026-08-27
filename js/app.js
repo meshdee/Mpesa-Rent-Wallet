@@ -1,25 +1,14 @@
 // ===========================================
 // M-PESA Rent Wallet
-// Version 10.1 Stable
+// Version 11.0 Enterprise Stable
 // app.js
 // CHUNK 1
 // ===========================================
 
 "use strict";
 
-console.log("Initializing M-PESA Rent Wallet...");
+console.log("Initializing M-PESA Rent Wallet Enterprise...");
 
-// ===========================================
-// API Configuration
-// ===========================================
-
-const API_BASE = "/api";
-
-// ===========================================
-// Local Storage Keys
-// ===========================================
-
-const STORAGE = window.STORAGE;
 
 // ===========================================
 // Global State
@@ -31,15 +20,9 @@ let wallet = null;
 
 let landlord = null;
 
-let session = {
+let properties = [];
 
-    isLoggedIn: false,
-
-    userId: null,
-
-    landlordId: null
-
-};
+let tenants = [];
 
 // ===========================================
 // DOM Elements
@@ -51,18 +34,22 @@ const elements = {
 
     appView: document.getElementById("appView"),
 
+    // Authentication Forms
     loginForm: document.getElementById("loginForm"),
 
     registerForm: document.getElementById("registerForm"),
 
+    // Authentication Tabs
     showLoginBtn: document.getElementById("showLoginBtn"),
 
     showRegisterBtn: document.getElementById("showRegisterBtn"),
 
+    // Login Inputs
     loginId: document.getElementById("loginId"),
 
     loginPassword: document.getElementById("loginPassword"),
 
+    // Registration Inputs
     fullName: document.getElementById("fullName"),
 
     phoneNumber: document.getElementById("phoneNumber"),
@@ -73,20 +60,21 @@ const elements = {
 
     confirmPassword: document.getElementById("confirmPassword"),
 
+    // Dashboard
     logoutBtn: document.getElementById("logoutBtn"),
-
-    tenantDashboard: document.getElementById("tenantDashboard"),
-
-    landlordDashboard: document.getElementById("landlordDashboard"),
 
     tenantWorkspaceBtn: document.getElementById("tenantWorkspaceBtn"),
 
-    landlordWorkspaceBtn: document.getElementById("landlordWorkspaceBtn")
+    landlordWorkspaceBtn: document.getElementById("landlordWorkspaceBtn"),
+
+    tenantDashboard: document.getElementById("tenantDashboard"),
+
+    landlordDashboard: document.getElementById("landlordDashboard")
 
 };
 
 // ===========================================
-// Utility
+// Utility Functions
 // ===========================================
 
 function show(element){
@@ -109,75 +97,67 @@ function hide(element){
 
 }
 
-// ===========================================
-// Local Storage
-// ===========================================
+function formatMoney(amount){
 
-function saveSession(){
+    return `KES ${Number(amount || 0).toLocaleString()}`;
 
-    localStorage.setItem(
+}
 
-        STORAGE.SESSION,
+function currentUserId(){
 
-        JSON.stringify(session)
+    return localStorage.getItem(STORAGE.USER_ID);
+
+}
+
+function currentUserEmail(){
+
+    return localStorage.getItem(STORAGE.USER_EMAIL);
+
+}
+
+function currentLandlordId(){
+
+    return localStorage.getItem(STORAGE.LANDLORD_ID);
+
+}
+
+function userLoggedIn(){
+
+    return (
+
+        localStorage.getItem(STORAGE.SESSION) === "ACTIVE" &&
+
+        currentUserId()
 
     );
 
 }
 
-function loadSession(){
-
-    const stored = localStorage.getItem(
-
-        STORAGE.SESSION
-
-    );
-
-    if(!stored){
-
-        return;
-
-    }
-
-    try{
-
-        session = JSON.parse(stored);
-
-    }
-
-    catch{
-
-        session = {
-
-            isLoggedIn:false,
-
-            userId:null,
-
-            landlordId:null
-
-        };
-
-    }
-
-}
+// ===========================================
+// Session Helpers
+// ===========================================
 
 function clearSession(){
 
-    localStorage.removeItem(
+    localStorage.removeItem(STORAGE.SESSION);
 
-        STORAGE.SESSION
+    localStorage.removeItem(STORAGE.USER_ID);
+
+    localStorage.removeItem(STORAGE.USER_EMAIL);
+
+    localStorage.removeItem(STORAGE.LANDLORD_ID);
+
+}
+
+function saveLandlordId(id){
+
+    localStorage.setItem(
+
+        STORAGE.LANDLORD_ID,
+
+        id
 
     );
-
-    session = {
-
-        isLoggedIn:false,
-
-        userId:null,
-
-        landlordId:null
-
-    };
 
 }
 
@@ -185,7 +165,13 @@ function clearSession(){
 // API Helper
 // ===========================================
 
-async function apiFetch(endpoint, options={}){
+async function apiFetch(
+
+    endpoint,
+
+    options = {}
+
+){
 
     const response = await fetch(
 
@@ -226,225 +212,8 @@ async function apiFetch(endpoint, options={}){
 }
 
 // ===========================================
-// Authentication Tabs
+// Navigation
 // ===========================================
-
-function showLoginTab(){
-
-    show(elements.loginForm);
-
-    hide(elements.registerForm);
-
-}
-
-function showRegisterTab(){
-
-    hide(elements.loginForm);
-
-    show(elements.registerForm);
-
-}
-
-// ===========================================
-// Register
-// ===========================================
-
-async function registerUser(event){
-
-    event.preventDefault();
-
-    const fullName =
-
-        elements.fullName.value.trim();
-
-    const phone =
-
-        elements.phoneNumber.value.trim();
-
-    const email =
-
-        elements.emailAddress.value.trim();
-
-    const password =
-
-        elements.registerPassword.value;
-
-    const confirm =
-
-        elements.confirmPassword.value;
-
-    if(
-
-        !fullName ||
-
-        !phone ||
-
-        !email ||
-
-        !password ||
-
-        !confirm
-
-    ){
-
-        return alert("Complete all fields.");
-
-    }
-
-    if(password !== confirm){
-
-        return alert("Passwords do not match.");
-
-    }
-
-    try{
-
-        const response = await apiFetch(
-
-            "/auth/register",
-
-            {
-
-                method:"POST",
-
-                body:JSON.stringify({
-
-                    fullName,
-
-                    phone,
-
-                    email,
-
-                    password
-
-                })
-
-            }
-
-        );
-
-        alert(response.message);
-
-        elements.registerForm.reset();
-
-        showLoginTab();
-
-    }
-
-    catch(error){
-
-        alert(error.message);
-
-    }
-
-}
-
-// ===========================================
-// Login
-// ===========================================
-
-async function loginUser(event){
-
-    event.preventDefault();
-
-    const login =
-
-        elements.loginId.value.trim();
-
-    const password =
-
-        elements.loginPassword.value;
-
-    if(!login || !password){
-
-        return alert(
-
-            "Enter your login credentials."
-
-        );
-
-    }
-
-    try{
-
-        const response = await apiFetch(
-
-            "/auth/login",
-
-            {
-
-                method:"POST",
-
-                body:JSON.stringify({
-
-                    login,
-
-                    password
-
-                })
-
-            }
-
-        );
-
-        user = response.user;
-
-        session = {
-
-            isLoggedIn:true,
-
-            userId:user.id,
-
-            landlordId:null
-
-        };
-
-        saveSession();
-
-        localStorage.setItem(
-
-            STORAGE.USER_ID,
-
-            user.id
-
-        );
-
-        localStorage.setItem(
-
-            STORAGE.USER_EMAIL,
-
-            user.email
-
-        );
-
-        console.log("Login successful");
-
-        console.log(user);
-
-        switchToDashboard();
-
-    }
-
-    catch(error){
-
-        alert(error.message);
-
-    }
-
-}
-
-// ===========================================
-// CHUNK 2
-// Dashboard Engine
-// ===========================================
-
-function switchToDashboard(){
-
-    hide(elements.authView);
-
-    show(elements.appView);
-
-}
 
 function switchToAuth(){
 
@@ -454,25 +223,59 @@ function switchToAuth(){
 
 }
 
+function switchToDashboard(){
+
+    hide(elements.authView);
+
+    show(elements.appView);
+
+}
+
+console.log("✅ app.js Chunk 1 Loaded");
+
 // ===========================================
-// Restore User Session
+// CHUNK 2
+// Dashboard Engine
+// Version 11.0 Enterprise Stable
+// ===========================================
+
+// ===========================================
+// Restore Logged In User
 // ===========================================
 
 async function restoreUserSession(){
 
-    loadSession();
-
-    console.log("Restored session:", session);
-
-    if(
-
-        !session.isLoggedIn ||
-
-        !session.userId
-
-    ){
+    if(!userLoggedIn()){
 
         switchToAuth();
+
+        return false;
+
+    }
+
+    user = {
+
+        id: currentUserId(),
+
+        email: currentUserEmail()
+
+    };
+
+    console.log("Current User:", user);
+
+    switchToDashboard();
+
+    return true;
+
+}
+
+// ===========================================
+// Load User Profile
+// ===========================================
+
+async function loadUserProfile(){
+
+    if(!user){
 
         return;
 
@@ -482,372 +285,29 @@ async function restoreUserSession(){
 
         const response = await apiFetch(
 
-            `/auth/profile/${session.userId}`
+            `/users/${user.id}`
 
         );
 
         user = response.user;
 
-        console.log("Profile restored:", user);
-
-        switchToDashboard();
+        renderUser();
 
     }
 
     catch(error){
 
-        console.error(
+        console.log(
 
-            "Unable to restore profile:",
+            "Profile unavailable.",
 
             error.message
 
         );
 
-        clearSession();
-
-        switchToAuth();
-
     }
 
 }
-
-// ===========================================
-// Logout
-// ===========================================
-
-async function logoutUser(){
-
-    try{
-
-        await apiFetch(
-
-            "/auth/logout",
-
-            {
-
-                method:"POST"
-
-            }
-
-        );
-
-    }
-
-    catch(error){
-
-        console.log(error.message);
-
-    }
-
-    clearSession();
-
-    localStorage.removeItem(
-
-        STORAGE.USER_ID
-
-    );
-
-    localStorage.removeItem(
-
-        STORAGE.USER_EMAIL
-
-    );
-
-    localStorage.removeItem(
-
-        STORAGE.LANDLORD_ID
-
-    );
-
-    user = null;
-
-    wallet = null;
-
-    landlord = null;
-
-    switchToAuth();
-
-}
-
-// ===========================================
-// Workspace
-// ===========================================
-
-function openTenantWorkspace(){
-
-    hide(elements.landlordDashboard);
-
-    show(elements.tenantDashboard);
-
-}
-
-function openLandlordWorkspace(){
-
-    hide(elements.tenantDashboard);
-
-    show(elements.landlordDashboard);
-
-}
-
-// ===========================================
-// Greeting
-// ===========================================
-
-function updateGreeting(){
-
-    const greeting =
-
-        document.getElementById("greeting");
-
-    if(!greeting){
-
-        return;
-
-    }
-
-    const hour = new Date().getHours();
-
-    if(hour < 12){
-
-        greeting.textContent =
-
-            "Good Morning";
-
-    }
-
-    else if(hour < 17){
-
-        greeting.textContent =
-
-            "Good Afternoon";
-
-    }
-
-    else{
-
-        greeting.textContent =
-
-            "Good Evening";
-
-    }
-
-}
-
-// ===========================================
-// Profile Rendering
-// ===========================================
-
-function renderUser(){
-
-    if(!user){
-
-        return;
-
-    }
-
-    const profileName =
-
-        document.getElementById("profileName");
-
-    const profilePhone =
-
-        document.getElementById("profilePhone");
-
-    const profileEmail =
-
-        document.getElementById("profileEmail");
-
-    const userNameLine =
-
-        document.getElementById("userNameLine");
-
-    if(profileName){
-
-        profileName.textContent =
-
-            user.fullName;
-
-    }
-
-    if(profilePhone){
-
-        profilePhone.textContent =
-
-            user.phone;
-
-    }
-
-    if(profileEmail){
-
-        profileEmail.textContent =
-
-            user.email;
-
-    }
-
-    if(userNameLine){
-
-        userNameLine.textContent =
-
-            user.fullName;
-
-    }
-
-}
-
-// ===========================================
-// Main Renderer
-// ===========================================
-
-function renderApplication(){
-
-    if(
-
-        !session.isLoggedIn ||
-
-        !user
-
-    ){
-
-        switchToAuth();
-
-        return;
-
-    }
-
-    switchToDashboard();
-
-    updateGreeting();
-
-    renderUser();
-
-}
-
-// ===========================================
-// Register Events
-// ===========================================
-
-function registerEventListeners(){
-
-    if(elements.showLoginBtn){
-
-        elements.showLoginBtn.addEventListener(
-
-            "click",
-
-            showLoginTab
-
-        );
-
-    }
-
-    if(elements.showRegisterBtn){
-
-        elements.showRegisterBtn.addEventListener(
-
-            "click",
-
-            showRegisterTab
-
-        );
-
-    }
-
-    if(elements.loginForm){
-
-        elements.loginForm.addEventListener(
-
-            "submit",
-
-            loginUser
-
-        );
-
-    }
-
-    if(elements.registerForm){
-
-        elements.registerForm.addEventListener(
-
-            "submit",
-
-            registerUser
-
-        );
-
-    }
-
-    if(elements.logoutBtn){
-
-        elements.logoutBtn.addEventListener(
-
-            "click",
-
-            logoutUser
-
-        );
-
-    }
-
-    if(elements.tenantWorkspaceBtn){
-
-        elements.tenantWorkspaceBtn.addEventListener(
-
-            "click",
-
-            openTenantWorkspace
-
-        );
-
-    }
-
-    if(elements.landlordWorkspaceBtn){
-
-        elements.landlordWorkspaceBtn.addEventListener(
-
-            "click",
-
-            openLandlordWorkspace
-
-        );
-
-    }
-
-}
-
-// ===========================================
-// CHUNK 3
-// Wallet Module
-// ===========================================
-
-const walletElements = {
-
-    rentGoalInput: document.getElementById("rentGoalInput"),
-
-    dueDateInput: document.getElementById("dueDateInput"),
-
-    saveAmountInput: document.getElementById("saveAmountInput"),
-
-    saveSettingsBtn: document.getElementById("saveSettingsBtn"),
-
-    saveRentBtn: document.getElementById("saveRentBtn"),
-
-    resetWalletBtn: document.getElementById("resetWalletBtn"),
-
-    savedAmount: document.getElementById("savedAmount"),
-
-    remainingAmount: document.getElementById("remainingAmount"),
-
-    progressPercent: document.getElementById("progressPercent"),
-
-    progressFill: document.getElementById("progressFill"),
-
-    historyList: document.getElementById("historyList"),
-
-    historyCount: document.getElementById("historyCount")
-
-};
 
 // ===========================================
 // Load Wallet
@@ -863,25 +323,27 @@ async function loadWallet(){
 
     try{
 
-        const response = await apiFetch(
+        wallet = await apiFetch(
 
             `/wallet/${user.id}`
 
         );
 
-        wallet = response.wallet;
-
     }
 
     catch(error){
 
-        console.log("Creating default wallet...");
+        console.log(
+
+            "Wallet not found. Creating default wallet..."
+
+        );
 
         wallet = {
 
-            rentGoal:0,
+            rentGoal:25000,
 
-            savedAmount:0,
+            walletBalance:0,
 
             dueDate:"",
 
@@ -892,6 +354,120 @@ async function loadWallet(){
     }
 
     renderWallet();
+
+}
+
+// ===========================================
+// Greeting
+// ===========================================
+
+function updateGreeting(){
+
+    const greeting = document.getElementById("greeting");
+
+    if(!greeting){
+
+        return;
+
+    }
+
+    const hour = new Date().getHours();
+
+    if(hour < 12){
+
+        greeting.textContent = "Good Morning";
+
+    }
+
+    else if(hour < 17){
+
+        greeting.textContent = "Good Afternoon";
+
+    }
+
+    else{
+
+        greeting.textContent = "Good Evening";
+
+    }
+
+}
+
+// ===========================================
+// Render User
+// ===========================================
+
+function renderUser(){
+
+    if(!user){
+
+        return;
+
+    }
+
+    const ids = {
+
+        profileName:
+
+            document.getElementById("profileName"),
+
+        profilePhone:
+
+            document.getElementById("profilePhone"),
+
+        profileEmail:
+
+            document.getElementById("profileEmail"),
+
+        dashboardUserName:
+
+            document.getElementById("dashboardUserName"),
+
+        userNameLine:
+
+            document.getElementById("userNameLine")
+
+    };
+
+    if(ids.profileName){
+
+        ids.profileName.textContent =
+
+            user.fullName || "-";
+
+    }
+
+    if(ids.profilePhone){
+
+        ids.profilePhone.textContent =
+
+            user.phone || "-";
+
+    }
+
+    if(ids.profileEmail){
+
+        ids.profileEmail.textContent =
+
+            user.email || "-";
+
+    }
+
+    if(ids.dashboardUserName){
+
+        ids.dashboardUserName.textContent =
+
+            user.fullName || "-";
+
+    }
+
+    if(ids.userNameLine){
+
+        ids.userNameLine.textContent =
+
+            user.fullName || "-";
+
+    }
 
 }
 
@@ -907,9 +483,17 @@ function renderWallet(){
 
     }
 
-    const goal = Number(wallet.rentGoal || 0);
+    const saved = Number(
 
-    const saved = Number(wallet.savedAmount || 0);
+        wallet.walletBalance || 0
+
+    );
+
+    const goal = Number(
+
+        wallet.rentGoal || 25000
+
+    );
 
     const remaining = Math.max(
 
@@ -931,330 +515,101 @@ function renderWallet(){
 
         );
 
-    if(walletElements.savedAmount){
+    const savedAmount =
 
-        walletElements.savedAmount.textContent =
+        document.getElementById("savedAmount");
 
-            `KES ${saved.toLocaleString()}`;
+    const remainingAmount =
+
+        document.getElementById("remainingAmount");
+
+    const progressPercent =
+
+        document.getElementById("progressPercent");
+
+    const progressFill =
+
+        document.getElementById("progressFill");
+
+    if(savedAmount){
+
+        savedAmount.textContent =
+
+            formatMoney(saved);
 
     }
 
-    if(walletElements.remainingAmount){
+    if(remainingAmount){
 
-        walletElements.remainingAmount.textContent =
+        remainingAmount.textContent =
 
-            `KES ${remaining.toLocaleString()}`;
+            formatMoney(remaining);
 
     }
 
-    if(walletElements.progressPercent){
+    if(progressPercent){
 
-        walletElements.progressPercent.textContent =
+        progressPercent.textContent =
 
             `${progress}%`;
 
     }
 
-    if(walletElements.progressFill){
+    if(progressFill){
 
-        walletElements.progressFill.style.width =
+        progressFill.style.width =
 
             `${progress}%`;
 
     }
 
-    if(walletElements.rentGoalInput){
-
-        walletElements.rentGoalInput.value =
-
-            goal;
-
-    }
-
-    if(walletElements.dueDateInput){
-
-        walletElements.dueDateInput.value =
-
-            wallet.dueDate || "";
-
-    }
-
-    renderHistory();
-
 }
 
 // ===========================================
-// Wallet History
+// Main Renderer
 // ===========================================
 
-function renderHistory(){
+function renderApplication(){
 
-    if(!walletElements.historyList){
+    if(!userLoggedIn()){
+
+        switchToAuth();
 
         return;
 
     }
 
-    walletElements.historyList.innerHTML = "";
+    switchToDashboard();
 
-    const history = wallet.history || [];
+    updateGreeting();
 
-    if(walletElements.historyCount){
+    renderUser();
 
-        walletElements.historyCount.textContent =
-
-            `${history.length} Transactions`;
-
-    }
-
-    if(history.length === 0){
-
-        walletElements.historyList.innerHTML =
-
-            "<li>No transactions yet.</li>";
-
-        return;
-
-    }
-
-    history.forEach(item=>{
-
-        const li = document.createElement("li");
-
-        li.innerHTML =
-
-        `<strong>KES ${Number(item.amount).toLocaleString()}</strong>
-        <br>
-        <small>${item.date}</small>`;
-
-        walletElements.historyList.appendChild(li);
-
-    });
+    renderWallet();
 
 }
 
-// ===========================================
-// Save Wallet Settings
-// ===========================================
-
-async function saveWalletSettings(){
-
-    if(!user){
-
-        return;
-
-    }
-
-    try{
-
-        const response = await apiFetch(
-
-            `/wallet/${user.id}/settings`,
-
-            {
-
-                method:"PUT",
-
-                body:JSON.stringify({
-
-                    rentGoal:Number(
-
-                        walletElements.rentGoalInput.value
-
-                    ),
-
-                    dueDate:
-
-                        walletElements.dueDateInput.value
-
-                })
-
-            }
-
-        );
-
-        wallet = response.wallet;
-
-        renderWallet();
-
-        alert("Wallet updated.");
-
-    }
-
-    catch(error){
-
-        alert(error.message);
-
-    }
-
-}
+console.log("✅ app.js Chunk 2 Loaded");
 
 // ===========================================
-// Save Rent
-// ===========================================
-
-async function saveRent(){
-
-    if(!user){
-
-        return;
-
-    }
-
-    const amount = Number(
-
-        walletElements.saveAmountInput.value
-
-    );
-
-    if(amount <= 0){
-
-        return alert("Enter amount.");
-
-    }
-
-    try{
-
-        const response = await apiFetch(
-
-            `/wallet/${user.id}/save`,
-
-            {
-
-                method:"POST",
-
-                body:JSON.stringify({
-
-                    amount
-
-                })
-
-            }
-
-        );
-
-        wallet = response.wallet;
-
-        walletElements.saveAmountInput.value = "";
-
-        renderWallet();
-
-        alert("Amount saved.");
-
-    }
-
-    catch(error){
-
-        alert(error.message);
-
-    }
-
-}
-
-// ===========================================
-// Reset Wallet
-// ===========================================
-
-async function resetWallet(){
-
-    if(!confirm(
-
-        "Reset Rent Wallet?"
-
-    )){
-
-        return;
-
-    }
-
-    try{
-
-        const response = await apiFetch(
-
-            `/wallet/${user.id}/reset`,
-
-            {
-
-                method:"POST"
-
-            }
-
-        );
-
-        wallet = response.wallet;
-
-        renderWallet();
-
-    }
-
-    catch(error){
-
-        alert(error.message);
-
-    }
-
-}
-
-// ===========================================
-// Wallet Event Listeners
-// ===========================================
-
-function registerWalletEvents(){
-
-    if(walletElements.saveSettingsBtn){
-
-        walletElements.saveSettingsBtn.addEventListener(
-
-            "click",
-
-            saveWalletSettings
-
-        );
-
-    }
-
-    if(walletElements.saveRentBtn){
-
-        walletElements.saveRentBtn.addEventListener(
-
-            "click",
-
-            saveRent
-
-        );
-
-    }
-
-    if(walletElements.resetWalletBtn){
-
-        walletElements.resetWalletBtn.addEventListener(
-
-            "click",
-
-            resetWallet
-
-        );
-
-    }
-
-}
-
-// ===========================================
-// CHUNK 4
+// CHUNK 3
 // Application Engine
+// Version 11.0 Enterprise Stable
 // ===========================================
 
 // ===========================================
 // Refresh Dashboard
 // ===========================================
 
-async function refreshDashboard(){
+async function refreshDashboard() {
 
-    if(!session.isLoggedIn){
+    if (!userLoggedIn()) {
 
         return;
 
     }
+
+    await loadUserProfile();
 
     await loadWallet();
 
@@ -1263,10 +618,229 @@ async function refreshDashboard(){
 }
 
 // ===========================================
-// Application Startup
+// Logout
 // ===========================================
 
-async function startApplication(){
+function logout() {
+
+    clearSession();
+
+    user = null;
+
+    landlord = null;
+
+    wallet = null;
+
+    properties = [];
+
+    tenants = [];
+
+    window.location.href = "../index.html";
+
+}
+
+// ===========================================
+// Workspace Navigation
+// ===========================================
+
+function openTenantWorkspace() {
+
+    if (elements.tenantDashboard) {
+
+        show(elements.tenantDashboard);
+
+    }
+
+    if (elements.landlordDashboard) {
+
+        hide(elements.landlordDashboard);
+
+    }
+
+}
+
+function openLandlordWorkspace() {
+
+    if (elements.landlordDashboard) {
+
+        show(elements.landlordDashboard);
+
+    }
+
+    if (elements.tenantDashboard) {
+
+        hide(elements.tenantDashboard);
+
+    }
+
+}
+
+// ===========================================
+// Event Registration
+// ===========================================
+// ===========================================
+// Authentication Tabs
+// ===========================================
+
+function showLoginForm() {
+
+    elements.loginForm.classList.remove("hidden");
+
+    elements.registerForm.classList.add("hidden");
+
+    document
+        .getElementById("showLoginBtn")
+        .classList.add("active");
+
+    document
+        .getElementById("showRegisterBtn")
+        .classList.remove("active");
+
+}
+
+function showRegisterForm() {
+
+    elements.registerForm.classList.remove("hidden");
+
+    elements.loginForm.classList.add("hidden");
+
+    document
+        .getElementById("showRegisterBtn")
+        .classList.add("active");
+
+    document
+        .getElementById("showLoginBtn")
+        .classList.remove("active");
+
+}
+
+function registerEventListeners() {
+
+    if (elements.showLoginBtn) {
+
+    elements.showLoginBtn.addEventListener(
+        "click",
+        showLoginForm
+    );
+
+}
+
+if (elements.showRegisterBtn) {
+
+    elements.showRegisterBtn.addEventListener(
+        "click",
+        showRegisterForm
+    );
+
+}
+
+    if (elements.logoutBtn) {
+
+        elements.logoutBtn.addEventListener(
+
+            "click",
+
+            logout
+
+        );
+
+    }
+
+    if (elements.landlordWorkspaceBtn) {
+
+        elements.landlordWorkspaceBtn.addEventListener(
+
+            "click",
+
+            openLandlordWorkspace
+
+        );
+
+    }
+
+    if (elements.tenantWorkspaceBtn) {
+
+        elements.tenantWorkspaceBtn.addEventListener(
+
+            "click",
+
+            openTenantWorkspace
+
+        );
+
+    }
+
+}
+
+// ===========================================
+// Wallet Events
+// ===========================================
+
+function registerWalletEvents() {
+
+    const saveGoalBtn =
+
+        document.getElementById("saveGoalBtn");
+
+    if (saveGoalBtn) {
+
+        saveGoalBtn.addEventListener(
+
+            "click",
+
+            () => {
+
+                console.log(
+
+                    "Rent Goal feature coming in Version 11."
+
+                );
+
+            }
+
+        );
+
+    }
+
+    const depositBtn =
+
+        document.getElementById("depositBtn");
+
+    if (depositBtn) {
+
+        depositBtn.addEventListener(
+
+            "click",
+
+            () => {
+
+                console.log(
+
+                    "Deposit feature coming in Version 11."
+
+                );
+
+            }
+
+        );
+
+    }
+
+}
+
+console.log("✅ app.js Chunk 3 Loaded");
+
+// ===========================================
+// CHUNK 4
+// Application Startup
+// Version 11.0 Enterprise Stable
+// ===========================================
+
+// ===========================================
+// Start Application
+// ===========================================
+
+async function startApplication() {
 
     console.log("Initializing M-PESA Rent Wallet...");
 
@@ -1274,71 +848,98 @@ async function startApplication(){
 
     registerWalletEvents();
 
-    await restoreUserSession();
+    const loggedIn = await restoreUserSession();
 
-    if(session.isLoggedIn){
-
-        await refreshDashboard();
-
-    }
-
-    else{
+    if (!loggedIn) {
 
         switchToAuth();
 
+        return;
+
     }
+
+    await refreshDashboard();
+
+    console.log("M-PESA Rent Wallet Ready.");
 
 }
 
 // ===========================================
-// Global Helpers
-// ===========================================
-
-window.logoutUser = logoutUser;
-
-window.refreshDashboard = refreshDashboard;
-
-window.renderApplication = renderApplication;
-
-window.loadWallet = loadWallet;
-
-// ===========================================
-// DOM Ready
+// Initialize
 // ===========================================
 
 document.addEventListener(
 
     "DOMContentLoaded",
 
-    async ()=>{
+    () => {
 
-        try{
-
-            await startApplication();
-
-            console.log("M-PESA Rent Wallet Ready.");
-
-        }
-
-        catch(error){
-
-            console.error(
-
-                "Application failed to start.",
-
-                error
-
-            );
-
-            switchToAuth();
-
-        }
+        startApplication();
 
     }
 
 );
 
+console.log("✅ app.js Version 11.0 Enterprise Stable Loaded");
+
 // ===========================================
-// END OF FILE
-// VERSION 10.1 STABLE
+// PWA SERVICE WORKER REGISTRATION
 // ===========================================
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", () => {
+
+        navigator.serviceWorker
+            .register("/service-worker.js")
+            .then((registration) => {
+
+                console.log(
+                    "✅ PWA Service Worker registered:",
+                    registration.scope
+                );
+
+            })
+            .catch((error) => {
+
+                console.error(
+                    "❌ PWA Service Worker registration failed:",
+                    error
+                );
+
+            });
+
+    });
+
+}
+
+// ===========================================
+// MOBILE NAVIGATION
+// ===========================================
+
+const mobileMenuBtn =
+    document.getElementById("mobileMenuBtn");
+
+const dashboardShell =
+    document.querySelector(".dashboard-shell");
+
+if (mobileMenuBtn && dashboardShell) {
+
+    mobileMenuBtn.addEventListener(
+        "click",
+        () => {
+
+            const isOpen =
+                dashboardShell.classList.toggle(
+                    "mobile-menu-open"
+                );
+
+            mobileMenuBtn.setAttribute(
+                "aria-expanded",
+                isOpen ? "true" : "false"
+            );
+
+        }
+    );
+
+}

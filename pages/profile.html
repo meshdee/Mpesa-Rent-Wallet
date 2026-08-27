@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>M-PESA Rent Wallet | Profile</title>
+
+    <script src="/js/theme.js"></script>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         DASHBOARD SHELL
+         ========================================= -->
+
+    <div class="dashboard-shell">
+
+
+        <!-- =====================================
+             SIDEBAR
+             ===================================== -->
+
+        <aside class="sidebar">
+
+
+            <!-- BRAND -->
+
+            <div class="brand-block">
+
+                <p class="eyebrow">
+                    Safaricom Inspired
+                </p>
+
+                <h1>
+                    M-PESA Rent Wallet
+                </h1>
+
+                <p class="muted">
+                    Account Profile
+                </p>
+
+            </div>
+
+
+            <!-- NAVIGATION -->
+
+            <nav class="sidebar-nav">
+
+
+                <a
+                    href="/dashboard"
+                    class="nav-link"
+                >
+                    🏠 Dashboard
+                </a>
+
+
+                <a
+                    href="/properties"
+                    class="nav-link"
+                >
+                    🏢 Properties
+                </a>
+
+
+                <a
+                    href="/units"
+                    class="nav-link"
+                >
+                    🏘 Units
+                </a>
+
+
+                <a
+                    href="/tenants"
+                    class="nav-link"
+                >
+                    👥 Tenants
+                </a>
+
+
+                <a
+                    href="/wallet"
+                    class="nav-link"
+                >
+                    💰 Rent Wallet
+                </a>
+
+
+                <a
+                    href="/landlord"
+                    class="nav-link"
+                >
+                    👤 Landlord
+                </a>
+
+
+                <a
+                    href="/profile"
+                    class="nav-link active"
+                >
+                    🙍 Profile
+                </a>
+
+
+            </nav>
+
+
+            <!-- SIDEBAR FOOTER -->
+
+            <div class="sidebar-footer">
+
+    <button
+        type="button"
+        class="sidebar-user-trigger"
+        id="sidebarUserTrigger"
+    >
+
+        <span class="sidebar-user-avatar">
+            👤
+        </span>
+
+        <span class="sidebar-user-details">
+
+            <small>
+                Signed in as
+            </small>
+
+            <strong id="profileSidebarName">
+                Current User
+            </strong>
+
+        </span>
+
+        <span
+            class="sidebar-user-arrow"
+            id="sidebarUserArrow"
+        >
+            ▾
+        </span>
+
+    </button>
+
+
+    <div
+        class="sidebar-user-menu"
+        id="sidebarUserMenu"
+    >
+
+        <a href="/profile">
+            👤 My Profile
+        </a>
+
+        <a href="/settings">
+            ⚙️ Settings
+        </a>
+
+        <button
+            type="button"
+            id="profileLogoutBtn"
+        >
+            🚪 Logout
+        </button>
+
+    </div>
+
+</div>
+
+
+        </aside>
+
+
+
+        <!-- =====================================
+             MAIN CONTENT
+             ===================================== -->
+
+        <main class="dashboard-main">
+
+
+            <!-- =================================
+                 TOPBAR
+                 ================================= -->
+
+            <header class="dashboard-topbar">
+
+
+                <div>
+
+                    <p class="greeting">
+                        Account
+                    </p>
+
+
+                    <h2>
+                        My Profile
+                    </h2>
+
+
+                    <p class="muted">
+                        View and manage your M-PESA Rent Wallet account.
+                    </p>
+
+                </div>
+
+
+                <div class="topbar-actions">
+
+                    <span
+                        class="count-pill"
+                        id="profileVersion"
+                    >
+                        Enterprise
+                    </span>
+
+                </div>
+
+
+            </header>
+
+
+
+            <!-- =================================
+                 PERSONAL INFORMATION
+                 ================================= -->
+
+            <section class="card">
+
+
+                <div class="section-head">
+
+                    <div>
+
+                        <h3>
+                            Personal Information
+                        </h3>
+
+                        <p class="muted">
+                            Your registered account information.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-grid">
+
+
+                    <!-- FULL NAME -->
+
+                    <div>
+
+                        <span class="stat-label">
+                            Full Name
+                        </span>
+
+                        <strong id="profileName">
+                            Loading...
+                        </strong>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div>
+
+                        <span class="stat-label">
+                            Email Address
+                        </span>
+
+                        <strong id="profileEmail">
+                            Loading...
+                        </strong>
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div>
+
+                        <span class="stat-label">
+                            Phone Number
+                        </span>
+
+                        <strong id="profilePhone">
+                            Loading...
+                        </strong>
+
+                    </div>
+
+
+                    <!-- NATIONAL ID -->
+
+                    <div>
+
+                        <span class="stat-label">
+                            National ID
+                        </span>
+
+                        <strong id="profileNationalId">
+                            Loading...
+                        </strong>
+
+                    </div>
+
+
+                    <!-- USER ID -->
+
+                    <div>
+
+                        <span class="stat-label">
+                            User ID
+                        </span>
+
+                        <strong
+                            id="profileUserId"
+                            style="font-size:.85rem;word-break:break-all;"
+                        >
+                            Loading...
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ACCOUNT STATUS -->
+
+                    <div>
+
+                        <span class="stat-label">
+                            Account Status
+                        </span>
+
+                        <strong id="profileStatus">
+                            Active
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================
+                 LANDLORD / BUSINESS
+                 ================================= -->
+
+            <section class="card">
+
+
+                <div class="section-head">
+
+                    <div>
+
+                        <h3>
+                            Landlord / Business Information
+                        </h3>
+
+                        <p class="muted">
+                            Information connected to your landlord account.
+                        </p>
+
+                    </div>
+
+
+                    <span
+                        class="count-pill"
+                        id="profileLandlordStatus"
+                    >
+                        Landlord
+                    </span>
+
+                </div>
+
+
+                <div class="profile-grid">
+
+
+                    <!-- BUSINESS -->
+
+                    <div>
+
+                        <span class="stat-label">
+                            Business Name
+                        </span>
+
+                        <strong id="profileBusinessName">
+                            Loading...
+                        </strong>
+
+                    </div>
+
+
+                    <!-- LANDLORD ID -->
+
+                    <div>
+
+                        <span class="stat-label">
+                            Landlord ID
+                        </span>
+
+                        <strong
+                            id="profileLandlordId"
+                            style="font-size:.85rem;word-break:break-all;"
+                        >
+                            Loading...
+                        </strong>
+
+                    </div>
+
+
+                    <!-- PROPERTIES -->
+
+                    <div>
+
+                        <span class="stat-label">
+                            Properties
+                        </span>
+
+                        <strong id="profileProperties">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <!-- UNITS -->
+
+                    <div>
+
+                        <span class="stat-label">
+                            Units
+                        </span>
+
+                        <strong id="profileUnits">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <!-- TENANTS -->
+
+                    <div>
+
+                        <span class="stat-label">
+                            Tenants
+                        </span>
+
+                        <strong id="profileTenants">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <!-- WORKSPACE -->
+
+                    <div>
+
+                        <span class="stat-label">
+                            Workspace
+                        </span>
+
+                        <strong id="profileWorkspace">
+                            Landlord
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================
+                 RENT WALLET
+                 ================================= -->
+
+            <section class="card">
+
+
+                <div class="section-head">
+
+
+                    <div>
+
+                        <h3>
+                            Rent Wallet
+                        </h3>
+
+                        <p class="muted">
+                            Your current M-PESA Rent Wallet position.
+                        </p>
+
+                    </div>
+
+
+                    <span
+                        class="count-pill"
+                        id="profileWalletStatus"
+                    >
+                        Loading...
+                    </span>
+
+
+                </div>
+
+
+
+                <div class="stats-grid">
+
+
+                    <!-- RENT GOAL -->
+
+                    <article class="stat-card">
+
+                        <span class="stat-label">
+                            Rent Goal
+                        </span>
+
+                        <strong id="profileRentGoal">
+                            KES 0
+                        </strong>
+
+                        <p class="muted">
+                            Target rent amount
+                        </p>
+
+                    </article>
+
+
+
+                    <!-- SAVED AMOUNT -->
+
+                    <article class="stat-card">
+
+                        <span class="stat-label">
+                            Saved Amount
+                        </span>
+
+                        <strong id="profileSavedAmount">
+                            KES 0
+                        </strong>
+
+                        <p class="muted">
+                            Current wallet savings
+                        </p>
+
+                    </article>
+
+
+
+                    <!-- DUE DATE -->
+
+                    <article class="stat-card">
+
+                        <span class="stat-label">
+                            Rent Due Date
+                        </span>
+
+                        <strong id="profileDueDate">
+                            Not set
+                        </strong>
+
+                        <p class="muted">
+                            Next scheduled rent date
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================
+                 ACCOUNT ACTIONS
+                 ================================= -->
+
+            <section class="card">
+
+
+                <h3>
+                    Account Actions
+                </h3>
+
+
+                <p class="muted">
+                    Manage your current session.
+                </p>
+
+
+                <div class="actions">
+
+
+                    <button
+                        type="button"
+                        id="profileLogoutMainBtn"
+                    >
+                        Logout
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="secondary"
+                        onclick="window.location.href='/dashboard'"
+                    >
+                        Back to Dashboard
+                    </button>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================
+                 STATUS / MESSAGES
+                 ================================= -->
+
+            <section
+                class="card hidden"
+                id="profileMessageCard"
+            >
+
+                <p
+                    class="muted"
+                    id="profileMessage"
+                ></p>
+
+            </section>
+
+
+        </main>
+
+
+    </div>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+         IMPORTANT:
+         storage.js MUST load before profile.js
+         ========================================= -->
+
+    <script src="../js/config/storage.js"></script>
+    <script src="../js/modules/profile.js"></script>
+    <script src="/js/mobile-nav.js"></script>
+    <script src="/js/offline-status.js"></script>
+
+
+</body>
+
+</html>

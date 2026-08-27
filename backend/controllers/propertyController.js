@@ -143,39 +143,40 @@ exports.createProperty = async (req, res) => {
 // ===========================================
 // Get Properties
 // ===========================================
-
 exports.getProperties = async (req, res) => {
 
     try {
 
         const pool = await db();
 
+        const { landlordId } = req.params;
+
         const [rows] = await pool.execute(
 
             `SELECT
+                id,
+                landlordId,
+                propertyCode,
+                propertyName,
+                location,
+                units,
+                monthlyRent,
+                createdAt
+            FROM properties
+            WHERE landlordId = ?
+            ORDER BY createdAt DESC`,
 
-                p.id,
-                p.landlordId,
-                p.propertyCode,
-                p.propertyName,
-                p.location,
-                p.units,
-                p.monthlyRent,
-                p.createdAt,
-
-                l.phone
-
-            FROM properties p
-
-            LEFT JOIN landlords l
-
-                ON p.landlordId = l.id
-
-            ORDER BY p.createdAt DESC`
+            [landlordId]
 
         );
 
-        res.json(rows);
+        res.json({
+
+            success: true,
+
+            properties: rows
+
+        });
 
     }
 

@@ -3,13 +3,21 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>Tenant Management</title>
+    <title>Tenant Management | M-PESA Rent Wallet</title>
 
-<link rel="stylesheet" href="../css/style.css">
+    <script src="/js/theme.js"></script>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
 
 </head>
 
@@ -17,93 +25,259 @@
 
 <div class="dashboard-shell">
 
+    <!-- =========================================
+         SIDEBAR
+         ========================================= -->
+
     <aside class="sidebar">
 
         <div class="brand-block">
 
-            <p class="eyebrow">Safaricom Inspired</p>
+            <p class="eyebrow">
+                Safaricom Inspired
+            </p>
 
-            <h1>M-PESA Rent Wallet</h1>
+            <h1>
+                M-PESA Rent Wallet
+            </h1>
 
-            <p class="muted">Tenant Management</p>
+            <p class="muted">
+                Tenant Management
+            </p>
 
         </div>
 
+
         <nav class="sidebar-nav">
 
-            <a href="dashboard.html">🏠 Dashboard</a>
+            <a
+                href="/dashboard"
+                class="nav-link"
+            >
+                🏠 Dashboard
+            </a>
 
-            <a href="properties.html">🏢 Properties</a>
+            <a
+                href="/properties"
+                class="nav-link"
+            >
+                🏢 Properties
+            </a>
 
-            <a href="units.html">🏘️ Units</a>
+            <a
+                href="/units"
+                class="nav-link"
+            >
+                🏘 Units
+            </a>
 
-            <a href="tenants.html" class="active">👥 Tenants</a>
+            <a
+                href="/tenants"
+                class="nav-link active"
+            >
+                👥 Tenants
+            </a>
 
-            <a href="wallet.html">💰 Rent Wallet</a>
+            <a
+                href="/wallet"
+                class="nav-link"
+            >
+                💰 Rent Wallet
+            </a>
+
+            <a
+                href="/landlord"
+                class="nav-link"
+            >
+                👤 Landlord
+            </a>
+
+            <a
+                href="/profile"
+                class="nav-link"
+            >
+                🙍 Profile
+            </a>
 
         </nav>
 
     </aside>
 
+
+    <!-- =========================================
+         MAIN CONTENT
+         ========================================= -->
+
     <main class="dashboard-main">
 
-        <h2>Tenant Management</h2>
+        <header class="dashboard-topbar">
 
-        <p class="muted">
+            <div>
 
-            Register tenants and assign them to available units.
+                <h2>
+                    Tenant Management
+                </h2>
 
-        </p>
+                <p class="muted">
+                    Register tenants and assign them
+                    to available units.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <a href="/dashboard">
+
+                    <button
+                        type="button"
+                        class="secondary"
+                    >
+                        ← Dashboard
+                    </button>
+
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================
+             STATISTICS
+             ===================================== -->
+
+        <section class="stats-grid">
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Registered Tenants
+                </span>
+
+                <strong id="tenantCount">
+                    0
+                </strong>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Occupied Units
+                </span>
+
+                <strong id="occupiedUnits">
+                    0
+                </strong>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Monthly Rent
+                </span>
+
+                <strong id="tenantRevenue">
+                    KES 0
+                </strong>
+
+            </article>
+
+        </section>
+
+
+        <br>
+
+
+        <!-- =====================================
+             REGISTER TENANT
+             ===================================== -->
 
         <section class="card">
 
-            <h3>Register Tenant</h3>
+            <h3>
+                Register Tenant
+            </h3>
 
-            <label for="tenantName">Full Name</label>
+
+            <label for="tenantName">
+                Full Name
+            </label>
+
             <input
                 id="tenantName"
                 type="text"
                 placeholder="Full Name"
             >
 
-            <label for="tenantId">National ID</label>
+
+            <label for="tenantId">
+                National ID
+            </label>
+
             <input
                 id="tenantId"
                 type="text"
                 placeholder="National ID"
             >
 
-            <label for="tenantPhone">Phone</label>
+
+            <label for="tenantPhone">
+                Phone Number
+            </label>
+
             <input
                 id="tenantPhone"
                 type="text"
                 placeholder="07XXXXXXXX"
             >
 
-            <label for="tenantEmail">Email</label>
+
+            <label for="tenantEmail">
+                Email
+            </label>
+
             <input
                 id="tenantEmail"
                 type="email"
                 placeholder="example@email.com"
             >
 
-            <label for="tenantProperty">Property</label>
+
+            <label for="tenantProperty">
+                Property
+            </label>
 
             <select id="tenantProperty">
 
-                <option value="">Select Property</option>
+                <option value="">
+                    Select Property
+                </option>
 
             </select>
 
-            <label for="tenantUnit">Available Unit</label>
+
+            <label for="tenantUnit">
+                Available Unit
+            </label>
 
             <select id="tenantUnit">
 
-                <option value="">Select Unit</option>
+                <option value="">
+                    Select Unit
+                </option>
 
             </select>
 
-            <label for="tenantRent">Monthly Rent</label>
+
+            <label for="tenantRent">
+                Monthly Rent
+            </label>
 
             <input
                 id="tenantRent"
@@ -112,60 +286,108 @@
                 placeholder="Monthly Rent"
             >
 
-            <br><br>
 
-            <button
-                id="registerTenantBtn"
-                type="button"
-            >
+            <div class="actions">
 
-                Register Tenant
+                <button
+                    id="registerTenantBtn"
+                    type="button"
+                >
+                    Register Tenant
+                </button>
 
-            </button>
+            </div>
 
         </section>
 
+
         <br>
+
+
+        <!-- =====================================
+             REGISTERED TENANTS
+             ===================================== -->
 
         <section class="card">
 
-            <h3>Registered Tenants</h3>
+            <div class="section-head">
 
-            <table class="data-table">
+                <div>
 
-                <thead>
+                    <h3>
+                        Registered Tenants
+                    </h3>
 
-                    <tr>
+                    <p class="muted">
+                        Tenants registered under
+                        your landlord account.
+                    </p>
 
-                        <th>Name</th>
+                </div>
 
-                        <th>Phone</th>
 
-                        <th>Property</th>
+                <span
+                    class="count-pill"
+                    id="tenantCountBadge"
+                >
+                    0 Tenants
+                </span>
 
-                        <th>Unit</th>
+            </div>
 
-                        <th>Rent</th>
 
-                    </tr>
+            <div class="table-wrap">
 
-                </thead>
+                <table class="data-table">
 
-                <tbody id="tenantTableBody">
+                    <thead>
 
-                    <tr>
+                        <tr>
 
-                        <td colspan="5">
+                            <th>
+                                Name
+                            </th>
 
-                            No tenants registered.
+                            <th>
+                                Phone
+                            </th>
 
-                        </td>
+                            <th>
+                                Property
+                            </th>
 
-                    </tr>
+                            <th>
+                                Unit
+                            </th>
 
-                </tbody>
+                            <th>
+                                Rent
+                            </th>
 
-            </table>
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tenantTableBody">
+
+                        <tr>
+
+                            <td colspan="6">
+                                No tenants registered.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
 
         </section>
 
@@ -173,8 +395,19 @@
 
 </div>
 
+
+<!-- =========================================
+     JAVASCRIPT
+     IMPORTANT: STORAGE MUST LOAD FIRST
+     ========================================= -->
+
 <script src="../js/config/storage.js"></script>
+
 <script src="../js/modules/tenant.js"></script>
+
+<script src="/js/mobile-nav.js"></script>
+
+<script src="/js/offline-status.js"></script>
 
 </body>
 

@@ -1,20 +1,124 @@
 // ===========================================
 // M-PESA Rent Wallet
 // Authentication Module
-// Version 10.0 - Part 1
+// Version 10.3 Enterprise
 // ===========================================
 
-const loginForm = document.getElementById("loginForm");
-const registerForm = document.getElementById("registerForm");
+"use strict";
 
-const loginId = document.getElementById("loginId");
-const loginPassword = document.getElementById("loginPassword");
+console.log("===========================================");
+console.log("M-PESA RENT WALLET");
+console.log("AUTHENTICATION MODULE VERSION 10.3");
+console.log("===========================================");
 
-const fullName = document.getElementById("fullName");
-const phoneNumber = document.getElementById("phoneNumber");
-const emailAddress = document.getElementById("emailAddress");
-const registerPassword = document.getElementById("registerPassword");
-const confirmPassword = document.getElementById("confirmPassword");
+// ===========================================
+// DOM Elements
+// ===========================================
+
+const loginForm =
+    document.getElementById("loginForm");
+
+const registerForm =
+    document.getElementById("registerForm");
+
+const loginId =
+    document.getElementById("loginId");
+
+const loginPassword =
+    document.getElementById("loginPassword");
+
+const fullName =
+    document.getElementById("fullName");
+
+const phoneNumber =
+    document.getElementById("phoneNumber");
+
+const emailAddress =
+    document.getElementById("emailAddress");
+
+const registerPassword =
+    document.getElementById("registerPassword");
+
+const confirmPassword =
+    document.getElementById("confirmPassword");
+
+// ===========================================
+// LOGIN / REGISTER TAB SWITCHING
+// ===========================================
+
+const showLoginBtn =
+    document.getElementById("showLoginBtn");
+
+const showRegisterBtn =
+    document.getElementById("showRegisterBtn");
+
+
+function showLoginForm() {
+
+    if (!loginForm || !registerForm) {
+        console.error(
+            "Login/Register forms not found."
+        );
+        return;
+    }
+
+    loginForm.classList.remove("hidden");
+
+    registerForm.classList.add("hidden");
+
+    if (showLoginBtn) {
+        showLoginBtn.classList.add("active");
+    }
+
+    if (showRegisterBtn) {
+        showRegisterBtn.classList.remove("active");
+    }
+
+}
+
+
+function showRegisterForm() {
+
+    if (!loginForm || !registerForm) {
+        console.error(
+            "Login/Register forms not found."
+        );
+        return;
+    }
+
+    loginForm.classList.add("hidden");
+
+    registerForm.classList.remove("hidden");
+
+    if (showLoginBtn) {
+        showLoginBtn.classList.remove("active");
+    }
+
+    if (showRegisterBtn) {
+        showRegisterBtn.classList.add("active");
+    }
+
+}
+
+
+if (showLoginBtn) {
+
+    showLoginBtn.addEventListener(
+        "click",
+        showLoginForm
+    );
+
+}
+
+
+if (showRegisterBtn) {
+
+    showRegisterBtn.addEventListener(
+        "click",
+        showRegisterForm
+    );
+
+}
 
 // ===========================================
 // Register
@@ -24,7 +128,10 @@ async function registerUser(e) {
 
     e.preventDefault();
 
-    if (registerPassword.value !== confirmPassword.value) {
+    if (
+        registerPassword.value !==
+        confirmPassword.value
+    ) {
 
         alert("Passwords do not match.");
 
@@ -32,33 +139,65 @@ async function registerUser(e) {
 
     }
 
-    const response = await fetch("/api/auth/register", {
+    try {
 
-        method: "POST",
+        const response =
+            await fetch(
+                "/api/auth/register",
+                {
+                    method: "POST",
 
-        headers: {
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-            "Content-Type": "application/json"
+                    body: JSON.stringify({
 
-        },
+                        fullName:
+                            fullName.value.trim(),
 
-        body: JSON.stringify({
+                        phone:
+                            phoneNumber.value.trim(),
 
-            fullName: fullName.value.trim(),
+                        email:
+                            emailAddress.value.trim(),
 
-            phone: phoneNumber.value.trim(),
+                        password:
+                            registerPassword.value
 
-            email: emailAddress.value.trim(),
+                    })
+                }
+            );
 
-            password: registerPassword.value
 
-        })
+        const result =
+            await response.json();
 
-    });
 
-    const result = await response.json();
+        alert(result.message);
 
-    alert(result.message);
+
+        if (result.success) {
+
+            registerForm.reset();
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Registration Error:",
+            error
+        );
+
+        alert(
+            "Registration failed."
+        );
+
+    }
 
 }
 
@@ -70,63 +209,205 @@ async function loginUser(e) {
 
     e.preventDefault();
 
-    const response = await fetch("/api/auth/login", {
+    try {
 
-        method: "POST",
+        console.log("-------------------------------------------");
+        console.log("LOGIN REQUEST");
+        console.log("-------------------------------------------");
 
-        headers: {
 
-            "Content-Type": "application/json"
+        const response =
+            await fetch(
+                "/api/auth/login",
+                {
+                    method: "POST",
 
-        },
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-        body: JSON.stringify({
+                    body: JSON.stringify({
 
-            login: loginId.value.trim(),
+                        login:
+                            loginId.value.trim(),
 
-            password: loginPassword.value
+                        password:
+                            loginPassword.value
 
-        })
+                    })
+                }
+            );
 
-    });
 
-    const result = await response.json();
+        const result =
+            await response.json();
 
-    if (!result.success) {
 
-        alert(result.message);
+        console.log(
+            "Login HTTP Status:",
+            response.status
+        );
 
-        return;
+        console.log(
+            "Login Result:",
+            result
+        );
+
+
+        // ===================================
+        // Login Failed
+        // ===================================
+
+        if (
+            !response.ok ||
+            !result.success
+        ) {
+
+            alert(
+                result.message ||
+                "Login failed."
+            );
+
+            return;
+
+        }
+
+
+        // ===================================
+        // Clear Previous Session Data
+        // ===================================
+
+        localStorage.removeItem(
+            STORAGE.USER_ID
+        );
+
+        localStorage.removeItem(
+            STORAGE.USER_EMAIL
+        );
+
+        localStorage.removeItem(
+            STORAGE.USER_NAME
+        );
+
+        localStorage.removeItem(
+            STORAGE.LANDLORD_ID
+        );
+
+        localStorage.removeItem(
+            STORAGE.TENANT_ID
+        );
+
+        localStorage.removeItem(
+            STORAGE.WALLET_ID
+        );
+
+        localStorage.removeItem(
+            STORAGE.PROPERTY_ID
+        );
+
+        localStorage.removeItem(
+            STORAGE.WORKSPACE
+        );
+
+        localStorage.removeItem(
+            STORAGE.SESSION
+        );
+
+
+        // ===================================
+        // Save Current User
+        // ===================================
+
+        localStorage.setItem(
+            STORAGE.USER_ID,
+            result.user.id
+        );
+
+        localStorage.setItem(
+            STORAGE.USER_EMAIL,
+            result.user.email || ""
+        );
+
+        localStorage.setItem(
+            STORAGE.USER_NAME,
+            result.user.fullName || ""
+        );
+
+        localStorage.setItem(
+            STORAGE.SESSION,
+            "ACTIVE"
+        );
+
+
+        // ===================================
+        // Restore Landlord
+        // ===================================
+
+        if (result.landlord) {
+
+            localStorage.setItem(
+                STORAGE.LANDLORD_ID,
+                result.landlord.id
+            );
+
+            console.log(
+                "Landlord restored:",
+                result.landlord.id
+            );
+
+        }
+
+
+        // ===================================
+        // Restore Tenant
+        // ===================================
+
+        if (result.tenant) {
+
+            localStorage.setItem(
+                STORAGE.TENANT_ID,
+                result.tenant.id
+            );
+
+        }
+
+
+        // ===================================
+        // Login Successful
+        // ===================================
+
+        console.log(
+            "✅ Login successful:",
+            result.user.id
+        );
+
+        console.log(
+            "Redirecting to /dashboard"
+        );
+
+
+        // IMPORTANT:
+        // Use Express route, NOT dashboard.html
+
+        window.location.replace(
+            "/dashboard"
+        );
 
     }
 
-    localStorage.setItem(
+    catch (error) {
 
-        STORAGE.userId,
+        console.error(
+            "LOGIN ERROR:",
+            error
+        );
 
-        result.user.id
+        alert(
+            "Login failed. Please try again."
+        );
 
-    );
-
-    localStorage.setItem(
-
-        STORAGE.userEmail,
-
-        result.user.email
-
-    );
-
-    localStorage.setItem(
-
-        STORAGE.session,
-
-        "ACTIVE"
-
-    );
-
-    alert("Login successful.");
-
-    location.reload();
+    }
 
 }
 
@@ -136,42 +417,104 @@ async function loginUser(e) {
 
 function logout() {
 
-    localStorage.removeItem(STORAGE.userId);
+    console.log(
+        "Logging out current user..."
+    );
 
-    localStorage.removeItem(STORAGE.userEmail);
 
-    localStorage.removeItem(STORAGE.landlordId);
+    // ===================================
+    // Clear ALL Application Session Data
+    // ===================================
 
-    localStorage.removeItem(STORAGE.session);
+    localStorage.removeItem(
+        STORAGE.USER_ID
+    );
 
-    location.reload();
+    localStorage.removeItem(
+        STORAGE.USER_EMAIL
+    );
+
+    localStorage.removeItem(
+        STORAGE.USER_NAME
+    );
+
+    localStorage.removeItem(
+        STORAGE.LANDLORD_ID
+    );
+
+    localStorage.removeItem(
+        STORAGE.TENANT_ID
+    );
+
+    localStorage.removeItem(
+        STORAGE.WALLET_ID
+    );
+
+    localStorage.removeItem(
+        STORAGE.PROPERTY_ID
+    );
+
+    localStorage.removeItem(
+        STORAGE.WORKSPACE
+    );
+
+    localStorage.removeItem(
+        STORAGE.SESSION
+    );
+
+
+    console.log(
+        "✅ Session cleared."
+    );
+
+
+    // ===================================
+    // Return to Login
+    // ===================================
+
+    window.location.replace(
+        "/"
+    );
 
 }
 
 // ===========================================
-// Events
+// Login Event
 // ===========================================
 
 if (loginForm) {
 
     loginForm.addEventListener(
-
         "submit",
-
         loginUser
-
     );
 
 }
+
+// ===========================================
+// Registration Event
+// ===========================================
 
 if (registerForm) {
 
     registerForm.addEventListener(
-
         "submit",
-
         registerUser
-
     );
 
 }
+
+// ===========================================
+// Expose Logout Globally
+// ===========================================
+
+window.logout = logout;
+
+
+// ===========================================
+// Ready
+// ===========================================
+
+console.log(
+    "✅ Authentication Module Version 10.3 Enterprise Loaded"
+);

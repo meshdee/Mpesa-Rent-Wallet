@@ -1,150 +1,532 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M-PESA Rent Wallet | Dashboard</title>
-  <link rel="stylesheet" href="../css/style.css" />
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>M-PESA Rent Wallet - Dashboard</title>
+
+    <script src="/js/theme.js"></script>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css">
+
 </head>
+
 <body>
-  <div class="dashboard-shell">
+
+<div class="dashboard-shell">
+
+    <!-- ===========================================
+         SIDEBAR
+         =========================================== -->
+
     <aside class="sidebar">
-      <div class="brand-block">
-        <p class="eyebrow">Safaricom Inspired</p>
-        <h1>M-PESA Rent Wallet</h1>
-        <p class="muted">Enterprise workspace</p>
-      </div>
 
-      <nav class="sidebar-nav">
-        <a href="#" class="nav-link active">🏠 Dashboard</a>
-        <a href="#" class="nav-link">🏢 Properties</a>
-        <a href="#" class="nav-link">👥 Tenants</a>
-        <a href="#" class="nav-link">💰 Rent Wallet</a>
-        <a href="#" class="nav-link">📈 Analytics</a>
-        <a href="#" class="nav-link">⚙ Settings</a>
-      </nav>
+        <div class="brand-block">
 
-      <div class="sidebar-footer">
-        <p class="muted">Signed in as</p>
-        <strong id="dashboardUserName">Meshack</strong>
-        <button type="button" class="secondary full-width" id="dashboardLogoutBtn">Logout</button>
-      </div>
+            <p class="eyebrow">
+                Safaricom Inspired
+            </p>
+
+            <h1>
+                M-PESA Rent Wallet
+            </h1>
+
+            <p class="muted">
+                Rental Management
+            </p>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a
+                href="/dashboard"
+                class="nav-link active">
+
+                🏠 Dashboard
+
+            </a>
+
+
+            <a
+                href="/properties"
+                class="nav-link">
+
+                🏢 Properties
+
+            </a>
+
+
+            <a
+                href="/units"
+                class="nav-link">
+
+                🏘️ Units
+
+            </a>
+
+
+            <a
+                href="/tenants"
+                class="nav-link">
+
+                👥 Tenants
+
+            </a>
+
+
+
+            <!-- ===================================
+                 RENT WALLET
+                 =================================== -->
+
+            <a
+                href="/wallet"
+                class="nav-link">
+
+                💰 Rent Wallet
+
+            </a>
+
+
+            <a
+                href="/landlord"
+                class="nav-link">
+
+                👤 Landlord
+
+            </a>
+
+
+            <a
+                href="/profile"
+                class="nav-link">
+
+                🙍 Profile
+
+            </a>
+
+        </nav>
+
+
+        <!-- =======================================
+             SIDEBAR FOOTER
+             ======================================= -->
+
+        <div class="sidebar-footer">
+
+            <p class="muted">
+                Signed in as
+            </p>
+
+            <strong id="dashboardUserName">
+                Meshack
+            </strong>
+
+            <button
+                type="button"
+                class="secondary full-width"
+                id="dashboardLogoutBtn">
+
+                Logout
+
+            </button>
+
+        </div>
+
     </aside>
 
+
+    <!-- ===========================================
+         MAIN DASHBOARD
+         =========================================== -->
+
     <main class="dashboard-main">
-      <header class="dashboard-topbar">
-        <div>
-          <p class="greeting">Good day</p>
-          <h2>Welcome back</h2>
-          <p class="muted">Manage your rental ecosystem from one place.</p>
-        </div>
 
-        <div class="topbar-actions">
-          <span class="count-pill">Version 8.2</span>
-        </div>
-      </header>
 
-      <section class="stats-grid">
-        <article class="stat-card">
-          <span class="stat-label">Properties</span>
-          <strong id="propertiesCount">0</strong>
-          <p class="muted">Registered rental properties</p>
-        </article>
+        <!-- =======================================
+             TOPBAR
+             ======================================= -->
 
-        <article class="stat-card">
-          <span class="stat-label">Tenants</span>
-          <strong id="tenantsCount">0</strong>
-          <p class="muted">Active tenant profiles</p>
-        </article>
+        <header class="dashboard-topbar">
 
-        <article class="stat-card">
-          <span class="stat-label">Monthly Revenue</span>
-          <strong id="monthlyRevenue">KES 0</strong>
-          <p class="muted">Expected rent collection</p>
-        </article>
-      </section>
+            <div>
 
-      <section class="content-grid">
-        <section class="card">
-          <h3>Landlord Registration</h3>
-          <p class="muted">Register a landlord account before creating properties.</p>
+                <p class="greeting">
+                    Good day
+                </p>
 
-          <label for="businessName">Business Name</label>
-          <input id="businessName" type="text" placeholder="Business Name" />
+                <h2>
+                    Welcome back
+                </h2>
 
-          <label for="nationalId">National ID</label>
-          <input id="nationalId" type="text" placeholder="National ID" />
+                <p class="muted">
+                    Manage your rental ecosystem from one place.
+                </p>
 
-          <label for="landlordPhone">Phone Number</label>
-          <input id="landlordPhone" type="text" placeholder="Phone Number" />
+            </div>
 
-          <div class="actions">
-            <button type="button" id="registerLandlordBtn">Register Landlord</button>
-          </div>
+
+            <div class="topbar-actions">
+
+                <span
+                    class="count-pill"
+                    id="appVersion">
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- =======================================
+             DASHBOARD STATISTICS
+             ======================================= -->
+
+        <section class="stats-grid">
+
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Properties
+                </span>
+
+                <strong id="propertiesCount">
+                    0
+                </strong>
+
+                <p class="muted">
+                    Registered rental properties
+                </p>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Tenants
+                </span>
+
+                <strong id="tenantsCount">
+                    0
+                </strong>
+
+                <p class="muted">
+                    Active tenant profiles
+                </p>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Monthly Revenue
+                </span>
+
+                <strong id="monthlyRevenue">
+                    KES 0
+                </strong>
+
+                <p class="muted">
+                    Expected rent collection
+                </p>
+
+            </article>
+
+
         </section>
 
-        <section class="card">
-          <h3>Create Property</h3>
-          <p class="muted">Add a property and generate a unique property code.</p>
 
-          <label for="propertyName">Property Name</label>
-          <input id="propertyName" type="text" placeholder="Property Name" />
+        <!-- =======================================
+             MANAGEMENT ACTIONS
+             ======================================= -->
 
-          <label for="propertyLocation">Location</label>
-          <input id="propertyLocation" type="text" placeholder="Location" />
+        <section class="content-grid">
 
-          <label for="propertyUnits">Units</label>
-          <input id="propertyUnits" type="number" min="1" placeholder="Units" />
 
-          <label for="monthlyRent">Monthly Rent</label>
-          <input id="monthlyRent" type="number" min="1" placeholder="Monthly Rent" />
+            <!-- ===================================
+                 LANDLORD REGISTRATION
+                 =================================== -->
 
-          <div class="actions">
-            <button type="button" id="createPropertyBtn">Create Property</button>
-          </div>
+            <section class="card">
+
+                <h3>
+                    Landlord Registration
+                </h3>
+
+                <p class="muted">
+                    Register a landlord account before creating properties.
+                </p>
+
+
+                <label for="businessName">
+                    Business Name
+                </label>
+
+                <input
+                    id="businessName"
+                    type="text"
+                    placeholder="Business Name">
+
+
+                <label for="nationalId">
+                    National ID
+                </label>
+
+                <input
+                    id="nationalId"
+                    type="text"
+                    placeholder="National ID">
+
+
+                <label for="landlordPhone">
+                    Phone Number
+                </label>
+
+                <input
+                    id="landlordPhone"
+                    type="text"
+                    placeholder="Phone Number">
+
+
+                <div class="actions">
+
+                    <button
+                        type="button"
+                        id="registerLandlordBtn">
+
+                        Register Landlord
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ===================================
+                 CREATE PROPERTY
+                 =================================== -->
+
+            <section class="card">
+
+                <h3>
+                    Create Property
+                </h3>
+
+                <p class="muted">
+                    Add a property and generate a unique property code.
+                </p>
+
+
+                <label for="propertyName">
+                    Property Name
+                </label>
+
+                <input
+                    id="propertyName"
+                    type="text"
+                    placeholder="Property Name">
+
+
+                <label for="propertyLocation">
+                    Location
+                </label>
+
+                <input
+                    id="propertyLocation"
+                    type="text"
+                    placeholder="Location">
+
+
+                <label for="propertyUnits">
+                    Units
+                </label>
+
+                <input
+                    id="propertyUnits"
+                    type="number"
+                    min="1"
+                    placeholder="Units">
+
+
+                <label for="monthlyRent">
+                    Monthly Rent
+                </label>
+
+                <input
+                    id="monthlyRent"
+                    type="number"
+                    min="1"
+                    placeholder="Monthly Rent">
+
+
+                <div class="actions">
+
+                    <button
+                        type="button"
+                        id="createPropertyBtn">
+
+                        Create Property
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
         </section>
-      </section>
 
-      <section class="card">
-        <div class="section-head">
-          <div>
-            <h3>Registered Properties</h3>
-            <p class="muted">Monitor property codes, units, and expected rent.</p>
-          </div>
-          <span class="count-pill" id="propertyCountBadge">0 properties</span>
-        </div>
 
-        <div class="table-wrap">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Property Code</th>
-                <th>Property</th>
-                <th>Location</th>
-                <th>Units</th>
-                <th>Monthly Rent</th>
-              </tr>
-            </thead>
-            <tbody id="propertiesTableBody">
-              <tr>
-                <td colspan="5" class="empty-state">No properties registered yet.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        <!-- =======================================
+             REGISTERED PROPERTIES
+             ======================================= -->
 
-      <section class="card">
-        <h3>Recent Activity</h3>
-        <ul class="activity-list" id="activityList">
-          <li class="empty-state">No recent activity yet.</li>
-        </ul>
-      </section>
+        <section class="card">
+
+
+            <div class="section-head">
+
+                <div>
+
+                    <h3>
+                        Registered Properties
+                    </h3>
+
+                    <p class="muted">
+                        Monitor property codes, units, and expected rent.
+                    </p>
+
+                </div>
+
+
+                <span
+                    class="count-pill"
+                    id="propertyCountBadge">
+
+                    0 properties
+
+                </span>
+
+            </div>
+
+
+            <div class="table-wrap">
+
+                <table class="data-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Property Code
+                            </th>
+
+                            <th>
+                                Property
+                            </th>
+
+                            <th>
+                                Location
+                            </th>
+
+                            <th>
+                                Units
+                            </th>
+
+                            <th>
+                                Monthly Rent
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="propertiesTableBody">
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="empty-state">
+
+                                No properties registered yet.
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =======================================
+             RECENT ACTIVITY
+             ======================================= -->
+
+        <section class="card">
+
+            <h3>
+                Recent Activity
+            </h3>
+
+
+            <ul
+                class="activity-list"
+                id="activityList">
+
+                <li class="empty-state">
+                    No recent activity yet.
+                </li>
+
+            </ul>
+
+        </section>
+
+
     </main>
-  </div>
 
-  <script src="../js/modules/landlord.js"></script>
-<!--  <script src="../js/modules/property.js"></script>-->
-  <script src="../js/app.js"></script>
+</div>
+
+
+<!-- ===========================================
+     APPLICATION SCRIPTS
+     IMPORTANT: LOAD ORDER
+     =========================================== -->
+
+<script src="../js/config/storage.js"></script>
+
+<script src="../js/modules/landlord.js"></script>
+
+<script src="../js/modules/property.js"></script>
+
+<script src="../js/dashboard.js"></script>
+
+<script src="../js/helpers/authHelper.js"></script>
+
+<script src="/js/mobile-nav.js"></script>
+
+<script src="/js/offline-status.js"></script>
+
+
 </body>
 </html>

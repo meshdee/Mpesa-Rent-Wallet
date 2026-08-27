@@ -4,6 +4,16 @@ const router = express.Router();
 
 const walletController = require("../controllers/walletController");
 
+router.get(
+    "/:userId/transactions",
+    walletController.getTransactions
+);
+
+router.get(
+    "/:userId/transactions/:transactionId",
+    walletController.getTransaction
+);
+
 router.get("/:userId", walletController.getWallet);
 
 router.put("/:userId/settings", walletController.updateSettings);

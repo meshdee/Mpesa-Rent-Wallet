@@ -1,18 +1,59 @@
 // ===========================================
 // M-PESA Rent Wallet
-// Unit Module (Version 9.3)
+// Unit Module
+// Version 11.4 Enterprise
 // ===========================================
 
+"use strict";
+
+console.log("===========================================");
+console.log("M-PESA Rent Wallet");
+console.log("Unit Module Version 11.4 Enterprise");
+console.log("===========================================");
+
+// ===========================================
 // Form Elements
-const createUnitBtn = document.getElementById("createUnitBtn");
+// ===========================================
 
-const unitProperty = document.getElementById("unitProperty");
-const unitNumber = document.getElementById("unitNumber");
-const bedrooms = document.getElementById("bedrooms");
-const unitRent = document.getElementById("unitRent");
+const createUnitBtn =
+    document.getElementById("createUnitBtn");
 
+const unitProperty =
+    document.getElementById("unitProperty");
+
+const unitNumber =
+    document.getElementById("unitNumber");
+
+const bedrooms =
+    document.getElementById("bedrooms");
+
+const unitRent =
+    document.getElementById("unitRent");
+
+// ===========================================
 // Table
-const unitsTableBody = document.getElementById("unitsTableBody");
+// ===========================================
+
+const unitsTableBody =
+    document.getElementById("unitsTableBody");
+
+// ===========================================
+// Current Landlord
+// ===========================================
+
+function getLandlordId() {
+
+    const landlordId =
+        localStorage.getItem(STORAGE.LANDLORD_ID);
+
+    console.log(
+        "Current Landlord ID:",
+        landlordId
+    );
+
+    return landlordId;
+
+}
 
 // ===========================================
 // Load Properties
@@ -20,14 +61,92 @@ const unitsTableBody = document.getElementById("unitsTableBody");
 
 async function loadProperties() {
 
+    console.log("-------------------------------------------");
+    console.log("Loading landlord properties...");
+    console.log("-------------------------------------------");
+
+    if (!unitProperty) {
+
+        console.warn(
+            "unitProperty element not found."
+        );
+
+        return;
+
+    }
+
+    const landlordId =
+        getLandlordId();
+
+    if (!landlordId) {
+
+        console.warn(
+            "No landlord ID found."
+        );
+
+        unitProperty.innerHTML = `
+            <option value="">
+                Register as landlord first
+            </option>
+        `;
+
+        return;
+
+    }
+
     try {
 
-        const response = await fetch("/api/properties");
+        const response = await fetch(
 
-        const properties = await response.json();
+            `/api/properties/${landlordId}`
 
-        unitProperty.innerHTML =
-            `<option value="">Select Property</option>`;
+        );
+
+        console.log(
+            "Properties HTTP Status:",
+            response.status
+        );
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+        const result =
+            await response.json();
+
+        console.log(
+            "Properties API Result:",
+            result
+        );
+
+        const properties =
+            result.properties || [];
+
+        unitProperty.innerHTML = `
+            <option value="">
+                Select Property
+            </option>
+        `;
+
+        if (properties.length === 0) {
+
+            unitProperty.innerHTML = `
+                <option value="">
+                    No properties registered
+                </option>
+            `;
+
+            console.log(
+                "No properties found for this landlord."
+            );
+
+            return;
+
+        }
 
         properties.forEach(property => {
 
@@ -43,11 +162,25 @@ async function loadProperties() {
 
         });
 
+        console.log(
+            "Properties loaded:",
+            properties.length
+        );
+
     }
 
-    catch(error){
+    catch (error) {
 
-        console.error("Load Properties:", error);
+        console.error(
+            "Load Properties Error:",
+            error
+        );
+
+        unitProperty.innerHTML = `
+            <option value="">
+                Unable to load properties
+            </option>
+        `;
 
     }
 
@@ -59,11 +192,79 @@ async function loadProperties() {
 
 async function loadUnits() {
 
+    console.log("-------------------------------------------");
+    console.log("Loading landlord units...");
+    console.log("-------------------------------------------");
+
+    if (!unitsTableBody) {
+
+        console.warn(
+            "unitsTableBody element not found."
+        );
+
+        return;
+
+    }
+
+    const landlordId =
+        getLandlordId();
+
+    if (!landlordId) {
+
+        unitsTableBody.innerHTML = `
+
+            <tr>
+
+                <td colspan="5" class="empty-state">
+
+                    Register as a landlord first.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
     try {
 
-        const response = await fetch("/api/units");
+        const response = await fetch(
 
-        const units = await response.json();
+            `/api/units/${landlordId}`
+
+        );
+
+        console.log(
+            "Units HTTP Status:",
+            response.status
+        );
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+        const result =
+            await response.json();
+
+        console.log(
+            "Units API Result:",
+            result
+        );
+
+        const units =
+            result.units || [];
+
+        console.log(
+            "Units found:",
+            units.length
+        );
 
         unitsTableBody.innerHTML = "";
 
@@ -73,9 +274,9 @@ async function loadUnits() {
 
                 <tr>
 
-                    <td colspan="5">
+                    <td colspan="5" class="empty-state">
 
-                        No units created.
+                        No units created for this landlord.
 
                     </td>
 
@@ -87,33 +288,95 @@ async function loadUnits() {
 
         }
 
-        units.forEach(unit => {
+    units.forEach(unit => {
 
-            unitsTableBody.innerHTML += `
+    console.log(
+        "Rendering Unit:",
+        unit
+    );
 
-                <tr>
+    unitsTableBody.innerHTML += `
 
-                    <td>${unit.propertyName}</td>
+        <tr class="unit-row">
 
-                    <td>${unit.unitNumber}</td>
+            <td data-label="Property">
 
-                    <td>${unit.bedrooms}</td>
+                <span class="unit-property">
+                    ${unit.propertyName || "-"}
+                </span>
 
-                    <td>KES ${Number(unit.monthlyRent).toLocaleString()}</td>
+            </td>
 
-                    <td>${unit.status}</td>
 
-                </tr>
+            <td data-label="Unit">
 
-            `;
+                <strong class="unit-number">
+                    ${unit.unitNumber || "-"}
+                </strong>
 
-        });
+            </td>
+
+
+            <td data-label="Bedrooms">
+
+                <span class="unit-bedrooms">
+                    ${unit.bedrooms ?? "-"}
+                </span>
+
+            </td>
+
+
+            <td data-label="Rent">
+
+                <span class="unit-rent">
+                    KES ${Number(
+                        unit.monthlyRent || 0
+                    ).toLocaleString()}
+                </span>
+
+            </td>
+
+
+            <td data-label="Status">
+
+                <span class="unit-status">
+                    ${unit.status || "VACANT"}
+                </span>
+
+            </td>
+
+        </tr>
+
+    `;
+
+    });
+
+        console.log(
+            "✅ Units table rendered successfully."
+        );
 
     }
 
-    catch(error){
+    catch (error) {
 
-        console.error("Load Units:", error);
+        console.error(
+            "Load Units Error:",
+            error
+        );
+
+        unitsTableBody.innerHTML = `
+
+            <tr>
+
+                <td colspan="5" class="empty-state">
+
+                    Unable to load units.
+
+                </td>
+
+            </tr>
+
+        `;
 
     }
 
@@ -123,75 +386,230 @@ async function loadUnits() {
 // Create Unit
 // ===========================================
 
-createUnitBtn.addEventListener("click", async () => {
+if (createUnitBtn) {
 
-    if (
-        unitProperty.value === "" ||
-        unitNumber.value === "" ||
-        unitRent.value === ""
-    ) {
+    createUnitBtn.addEventListener(
 
-        alert("Please complete all required fields.");
+        "click",
 
-        return;
+        async () => {
 
-    }
+            console.log("-------------------------------------------");
+            console.log("Creating Unit...");
+            console.log("-------------------------------------------");
 
-    const data = {
+            const landlordId =
+                getLandlordId();
 
-        propertyId: unitProperty.value,
+            if (!landlordId) {
 
-        unitNumber: unitNumber.value,
+                alert(
+                    "Please register as a landlord first."
+                );
 
-        bedrooms: Number(bedrooms.value),
+                return;
 
-        monthlyRent: Number(unitRent.value)
+            }
 
-    };
+            if (
 
-    try {
+                !unitProperty ||
 
-        const response = await fetch("/api/units", {
+                unitProperty.value === ""
 
-            method: "POST",
+            ) {
 
-            headers: {
+                alert(
+                    "Please select a property."
+                );
 
-                "Content-Type": "application/json"
+                return;
 
-            },
+            }
 
-            body: JSON.stringify(data)
+            if (
 
-        });
+                !unitNumber ||
 
-        const result = await response.json();
+                unitNumber.value.trim() === ""
 
-        alert(result.message);
+            ) {
 
-        unitProperty.selectedIndex = 0;
-        unitNumber.value = "";
-        bedrooms.value = 1;
-        unitRent.value = "";
+                alert(
+                    "Please enter a unit number."
+                );
 
-        loadUnits();
+                return;
 
-    }
+            }
 
-    catch(error){
+            if (
 
-        console.error(error);
+                !unitRent ||
 
-        alert("Unable to create unit.");
+                unitRent.value === ""
 
-    }
+            ) {
 
-});
+                alert(
+                    "Please enter the monthly rent."
+                );
+
+                return;
+
+            }
+
+            const data = {
+
+                landlordId:
+
+                    landlordId,
+
+                propertyId:
+
+                    unitProperty.value,
+
+                unitNumber:
+
+                    unitNumber.value.trim(),
+
+                bedrooms:
+
+                    Number(
+                        bedrooms.value || 1
+                    ),
+
+                monthlyRent:
+
+                    Number(
+                        unitRent.value
+                    )
+
+            };
+
+            console.log(
+                "Unit Registration Data:",
+                data
+            );
+
+            try {
+
+                const response = await fetch(
+
+                    "/api/units",
+
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify(data)
+
+                    }
+
+                );
+
+                console.log(
+                    "Create Unit HTTP Status:",
+                    response.status
+                );
+
+                const result =
+                    await response.json();
+
+                console.log(
+                    "Create Unit API Result:",
+                    result
+                );
+
+                if (!response.ok) {
+
+                    alert(
+                        result.message ||
+                        "Unable to create unit."
+                    );
+
+                    return;
+
+                }
+
+                alert(
+                    result.message ||
+                    "Unit created successfully."
+                );
+
+                // ===================================
+                // Clear Form
+                // ===================================
+
+                unitProperty.selectedIndex = 0;
+
+                unitNumber.value = "";
+
+                bedrooms.value = 1;
+
+                unitRent.value = "";
+
+                // ===================================
+                // Reload Units
+                // ===================================
+
+                await loadUnits();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Create Unit Error:",
+                    error
+                );
+
+                alert(
+                    "Unable to create unit."
+                );
+
+            }
+
+        }
+
+    );
+
+}
 
 // ===========================================
 // Initialize
 // ===========================================
 
-loadProperties();
+async function initializeUnitPage() {
 
-loadUnits();
+    console.log("===========================================");
+    console.log("Initializing Unit Page...");
+    console.log("===========================================");
+
+    await loadProperties();
+
+    await loadUnits();
+
+    console.log(
+        "✅ Unit Page Initialized"
+    );
+
+}
+
+// ===========================================
+// Start
+// ===========================================
+
+initializeUnitPage();
+
+console.log(
+    "✅ Unit Module Version 11.4 Enterprise Loaded"
+);

@@ -130,7 +130,6 @@ exports.register = async (req, res) => {
     }
 
 };
-
 // ===========================================
 // Login
 // ===========================================
@@ -161,8 +160,8 @@ exports.login = async (req, res) => {
 
             `SELECT *
              FROM users
-             WHERE phone=?
-             OR LOWER(email)=LOWER(?)
+             WHERE phone = ?
+             OR LOWER(email) = LOWER(?)
              LIMIT 1`,
 
             [credential, credential]
@@ -203,6 +202,21 @@ exports.login = async (req, res) => {
 
         }
 
+        // ===========================================
+        // Check if this user is a landlord
+        // ===========================================
+
+        const [landlordRows] = await db.execute(
+
+            `SELECT id
+             FROM landlords
+             WHERE userId = ?
+             LIMIT 1`,
+
+            [user.id]
+
+        );
+
         return res.json({
 
             success: true,
@@ -219,7 +233,17 @@ exports.login = async (req, res) => {
 
                 email: user.email
 
-            }
+            },
+
+            landlord: landlordRows.length > 0
+
+                ? {
+
+                    id: landlordRows[0].id
+
+                }
+
+                : null
 
         });
 

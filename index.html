@@ -1,225 +1,814 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M-PESA Rent Wallet</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <meta
+    name="theme-color"
+    content="#00A651"
+    >
+
+    <title>M-PESA Rent Wallet</title>
+
+    <script src="/js/theme.js"></script>
+
+    <link
+        rel="stylesheet"
+        href="./css/style.css"
+    >
+    <link
+    rel="manifest"
+    href="/manifest.json"
+    >
+
 </head>
+
 <body>
-  <div class="app-shell">
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">Safaricom Inspired Prototype</p>
+    <!-- ===========================================
+     M-PESA RENT WALLET
+     PWA SPLASH SCREEN
+     =========================================== -->
+
+<div id="pwaSplash" class="pwa-splash">
+
+    <div class="pwa-splash-content">
+
+        <img
+            src="/icons/512.png"
+            alt="M-PESA Rent Wallet"
+            class="pwa-splash-icon"
+        >
+
         <h1>M-PESA Rent Wallet</h1>
-        <p class="subtitle">Save smart. Pay rent. Build your future.</p>
-      </div>
-      <div class="topbar-badge">
-        <span>Version 8.2 • Workspace Ready</span>
-      </div>
-    </header>
+
+        <p>Your rent. Your wallet. Your peace of mind.</p>
+
+        <div class="pwa-splash-loader"></div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     APPLICATION SHELL
+     ========================================== -->
+
+<div class="app-shell">
+
+    <!-- ======================================
+         AUTHENTICATION
+         ====================================== -->
 
     <main id="authView" class="auth-grid">
-      <section class="card auth-intro">
-        <p class="greeting" id="welcomeLine">Welcome</p>
-        <h2>Tenant Identity</h2>
-        <p class="muted">
-          Register your profile, then log in to access your rent wallet dashboard.
-        </p>
 
-        <div class="auth-note">
-          <strong>What this version adds</strong>
-          <p class="muted">
-            Login, registration, logout, MySQL storage, and persistent wallet data.
-          </p>
-        </div>
-      </section>
+        <!-- AUTH INTRO -->
 
-      <section class="card auth-card">
-        <div class="tabs">
-          <button class="tab active" id="showLoginBtn" type="button">Login</button>
-          <button class="tab" id="showRegisterBtn" type="button">Register</button>
-        </div>
+        <section class="card auth-intro">
 
-        <form id="loginForm" class="form-panel">
-          <h3>Login</h3>
+            <div>
 
-          <label for="loginId">Phone number or email</label>
-          <input id="loginId" type="text" placeholder="Enter phone or email" />
+                <p
+                    class="greeting"
+                    id="welcomeLine"
+                >
+                    Welcome
+                </p>
 
-          <label for="loginPassword">Password</label>
-          <input id="loginPassword" type="password" placeholder="Enter password" />
+                <h2>
+                    Tenant Identity
+                </h2>
 
-          <div class="actions">
-            <button type="submit">Login</button>
-          </div>
-        </form>
+                <p class="muted">
+                    Register your profile, then log in
+                    to access your M-PESA Rent Wallet.
+                </p>
 
-        <form id="registerForm" class="form-panel hidden">
-          <h3>Create tenant account</h3>
+            </div>
 
-          <label for="fullName">Full name</label>
-          <input id="fullName" type="text" placeholder="Enter your name" />
 
-          <label for="phoneNumber">Phone number</label>
-          <input id="phoneNumber" type="tel" placeholder="Enter phone number" />
+            <div class="auth-note">
 
-          <label for="emailAddress">Email address</label>
-          <input id="emailAddress" type="email" placeholder="Enter email" />
+                <strong>
+                    M-PESA Rent Wallet
+                </strong>
 
-          <label for="registerPassword">Password</label>
-          <input id="registerPassword" type="password" placeholder="Create password" />
+                <p class="muted">
+                    Manage rent savings, tenant information,
+                    landlord information and rental payments
+                    from one workspace.
+                </p>
 
-          <label for="confirmPassword">Confirm password</label>
-          <input id="confirmPassword" type="password" placeholder="Confirm password" />
+            </div>
 
-          <div class="actions">
-            <button type="submit">Register</button>
-          </div>
-        </form>
-      </section>
+        </section>
+
+
+        <!-- AUTH CARD -->
+
+        <section class="card auth-card">
+
+            <!-- TABS -->
+
+            <div class="tabs">
+
+                <button
+                    class="tab active"
+                    id="showLoginBtn"
+                    type="button"
+                >
+                    Login
+                </button>
+
+
+                <button
+                    class="tab"
+                    id="showRegisterBtn"
+                    type="button"
+                >
+                    Register
+                </button>
+
+            </div>
+
+
+            <!-- ==================================
+                 LOGIN FORM
+                 ================================== -->
+
+            <form
+                id="loginForm"
+                class="form-panel"
+            >
+
+                <h3>
+                    Login
+                </h3>
+
+
+                <label for="loginId">
+                    Phone number or email
+                </label>
+
+                <input
+                    id="loginId"
+                    type="text"
+                    placeholder="Enter phone or email"
+                    autocomplete="username"
+                >
+
+
+                <label for="loginPassword">
+                    Password
+                </label>
+
+                <input
+                    id="loginPassword"
+                    type="password"
+                    placeholder="Enter password"
+                    autocomplete="current-password"
+                >
+
+
+                <div class="actions">
+
+                    <button
+                        type="submit"
+                    >
+                        Login
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <!-- ==================================
+                 REGISTER FORM
+                 ================================== -->
+
+            <form
+                id="registerForm"
+                class="form-panel hidden"
+            >
+
+                <h3>
+                    Create Account
+                </h3>
+
+
+                <label for="fullName">
+                    Full name
+                </label>
+
+                <input
+                    id="fullName"
+                    type="text"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                >
+
+
+                <label for="phoneNumber">
+                    Phone number
+                </label>
+
+                <input
+                    id="phoneNumber"
+                    type="tel"
+                    placeholder="Enter phone number"
+                    autocomplete="tel"
+                >
+
+
+                <label for="emailAddress">
+                    Email address
+                </label>
+
+                <input
+                    id="emailAddress"
+                    type="email"
+                    placeholder="Enter email address"
+                    autocomplete="email"
+                >
+
+
+                <label for="registerPassword">
+                    Password
+                </label>
+
+                <input
+                    id="registerPassword"
+                    type="password"
+                    placeholder="Create password"
+                    autocomplete="new-password"
+                >
+
+
+                <label for="confirmPassword">
+                    Confirm password
+                </label>
+
+                <input
+                    id="confirmPassword"
+                    type="password"
+                    placeholder="Confirm password"
+                    autocomplete="new-password"
+                >
+
+
+                <div class="actions">
+
+                    <button
+                        type="submit"
+                    >
+                        Register
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
     </main>
 
-    <main id="appView" class="dashboard hidden">
-      <section class="card" id="workspaceSelector">
-        <h2>Choose Workspace</h2>
-        <p class="muted">
-          Select how you would like to use M-PESA Rent Wallet.
-        </p>
 
-        <div class="actions">
-          <button id="tenantWorkspaceBtn" type="button">🏠 Tenant Dashboard</button>
-          <button id="landlordWorkspaceBtn" class="secondary" type="button">🏢 Landlord Dashboard</button>
+    <!-- ==========================================
+         APPLICATION VIEW
+         ========================================== -->
+
+    <main
+        id="appView"
+        class="dashboard hidden"
+    >
+
+
+        <!-- ======================================
+             LANDLORD DASHBOARD
+             ====================================== -->
+
+        <section
+            id="landlordDashboard"
+            class="hidden"
+        >
+
+            <div class="card">
+
+                <h2>
+                    🏢 Landlord Dashboard
+                </h2>
+
+                <p class="muted">
+                    Register and manage your rental
+                    property portfolio.
+                </p>
+
+
+                <label for="businessName">
+                    Business Name
+                </label>
+
+                <input
+                    id="businessName"
+                    type="text"
+                    placeholder="Business Name"
+                >
+
+
+                <label for="nationalId">
+                    National ID
+                </label>
+
+                <input
+                    id="nationalId"
+                    type="text"
+                    placeholder="National ID"
+                >
+
+
+                <label for="landlordPhone">
+                    Phone Number
+                </label>
+
+                <input
+                    id="landlordPhone"
+                    type="text"
+                    placeholder="Phone Number"
+                >
+
+
+                <div class="actions">
+
+                    <button
+                        id="registerLandlordBtn"
+                        type="button"
+                    >
+                        Register Landlord
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             TENANT DASHBOARD
+             ====================================== -->
+
+        <div
+            id="tenantDashboard"
+        >
+
+
+            <!-- HERO -->
+
+            <section class="card hero-card">
+
+                <div>
+
+                    <p
+                        class="greeting"
+                        id="greeting"
+                    >
+                        Good day
+                    </p>
+
+                    <h2 id="userNameLine">
+                        Welcome back
+                    </h2>
+
+                    <p
+                        class="muted"
+                        id="userMetaLine"
+                    >
+                        Track your rent savings,
+                        due date and transaction
+                        history in one place.
+                    </p>
+
+                </div>
+
+
+                <div class="hero-actions">
+
+                    <button
+                        class="secondary"
+                        id="logoutBtn"
+                        type="button"
+                    >
+                        Logout
+                    </button>
+
+
+                    <div class="topbar-badge light">
+
+                        <span id="sessionStatus">
+                            Connected to backend
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PROFILE -->
+
+            <section class="card profile-card">
+
+                <h3>
+                    Your Profile
+                </h3>
+
+
+                <div class="profile-grid">
+
+                    <div>
+
+                        <span class="stat-label">
+                            Name
+                        </span>
+
+                        <strong id="profileName">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="stat-label">
+                            Phone
+                        </span>
+
+                        <strong id="profilePhone">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="stat-label">
+                            Email
+                        </span>
+
+                        <strong id="profileEmail">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- WALLET -->
+
+            <section class="grid-2">
+
+
+                <!-- WALLET SETTINGS -->
+
+                <section class="card">
+
+                    <h3>
+                        Wallet Settings
+                    </h3>
+
+                    <p class="muted">
+                        Set your monthly rent goal
+                        and rent due date.
+                    </p>
+
+
+                    <label for="rentGoalInput">
+                        Monthly rent goal (KES)
+                    </label>
+
+                    <input
+                        id="rentGoalInput"
+                        type="number"
+                        min="1"
+                        step="1"
+                        placeholder="25000"
+                    >
+
+
+                    <label for="dueDateInput">
+                        Rent due date
+                    </label>
+
+                    <input
+                        id="dueDateInput"
+                        type="date"
+                    >
+
+
+                    <div class="actions">
+
+                        <button
+                            id="saveSettingsBtn"
+                            type="button"
+                        >
+                            Save Settings
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+                <!-- WALLET OVERVIEW -->
+
+                <section class="card">
+
+                    <h3>
+                        Wallet Overview
+                    </h3>
+
+
+                    <div class="wallet-meta">
+
+                        <div>
+
+                            <span class="stat-label">
+                                Saved
+                            </span>
+
+                            <strong id="savedAmount">
+                                KES 0
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="stat-label">
+                                Remaining
+                            </span>
+
+                            <strong id="remainingAmount">
+                                KES 25,000
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-wrap">
+
+                        <div class="progress-head">
+
+                            <span>
+                                Progress
+                            </span>
+
+                            <strong id="progressPercent">
+                                0%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="progress-bar">
+
+                            <div
+                                class="progress-fill"
+                                id="progressFill"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <label for="saveAmountInput">
+                        Add money to wallet
+                    </label>
+
+                    <input
+                        id="saveAmountInput"
+                        type="number"
+                        min="1"
+                        step="1"
+                        placeholder="Enter amount to save"
+                    >
+
+
+                    <div class="actions">
+
+                        <button
+                            id="saveRentBtn"
+                            type="button"
+                        >
+                            Save Rent
+                        </button>
+
+
+                        <button
+                            class="secondary"
+                            id="resetWalletBtn"
+                            type="button"
+                        >
+                            Reset Wallet
+                        </button>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+
+            <!-- TRANSACTION HISTORY -->
+
+            <section class="card">
+
+                <div class="section-head">
+
+                    <div>
+
+                        <h3>
+                            Transaction History
+                        </h3>
+
+                        <p class="muted">
+                            Every saved amount is
+                            stored in MySQL.
+                        </p>
+
+                    </div>
+
+
+                    <span
+                        class="count-pill"
+                        id="historyCount"
+                    >
+                        0 transactions
+                    </span>
+
+                </div>
+
+
+                <ul
+                    class="history-list"
+                    id="historyList"
+                ></ul>
+
+            </section>
+
+
         </div>
-      </section>
 
-      <section id="landlordDashboard" class="hidden">
-        <div class="card">
-          <h2>🏢 Landlord Dashboard</h2>
-          <p class="muted">
-            Register and manage rental properties.
-          </p>
-
-          <label for="businessName">Business Name</label>
-          <input id="businessName" type="text" placeholder="Business Name" />
-
-          <label for="nationalId">National ID</label>
-          <input id="nationalId" type="text" placeholder="National ID" />
-
-          <label for="landlordPhone">Phone Number</label>
-          <input id="landlordPhone" type="text" placeholder="Phone Number" />
-
-          <div class="actions">
-            <button id="registerLandlordBtn" type="button">Register Landlord</button>
-          </div>
-        </div>
-      </section>
-
-      <div id="tenantDashboard">
-        <section class="card hero-card">
-          <div>
-            <p class="greeting" id="greeting">Good day</p>
-            <h2 id="userNameLine">Welcome back</h2>
-            <p class="muted" id="userMetaLine">
-              Track your rent savings, due date, and transaction history in one place.
-            </p>
-          </div>
-          <div class="hero-actions">
-            <button class="secondary" id="logoutBtn" type="button">Logout</button>
-            <div class="topbar-badge light">
-              <span id="sessionStatus">Connected to backend</span>
-            </div>
-          </div>
-        </section>
-
-        <section class="card profile-card">
-          <h3>Your Profile</h3>
-          <div class="profile-grid">
-            <div>
-              <span class="stat-label">Name</span>
-              <strong id="profileName">-</strong>
-            </div>
-            <div>
-              <span class="stat-label">Phone</span>
-              <strong id="profilePhone">-</strong>
-            </div>
-            <div>
-              <span class="stat-label">Email</span>
-              <strong id="profileEmail">-</strong>
-            </div>
-          </div>
-        </section>
-
-        <section class="grid-2">
-          <section class="card">
-            <h3>Wallet Settings</h3>
-            <p class="muted">Set your rent goal and rent due date.</p>
-
-            <label for="rentGoalInput">Monthly rent goal (KES)</label>
-            <input id="rentGoalInput" type="number" min="1" step="1" placeholder="25000" />
-
-            <label for="dueDateInput">Rent due date</label>
-            <input id="dueDateInput" type="date" />
-
-            <div class="actions">
-              <button id="saveSettingsBtn" type="button">Save Settings</button>
-            </div>
-          </section>
-
-          <section class="card">
-            <h3>Wallet Overview</h3>
-
-            <div class="wallet-meta">
-              <div>
-                <span class="stat-label">Saved</span>
-                <strong id="savedAmount">KES 0</strong>
-              </div>
-              <div>
-                <span class="stat-label">Remaining</span>
-                <strong id="remainingAmount">KES 25,000</strong>
-              </div>
-            </div>
-
-            <div class="progress-wrap">
-              <div class="progress-head">
-                <span>Progress</span>
-                <strong id="progressPercent">0%</strong>
-              </div>
-              <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-              </div>
-            </div>
-
-            <label for="saveAmountInput">Add money to wallet</label>
-            <input id="saveAmountInput" type="number" min="1" step="1" placeholder="Enter amount to save" />
-
-            <div class="actions">
-              <button id="saveRentBtn" type="button">Save Rent</button>
-              <button class="secondary" id="resetWalletBtn" type="button">Reset Wallet</button>
-            </div>
-          </section>
-        </section>
-
-        <section class="card">
-          <div class="section-head">
-            <div>
-              <h3>Transaction History</h3>
-              <p class="muted">Every saved amount is stored in MySQL.</p>
-            </div>
-            <span class="count-pill" id="historyCount">0 transactions</span>
-          </div>
-
-          <ul class="history-list" id="historyList"></ul>
-        </section>
-      </div>
     </main>
-  </div>
 
-  <script src="js/config/storage.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/modules/landlord.js"></script>
-<script src="js/property.js"></script>
-<script src="js/app.js"></script>
+</div>
+
+
+<!-- ==========================================
+     JAVASCRIPT
+     ========================================== -->
+
+<script src="./js/config/storage.js"></script>
+
+<script src="./js/auth.js"></script>
+
+<script src="/js/pwa-splash.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", () => {
+
+        navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(registration => {
+
+                console.log(
+                    "✅ PWA Service Worker registered:",
+                    registration.scope
+                );
+
+                // ===========================================
+                // CHECK FOR WAITING UPDATE
+                // ===========================================
+
+                if (registration.waiting) {
+
+                    showPWAUpdatePrompt(registration);
+
+                }
+
+
+                // ===========================================
+                // DETECT NEW SERVICE WORKER
+                // ===========================================
+
+                registration.addEventListener(
+                    "updatefound",
+                    () => {
+
+                        const newWorker =
+                            registration.installing;
+
+                        if (!newWorker) {
+                            return;
+                        }
+
+                        newWorker.addEventListener(
+                            "statechange",
+                            () => {
+
+                                if (
+                                    newWorker.state === "installed" &&
+                                    navigator.serviceWorker.controller
+                                ) {
+
+                                    showPWAUpdatePrompt(
+                                        registration
+                                    );
+
+                                }
+
+                            }
+                        );
+
+                    }
+                );
+
+            })
+            .catch(error => {
+
+                console.error(
+                    "❌ PWA Service Worker registration failed:",
+                    error
+                );
+
+            });
+
+    });
+
+
+    // ===========================================
+    // UPDATE PROMPT
+    // ===========================================
+
+    function showPWAUpdatePrompt(registration) {
+
+        const updateNow =
+            confirm(
+                "A new version of M-PESA Rent Wallet is available.\n\n" +
+                "Would you like to update now?"
+            );
+
+        if (!updateNow) {
+
+            return;
+
+        }
+
+        if (registration.waiting) {
+
+            registration.waiting.postMessage(
+                "SKIP_WAITING"
+            );
+
+        }
+
+    }
+
+
+    // ===========================================
+    // RELOAD AFTER UPDATE
+    // ===========================================
+
+    navigator.serviceWorker.addEventListener(
+        "controllerchange",
+        () => {
+
+            window.location.reload();
+
+        }
+    );
+
+}
+</script>
+
 </body>
+
 </html>

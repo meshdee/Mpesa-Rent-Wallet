@@ -193,7 +193,7 @@ This approach provides traceability between the business problem, architectural 
 
 ## 👤 Author
 
-**Meshack Wanyama W.**
+**Meshack Wanyama Wekesa**
 
 Relationship Management | Business Development | Business Architecture | Innovation | FinTech
 

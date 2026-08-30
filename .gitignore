@@ -7,3 +7,6 @@ node_modules/
 
 # Local database exports containing development data
 mpesa_rent_wallet_*.sql
+
+# Local development data
+database/store.json

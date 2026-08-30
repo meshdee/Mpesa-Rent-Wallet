@@ -10,10 +10,14 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>M-PESA Rent Wallet | Settings</title>
+    <title>
+        M-PESA Rent Wallet | Settings
+    </title>
 
+    <!-- GLOBAL THEME -->
     <script src="/js/theme.js"></script>
 
+    <!-- MAIN APPLICATION CSS -->
     <link
         rel="stylesheet"
         href="/css/style.css"
@@ -25,158 +29,305 @@
 <body>
 
 
-    <div class="dashboard-shell">
+<div class="dashboard-shell">
 
 
-        <!-- =====================================
-             SIDEBAR
-             ===================================== -->
+    <!-- =========================================
+         SIDEBAR
+         ========================================= -->
 
-        <aside class="sidebar">
+    <aside class="sidebar">
 
 
-            <div class="brand-block">
+        <div class="brand-block">
 
-                <p class="eyebrow">
-                    Safaricom Inspired
+            <p class="eyebrow">
+                Safaricom Inspired
+            </p>
+
+            <h1>
+                M-PESA Rent Wallet
+            </h1>
+
+            <p class="muted">
+                Application Settings
+            </p>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <a
+                href="/dashboard"
+                class="nav-link"
+            >
+                🏠 Dashboard
+            </a>
+
+
+            <a
+                href="/properties"
+                class="nav-link"
+            >
+                🏢 Properties
+            </a>
+
+
+            <a
+                href="/units"
+                class="nav-link"
+            >
+                🏘 Units
+            </a>
+
+
+            <a
+                href="/tenants"
+                class="nav-link"
+            >
+                👥 Tenants
+            </a>
+
+
+            <a
+                href="/wallet"
+                class="nav-link"
+            >
+                💰 Rent Wallet
+            </a>
+
+
+            <a
+                href="/landlord"
+                class="nav-link"
+            >
+                👤 Landlord
+            </a>
+
+
+            <a
+                href="/profile"
+                class="nav-link"
+            >
+                🙍 Profile
+            </a>
+
+
+        </nav>
+
+
+        <!-- USER -->
+
+        <div class="sidebar-footer">
+
+            <p class="muted">
+                Signed in as
+            </p>
+
+            <strong id="settingsSidebarName">
+                Current User
+            </strong>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =========================================
+         MAIN CONTENT
+         ========================================= -->
+
+    <main class="dashboard-main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="dashboard-topbar">
+
+
+            <div>
+
+                <p class="greeting">
+                    Preferences
                 </p>
 
-                <h1>
-                    M-PESA Rent Wallet
-                </h1>
+                <h2>
+                    Settings
+                </h2>
 
                 <p class="muted">
-                    Application Settings
+                    Personalize and control your
+                    M-PESA Rent Wallet experience.
                 </p>
 
             </div>
 
 
-            <nav class="sidebar-nav">
+            <div class="topbar-actions">
 
-                <a
-                    href="/dashboard"
-                    class="nav-link"
+                <span
+                    class="count-pill"
+                    id="settingsStatus"
                 >
-                    🏠 Dashboard
-                </a>
-
-
-                <a
-                    href="/properties"
-                    class="nav-link"
-                >
-                    🏢 Properties
-                </a>
-
-
-                <a
-                    href="/units"
-                    class="nav-link"
-                >
-                    🏘 Units
-                </a>
-
-
-                <a
-                    href="/tenants"
-                    class="nav-link"
-                >
-                    👥 Tenants
-                </a>
-
-
-                <a
-                    href="/wallet"
-                    class="nav-link"
-                >
-                    💰 Rent Wallet
-                </a>
-
-
-                <a
-                    href="/landlord"
-                    class="nav-link"
-                >
-                    👤 Landlord
-                </a>
-
-
-                <a
-                    href="/profile"
-                    class="nav-link"
-                >
-                    🙍 Profile
-                </a>
-
-            </nav>
-
-
-            <!-- USER -->
-
-            <div class="sidebar-footer">
-
-                <p class="muted">
-                    Signed in as
-                </p>
-
-                <strong>
-                    Current User
-                </strong>
+                    Settings
+                </span>
 
             </div>
 
 
-        </aside>
+        </header>
 
 
 
-        <!-- =====================================
-             MAIN CONTENT
-             ===================================== -->
+        <!-- =========================================
+             APPEARANCE
+             ========================================= -->
 
-        <main class="dashboard-main">
+        <section class="card">
 
 
-            <header class="dashboard-topbar">
+            <div class="section-head">
 
                 <div>
 
-                    <p class="greeting">
-                        Preferences
-                    </p>
-
-                    <h2>
-                        Settings
-                    </h2>
+                    <h3>
+                        Appearance
+                    </h3>
 
                     <p class="muted">
-                        Personalize your M-PESA Rent Wallet experience.
+                        Choose how M-PESA Rent Wallet
+                        should appear across the system.
                     </p>
 
                 </div>
 
-            </header>
+            </div>
+
+
+            <div class="settings-options">
+
+
+                <!-- SYSTEM -->
+
+                <label class="settings-option">
+
+                    <input
+                        type="radio"
+                        name="theme"
+                        value="system"
+                    >
+
+                    <span class="settings-option-icon">
+                        🖥️
+                    </span>
+
+                    <span class="settings-option-content">
+
+                        <strong>
+                            System Default
+                        </strong>
+
+                        <small>
+                            Follow your computer or
+                            device appearance.
+                        </small>
+
+                    </span>
+
+                </label>
 
 
 
-            <!-- =================================
-                 SETTINGS CONTENT
-                 ================================= -->
+                <!-- LIGHT -->
 
-            <section class="card">
+                <label class="settings-option">
+
+                    <input
+                        type="radio"
+                        name="theme"
+                        value="light"
+                    >
+
+                    <span class="settings-option-icon">
+                        ☀️
+                    </span>
+
+                    <span class="settings-option-content">
+
+                        <strong>
+                            Light
+                        </strong>
+
+                        <small>
+                            Use the standard light
+                            interface.
+                        </small>
+
+                    </span>
+
+                </label>
+
+
+
+                <!-- DARK -->
+
+                <label class="settings-option">
+
+                    <input
+                        type="radio"
+                        name="theme"
+                        value="dark"
+                    >
+
+                    <span class="settings-option-icon">
+                        🌙
+                    </span>
+
+                    <span class="settings-option-content">
+
+                        <strong>
+                            Dark
+                        </strong>
+
+                        <small>
+                            Use the dark M-PESA
+                            Rent Wallet interface.
+                        </small>
+
+                    </span>
+
+                </label>
+
+
+            </div>
+
+
+        </section>
+
+
+
+      <!-- =========================================
+     APPLICATION MODE
+     ========================================= -->
+
+<section class="card settings-section">
 
     <div class="section-head">
 
         <div>
 
             <h3>
-                Appearance
+                Application Mode
             </h3>
 
             <p class="muted">
-                Choose how M-PESA Rent Wallet
-                should appear across the system.
+                Choose the workspace experience you want to use.
             </p>
 
         </div>
@@ -187,30 +338,30 @@
     <div class="settings-options">
 
 
-        <!-- SYSTEM DEFAULT -->
+        <!-- STANDARD MODE -->
 
         <label class="settings-option">
 
             <input
                 type="radio"
-                name="theme"
-                value="system"
-                checked
+                name="applicationMode"
+                value="standard"
             >
 
             <span class="settings-option-icon">
-                🖥️
+                🏠
             </span>
 
             <span class="settings-option-content">
 
                 <strong>
-                    System Default
+                    Standard Mode
                 </strong>
 
                 <small>
-                    Follow your computer or device
-                    appearance.
+                    Access the complete M-PESA Rent Wallet
+                    experience including rent, properties,
+                    units, tenants and landlord functions.
                 </small>
 
             </span>
@@ -218,29 +369,30 @@
         </label>
 
 
-        <!-- LIGHT -->
+
+        <!-- LANDLORD MODE -->
 
         <label class="settings-option">
 
             <input
                 type="radio"
-                name="theme"
-                value="light"
+                name="applicationMode"
+                value="landlord"
             >
 
             <span class="settings-option-icon">
-                ☀️
+                👤
             </span>
 
             <span class="settings-option-content">
 
                 <strong>
-                    Light
+                    Landlord Mode
                 </strong>
 
                 <small>
-                    Use the standard light
-                    M-PESA Rent Wallet interface.
+                    Focus on properties, units, tenants,
+                    landlord information and rent collection.
                 </small>
 
             </span>
@@ -248,29 +400,30 @@
         </label>
 
 
-        <!-- DARK -->
+
+        <!-- TENANT MODE -->
 
         <label class="settings-option">
 
             <input
                 type="radio"
-                name="theme"
-                value="dark"
+                name="applicationMode"
+                value="tenant"
             >
 
             <span class="settings-option-icon">
-                🌙
+                👥
             </span>
 
             <span class="settings-option-content">
 
                 <strong>
-                    Dark
+                    Tenant Mode
                 </strong>
 
                 <small>
-                    Use the dark M-PESA Rent Wallet
-                    interface.
+                    Focus on rent savings, wallet balance,
+                    payment history and receipts.
                 </small>
 
             </span>
@@ -280,41 +433,752 @@
 
     </div>
 
+</section>
 
-    <div class="actions">
+<!-- =========================================
+     RECEIPT PREFERENCES
+     ========================================= -->
 
-        <button
-            type="button"
-            onclick="window.location.href='/dashboard'"
-        >
-            ← Return to Dashboard
-        </button>
+<section class="card settings-section">
+
+    <div class="section-head">
+
+        <div>
+
+            <h3>
+                Receipt Preferences
+            </h3>
+
+            <p class="muted">
+                Control how your M-PESA Rent Wallet receipts
+                are displayed and printed.
+            </p>
+
+        </div>
 
     </div>
 
+
+    <div class="settings-options">
+
+
+        <!-- SHOW TRANSACTION ID -->
+
+        <label class="settings-option">
+
+            <input
+                type="checkbox"
+                id="receiptShowTransactionId"
+            >
+
+            <span class="settings-option-icon">
+                🧾
+            </span>
+
+            <span class="settings-option-content">
+
+                <strong>
+                    Show Transaction ID
+                </strong>
+
+                <small>
+                    Display the unique transaction reference
+                    on Receipt V2.
+                </small>
+
+            </span>
+
+        </label>
+
+
+
+        <!-- SHOW DATE AND TIME -->
+
+        <label class="settings-option">
+
+            <input
+                type="checkbox"
+                id="receiptShowDateTime"
+            >
+
+            <span class="settings-option-icon">
+                🕐
+            </span>
+
+            <span class="settings-option-content">
+
+                <strong>
+                    Show Date & Time
+                </strong>
+
+                <small>
+                    Display the transaction date and time
+                    on the receipt.
+                </small>
+
+            </span>
+
+        </label>
+
+
+
+        <!-- SHOW PROPERTY INFORMATION -->
+
+        <label class="settings-option">
+
+            <input
+                type="checkbox"
+                id="receiptShowProperty"
+            >
+
+            <span class="settings-option-icon">
+                🏢
+            </span>
+
+            <span class="settings-option-content">
+
+                <strong>
+                    Show Property & Unit
+                </strong>
+
+                <small>
+                    Include rental property and unit information
+                    when available.
+                </small>
+
+            </span>
+
+        </label>
+
+
+
+        <!-- AUTO RECEIPT -->
+
+        <label class="settings-option">
+
+            <input
+                type="checkbox"
+                id="receiptAutoOpen"
+            >
+
+            <span class="settings-option-icon">
+                📄
+            </span>
+
+            <span class="settings-option-content">
+
+                <strong>
+                    Open Receipt After Saving
+                </strong>
+
+                <small>
+                    Automatically display Receipt V2 after
+                    a successful rent-saving transaction.
+                </small>
+
+            </span>
+
+        </label>
+
+
+    </div>
 
 </section>
 
 
-                <div class="actions">
 
-                    <button
-                        type="button"
-                        onclick="window.location.href='/dashboard'"
-                    >
-                        ← Return to Dashboard
-                    </button>
+        <!-- =========================================
+             DASHBOARD PREFERENCES
+             ========================================= -->
+
+        <section class="card">
+
+
+            <div class="section-head">
+
+                <div>
+
+                    <h3>
+                        Dashboard Preferences
+                    </h3>
+
+                    <p class="muted">
+                        Control what appears on your
+                        main dashboard.
+                    </p>
 
                 </div>
 
-            </section>
+            </div>
 
 
-        </main>
+            <div class="settings-list">
 
 
-    </div>
+                <label class="settings-toggle">
 
+                    <span>
+
+                        <strong>
+                            Financial Summary
+                        </strong>
+
+                        <small>
+                            Show rent and financial
+                            summary cards.
+                        </small>
+
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        id="showFinancialSummary"
+                        checked
+                    >
+
+                </label>
+
+
+
+                <label class="settings-toggle">
+
+                    <span>
+
+                        <strong>
+                            Recent Activity
+                        </strong>
+
+                        <small>
+                            Show recent wallet and
+                            payment activity.
+                        </small>
+
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        id="showRecentActivity"
+                        checked
+                    >
+
+                </label>
+
+
+
+                <label class="settings-toggle">
+
+                    <span>
+
+                        <strong>
+                            Remember Application Mode
+                        </strong>
+
+                        <small>
+                            Open the application using
+                            your last selected mode.
+                        </small>
+
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        id="rememberApplicationMode"
+                        checked
+                    >
+
+                </label>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================================
+             RENT WALLET PREFERENCES
+             ========================================= -->
+
+        <section class="card">
+
+
+            <div class="section-head">
+
+                <div>
+
+                    <h3>
+                        Rent Wallet Preferences
+                    </h3>
+
+                    <p class="muted">
+                        Configure how your rent wallet
+                        experience behaves.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-form-grid">
+
+
+                <div>
+
+                    <label for="defaultRentGoal">
+                        Default Rent Goal
+                    </label>
+
+                    <input
+                        type="number"
+                        id="defaultRentGoal"
+                        placeholder="30000"
+                        min="0"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label for="defaultDueDay">
+                        Preferred Rent Due Day
+                    </label>
+
+                    <input
+                        type="number"
+                        id="defaultDueDay"
+                        placeholder="14"
+                        min="1"
+                        max="31"
+                    >
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================================
+             RECEIPT PREFERENCES
+             ========================================= -->
+
+        <section class="card">
+
+
+            <div class="section-head">
+
+                <div>
+
+                    <h3>
+                        Receipt Preferences
+                    </h3>
+
+                    <p class="muted">
+                        Control information displayed
+                        on Rent Wallet receipts.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-list">
+
+
+                <label class="settings-toggle">
+
+                    <span>
+
+                        <strong>
+                            Property Information
+                        </strong>
+
+                        <small>
+                            Include property name and
+                            property code.
+                        </small>
+
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        id="receiptProperty"
+                        checked
+                    >
+
+                </label>
+
+
+
+                <label class="settings-toggle">
+
+                    <span>
+
+                        <strong>
+                            Unit Information
+                        </strong>
+
+                        <small>
+                            Include unit number and
+                            unit code.
+                        </small>
+
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        id="receiptUnit"
+                        checked
+                    >
+
+                </label>
+
+
+
+                <label class="settings-toggle">
+
+                    <span>
+
+                        <strong>
+                            Rent Period
+                        </strong>
+
+                        <small>
+                            Include the rent period covered
+                            by the transaction.
+                        </small>
+
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        id="receiptRentPeriod"
+                        checked
+                    >
+
+                </label>
+
+
+
+                <label class="settings-toggle">
+
+                    <span>
+
+                        <strong>
+                            Payment Method
+                        </strong>
+
+                        <small>
+                            Include the payment method,
+                            such as M-PESA.
+                        </small>
+
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        id="receiptPaymentMethod"
+                        checked
+                    >
+
+                </label>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================================
+             NOTIFICATIONS
+             ========================================= -->
+
+        <section class="card">
+
+
+            <div class="section-head">
+
+                <div>
+
+                    <h3>
+                        Notifications
+                    </h3>
+
+                    <p class="muted">
+                        Choose which application
+                        notifications you receive.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-list">
+
+
+                <label class="settings-toggle">
+
+                    <span>
+
+                        <strong>
+                            Payment Confirmations
+                        </strong>
+
+                        <small>
+                            Confirm successful rent
+                            wallet transactions.
+                        </small>
+
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        id="notifyPayments"
+                        checked
+                    >
+
+                </label>
+
+
+
+                <label class="settings-toggle">
+
+                    <span>
+
+                        <strong>
+                            Rent Reminders
+                        </strong>
+
+                        <small>
+                            Receive reminders about
+                            upcoming rent dates.
+                        </small>
+
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        id="notifyRent"
+                        checked
+                    >
+
+                </label>
+
+
+
+                <label class="settings-toggle">
+
+                    <span>
+
+                        <strong>
+                            Wallet Updates
+                        </strong>
+
+                        <small>
+                            Receive updates when your
+                            wallet balance changes.
+                        </small>
+
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        id="notifyWallet"
+                        checked
+                    >
+
+                </label>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================================
+             SECURITY
+             ========================================= -->
+
+        <section class="card">
+
+
+            <div class="section-head">
+
+                <div>
+
+                    <h3>
+                        Security & Privacy
+                    </h3>
+
+                    <p class="muted">
+                        Manage local application
+                        preferences and your session.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+
+                <button
+                    type="button"
+                    class="secondary"
+                    id="clearSettingsBtn"
+                >
+                    Clear Saved Preferences
+                </button>
+
+
+                <button
+                    type="button"
+                    id="settingsLogoutBtn"
+                >
+                    Logout
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================================
+             SYSTEM INFORMATION
+             ========================================= -->
+
+        <section class="card">
+
+
+            <div class="section-head">
+
+                <div>
+
+                    <h3>
+                        System Information
+                    </h3>
+
+                    <p class="muted">
+                        M-PESA Rent Wallet environment
+                        information.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-grid">
+
+
+                <div>
+
+                    <span class="stat-label">
+                        Application
+                    </span>
+
+                    <strong>
+                        M-PESA Rent Wallet
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span class="stat-label">
+                        Version
+                    </span>
+
+                    <strong>
+                        Enterprise 11.6
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span class="stat-label">
+                        Theme Engine
+                    </span>
+
+                    <strong id="settingsThemeStatus">
+                        Loading...
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span class="stat-label">
+                        Storage
+                    </span>
+
+                    <strong>
+                        Browser Local Storage
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================================
+             RETURN
+             ========================================= -->
+
+        <section class="card">
+
+
+            <div class="actions">
+
+                <button
+                    type="button"
+                    onclick="window.location.href='/dashboard'"
+                >
+                    ← Return to Dashboard
+                </button>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =========================================
+     SETTINGS JAVASCRIPT
+     ========================================= -->
+<script src="/js/theme.js"></script>
+<script src="/js/settings.js"></script>
 
 </body>
 

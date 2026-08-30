@@ -6724,3 +6724,813 @@ html[data-theme="dark"] #closeReceiptBtn:hover {
     background: #26322b !important;
 
 }
+
+/* =========================================================
+   M-PESA RENT WALLET
+   SETTINGS V2
+   VERSION 12.0
+   ========================================================= */
+
+
+/* =========================================================
+   SETTINGS OPTIONS
+   ========================================================= */
+
+.settings-options {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(
+                220px,
+                1fr
+            )
+        );
+
+    gap: 16px;
+
+    margin-top: 20px;
+
+}
+
+
+.settings-option {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    min-height: 125px;
+
+    padding: 20px;
+
+    border:
+        1px solid
+        var(--border-color, #d9e2dc);
+
+    border-radius: 16px;
+
+    background:
+        var(
+            --surface-color,
+            #ffffff
+        );
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+
+}
+
+
+.settings-option:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        #00a651;
+
+    box-shadow:
+        0 8px 24px
+        rgba(
+            0,
+            166,
+            81,
+            .10
+        );
+
+}
+
+
+.settings-option:has(
+    input:checked
+) {
+
+    border-color:
+        #00a651;
+
+    background:
+        rgba(
+            0,
+            166,
+            81,
+            .07
+        );
+
+    box-shadow:
+        0 8px 24px
+        rgba(
+            0,
+            166,
+            81,
+            .12
+        );
+
+}
+
+
+.settings-option input {
+
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+}
+
+
+.settings-option-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 44px;
+
+    height: 44px;
+
+    flex:
+        0 0
+        44px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(
+            0,
+            166,
+            81,
+            .10
+        );
+
+    font-size: 21px;
+
+}
+
+
+.settings-option-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+}
+
+
+.settings-option-content strong {
+
+    font-size: 15px;
+
+    line-height: 1.3;
+
+}
+
+
+.settings-option-content small {
+
+    color:
+        var(
+            --muted-color,
+            #6d7d75
+        );
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   SETTINGS LIST
+   ========================================================= */
+
+.settings-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+
+    margin-top: 15px;
+
+}
+
+
+.settings-toggle {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 17px 4px;
+
+    border-bottom:
+        1px solid
+        var(
+            --border-color,
+            #d9e2dc
+        );
+
+}
+
+
+.settings-toggle:last-child {
+
+    border-bottom: none;
+
+}
+
+
+.settings-toggle > span {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+}
+
+
+.settings-toggle strong {
+
+    font-size: 15px;
+
+}
+
+
+.settings-toggle small {
+
+    color:
+        var(
+            --muted-color,
+            #6d7d75
+        );
+
+    line-height: 1.4;
+
+}
+
+
+/* =========================================================
+   TOGGLE SWITCH
+   ========================================================= */
+
+.settings-toggle input {
+
+    position: relative;
+
+    appearance: none;
+
+    width: 48px;
+
+    height: 26px;
+
+    flex:
+        0 0
+        48px;
+
+    border-radius: 30px;
+
+    border:
+        1px solid
+        #b8c7bf;
+
+    background:
+        #dce4df;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease;
+
+}
+
+
+.settings-toggle input::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 3px;
+
+    left: 3px;
+
+    width: 18px;
+
+    height: 18px;
+
+    border-radius: 50%;
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 1px 4px
+        rgba(
+            0,
+            0,
+            0,
+            .20
+        );
+
+    transition:
+        transform .2s ease;
+
+}
+
+
+.settings-toggle input:checked {
+
+    background:
+        #00a651;
+
+    border-color:
+        #00a651;
+
+}
+
+
+.settings-toggle input:checked::after {
+
+    transform:
+        translateX(22px);
+
+}
+
+
+/* =========================================================
+   SETTINGS FORM
+   ========================================================= */
+
+.settings-form-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(
+                240px,
+                1fr
+            )
+        );
+
+    gap: 20px;
+
+    margin-top: 20px;
+
+}
+
+
+.settings-form-grid > div {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.settings-form-grid label {
+
+    font-weight: 700;
+
+    font-size: 14px;
+
+}
+
+
+.settings-form-grid input {
+
+    width: 100%;
+
+    padding:
+        13px 15px;
+
+    border:
+        1px solid
+        var(
+            --border-color,
+            #cfdad3
+        );
+
+    border-radius: 11px;
+
+    background:
+        var(
+            --input-background,
+            #ffffff
+        );
+
+    color:
+        var(
+            --text-color,
+            #17231d
+        );
+
+    outline: none;
+
+    font-size: 15px;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+
+}
+
+
+.settings-form-grid input:focus {
+
+    border-color:
+        #00a651;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            0,
+            166,
+            81,
+            .10
+        );
+
+}
+
+
+/* =========================================================
+   SETTINGS CARD ENHANCEMENT
+   ========================================================= */
+
+.dashboard-main > .card {
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+
+.dashboard-main > .card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 54px;
+
+    height: 3px;
+
+    background:
+        #00a651;
+
+    border-radius:
+        0 0 6px 0;
+
+}
+
+
+/* =========================================================
+   SETTINGS TOAST
+   ========================================================= */
+
+.settings-toast {
+
+    position: fixed;
+
+    right: 28px;
+
+    bottom: 28px;
+
+    z-index: 9999;
+
+    max-width: 340px;
+
+    padding:
+        13px 18px;
+
+    border-radius: 30px;
+
+    background:
+        #eaf8f0;
+
+    color:
+        #087a3c;
+
+    border:
+        1px solid
+        #b8e7ca;
+
+    box-shadow:
+        0 12px 30px
+        rgba(
+            0,
+            0,
+            0,
+            .15
+        );
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    opacity: 0;
+
+    transform:
+        translateY(
+            12px
+        );
+
+    pointer-events: none;
+
+    transition:
+        opacity .25s ease,
+        transform .25s ease;
+
+}
+
+
+.settings-toast.show {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+
+}
+
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+html[data-theme="dark"] {
+
+    --surface-color:
+        #111b17;
+
+    --input-background:
+        #0c1511;
+
+    --text-color:
+        #f2f7f4;
+
+    --muted-color:
+        #9eb0a7;
+
+    --border-color:
+        #2a4036;
+
+}
+
+
+html[data-theme="dark"]
+.settings-option {
+
+    background:
+        #111b17;
+
+    border-color:
+        #2a4036;
+
+    color:
+        #f2f7f4;
+
+}
+
+
+html[data-theme="dark"]
+.settings-option:hover {
+
+    background:
+        #14231c;
+
+    border-color:
+        #00a651;
+
+}
+
+
+html[data-theme="dark"]
+.settings-option:has(
+    input:checked
+) {
+
+    background:
+        rgba(
+            0,
+            166,
+            81,
+            .14
+        );
+
+    border-color:
+        #00c968;
+
+}
+
+
+html[data-theme="dark"]
+.settings-option-content small {
+
+    color:
+        #9eb0a7;
+
+}
+
+
+html[data-theme="dark"]
+.settings-toggle {
+
+    border-color:
+        #2a4036;
+
+}
+
+
+html[data-theme="dark"]
+.settings-toggle small {
+
+    color:
+        #9eb0a7;
+
+}
+
+
+html[data-theme="dark"]
+.settings-form-grid input {
+
+    background:
+        #0c1511;
+
+    color:
+        #f2f7f4;
+
+    border-color:
+        #2a4036;
+
+}
+
+
+html[data-theme="dark"]
+.settings-form-grid input::placeholder {
+
+    color:
+        #71857b;
+
+}
+
+
+html[data-theme="dark"]
+.settings-toggle input {
+
+    background:
+        #26372f;
+
+    border-color:
+        #395247;
+
+}
+
+
+html[data-theme="dark"]
+.settings-toggle input:checked {
+
+    background:
+        #00b85a;
+
+    border-color:
+        #00b85a;
+
+}
+
+
+html[data-theme="dark"]
+.settings-toast {
+
+    background:
+        #123b28;
+
+    color:
+        #8af0b8;
+
+    border-color:
+        #246f4b;
+
+}
+
+
+/* =========================================================
+   LIGHT MODE
+   ========================================================= */
+
+html[data-theme="light"] {
+
+    --surface-color:
+        #ffffff;
+
+    --input-background:
+        #ffffff;
+
+    --text-color:
+        #17231d;
+
+    --muted-color:
+        #68776f;
+
+    --border-color:
+        #d7e0db;
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (
+    max-width: 700px
+) {
+
+    .settings-options {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .settings-option {
+
+        min-height: auto;
+
+    }
+
+
+    .settings-form-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .settings-toggle {
+
+        align-items:
+            flex-start;
+
+    }
+
+
+    .settings-toggle input {
+
+        margin-top:
+            3px;
+
+    }
+
+
+    .settings-toast {
+
+        right: 15px;
+
+        left: 15px;
+
+        bottom: 15px;
+
+        max-width: none;
+
+        text-align: center;
+
+    }
+
+}

@@ -1,4 +1,9 @@
-node_modules/
+# Environment variables and secrets
 .env
-.vscode/
-*.log
+.env.*
+
+# Node.js dependencies
+node_modules/
+
+# Local database exports containing development data
+mpesa_rent_wallet_*.sql

@@ -65,7 +65,7 @@ The working prototype is supported by a separate **Enterprise Architecture devel
 
 ### 🌐 Explore the Live Architecture
 
-**[🚀 Open M-PESA Rent Wallet Enterprise Architecture](https://meshdee.github.io/Mpesa-Rent-Wallet-Architecture/)**
+[**🚀 Open M-PESA Rent Wallet Enterprise Architecture**](https://meshdee.github.io/Mpesa-Rent-Wallet-Architecture/)
 
 Explore the architecture covering:
 
@@ -80,7 +80,17 @@ Explore the architecture covering:
 
 ### 📐 Architecture Repository
 
-**[View the M-PESA Rent Wallet Enterprise Architecture Repository](https://github.com/meshdee/Mpesa-Rent-Wallet-Architecture)**
+[**View the M-PESA Rent Wallet Enterprise Architecture Repository**](https://github.com/meshdee/Mpesa-Rent-Wallet-Architecture)
+
+---
+
+## 📊 Project Presentation
+
+The project is supported by a comprehensive presentation covering the **business case, enterprise architecture, application architecture, technology architecture, security, implementation dependencies, stakeholder value, architecture traceability and project roadmap**.
+
+[**🎤 View M-PESA Rent Wallet Project Presentation**](https://github.com/meshdee/M-PESA-Rent-Wallet-Presentation)
+
+The presentation provides a consolidated view of how the Rent Wallet concept evolves from a **business problem into an architectural blueprint and working software prototype**.
 
 ---
 
@@ -175,6 +185,40 @@ This approach provides traceability between the business problem, architectural 
 
 ---
 
+## 🔗 Project Ecosystem
+
+The M-PESA Rent Wallet project is supported by three complementary repositories:
+
+```text
+                    M-PESA RENT WALLET
+                           │
+             ┌─────────────┼─────────────┐
+             │             │             │
+             ▼             ▼             ▼
+       💻 WORKING      🏗️ ENTERPRISE    📊 PROJECT
+        PROTOTYPE       ARCHITECTURE    PRESENTATION
+             │             │             │
+             │             │             │
+          Software      ArchiMate       PowerPoint
+          Prototype       Model         Presentation
+             │             │             │
+             └─────────────┼─────────────┘
+                           │
+                           ▼
+                  INTEGRATED PROJECT
+                       PORTFOLIO
+```
+
+### Repository Links
+
+* 💻 **[Working Prototype](https://github.com/meshdee/Mpesa-Rent-Wallet)**
+* 🏗️ **[Enterprise Architecture](https://github.com/meshdee/Mpesa-Rent-Wallet-Architecture)**
+* 📊 **[Project Presentation](https://github.com/meshdee/M-PESA-Rent-Wallet-Presentation)**
+
+Together, these repositories demonstrate the relationship between the **business concept, enterprise architecture, technical implementation and project presentation**.
+
+---
+
 ## 🚀 Project Status
 
 **Project:** M-PESA Rent Wallet
@@ -188,6 +232,8 @@ This approach provides traceability between the business problem, architectural 
 **Source Control:** GitHub
 
 **Architecture Documentation:** GitHub Pages
+
+**Project Presentation:** Available
 
 ---
 

@@ -1,5 +1,11 @@
 # M-PESA Rent Wallet
 
+## 🚀 Live Application
+
+Explore the M-PESA Rent Wallet application:
+
+[**Launch M-PESA Rent Wallet**](https://site-756f2fe6d017421b8e8fea47017b9c24.freebuff.page/)
+
 ### Save smart. Pay rent. Build your future.
 
 **M-PESA Rent Wallet** is a digital rent-management and payment concept designed to make rental payments more convenient, transparent and manageable for tenants, landlords and property managers.

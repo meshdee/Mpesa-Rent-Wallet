@@ -1,16 +1,27 @@
+
 # M-PESA Rent Wallet
 
 ## 🚀 Live Application
 
-Explore the M-PESA Rent Wallet application:
+<p align="center">
+  <a href="https://site-756f2fe6d017421b8e8fea47017b9c24.freebuff.page/">
+    <strong>🌐 LAUNCH M-PESA RENT WALLET APPLICATION</strong>
+  </a>
+</p>
 
-[**Launch M-PESA Rent Wallet**](https://site-756f2fe6d017421b8e8fea47017b9c24.freebuff.page/)
+<p align="center">
+  <em>Save smart. Pay rent. Build your future.</em>
+</p>
 
-### Save smart. Pay rent. Build your future.
+**M-PESA Rent Wallet** is an independent digital rent-management and payment concept designed to make rental payments more convenient, transparent and manageable for tenants, landlords and property managers.
 
-**M-PESA Rent Wallet** is a digital rent-management and payment concept designed to make rental payments more convenient, transparent and manageable for tenants, landlords and property managers.
+The solution combines **rent savings, scheduled payments, M-PESA payment processing, transaction history, receipts and rental management** into one connected digital ecosystem.
 
-The solution combines **rent savings, scheduled payments, M-PESA payment processing, transaction history, receipts and rental management** into one digital ecosystem.
+**Explore the project:**
+- 🌐 [Launch Live Application](https://site-756f2fe6d017421b8e8fea47017b9c24.freebuff.page/)
+- 🏗️ [Explore Enterprise Architecture](https://meshdee.github.io/Mpesa-Rent-Wallet-Architecture/)
+- 📊 [View Project Presentation](https://github.com/meshdee/M-PESA-Rent-Wallet-Presentation)
+- 💻 [Access GitHub Source Repository](https://github.com/meshdee/Mpesa-Rent-Wallet)
 
 ---
 
@@ -18,12 +29,12 @@ The solution combines **rent savings, scheduled payments, M-PESA payment process
 
 The objective of M-PESA Rent Wallet is to provide a structured digital platform that enables tenants to:
 
-* Save toward rent
-* Plan rental payments
-* Schedule payment dates
-* Make rent payments
-* View transaction history
-* Access and print payment receipts
+- Save toward rent
+- Plan rental payments
+- Schedule payment dates
+- Make rent payments
+- View transaction history
+- Access and print payment receipts
 
 The platform also provides landlords and property managers with tools for managing properties, tenants and rental collections.
 
@@ -35,58 +46,58 @@ The platform also provides landlords and property managers with tools for managi
 
 The tenant can:
 
-* Create and manage a Rent Wallet
-* Save toward upcoming rent
-* View wallet balance
-* Schedule rent payments
-* Make rent payments
-* View transaction history
-* Access and print receipts
+- Create and manage a Rent Wallet
+- Save toward upcoming rent
+- View wallet balance
+- Schedule rent payments
+- Make rent payments
+- View transaction history
+- Access and print receipts
 
 ### Landlord
 
 The landlord can:
 
-* Register properties
-* Manage tenants
-* Monitor rent collections
-* View payment records
-* Track rental performance
+- Register properties
+- Manage tenants
+- Monitor rent collections
+- View payment records
+- Track rental performance
 
 ### Property Manager
 
 The property manager can:
 
-* Manage multiple properties
-* Manage tenants
-* Monitor rental collections
-* Access rental analytics
-* Support landlord operations
+- Manage multiple properties
+- Manage tenants
+- Monitor rental collections
+- Access rental analytics
+- Support landlord operations
 
 ---
 
 ## 🏗️ Enterprise Architecture
 
-The working prototype is supported by a separate **Enterprise Architecture developed using ArchiMate**.
+The working prototype is supported by a separate **Enterprise Architecture developed using ArchiMate concepts**.
 
 ### 🌐 Explore the Live Architecture
 
-[**🚀 Open M-PESA Rent Wallet Enterprise Architecture**](https://meshdee.github.io/Mpesa-Rent-Wallet-Architecture/)
+**[🚀 Open M-PESA Rent Wallet Enterprise Architecture](https://meshdee.github.io/Mpesa-Rent-Wallet-Architecture/)**
 
 Explore the architecture covering:
 
-* Strategy & Motivation
-* Business Architecture
-* Capability Map
-* Value Streams
-* Application Architecture
-* Technology Architecture
-* Security Architecture
-* End-to-End Architecture
+- Strategy & Motivation
+- Business Architecture
+- Capability Map
+- Value Streams
+- Application Architecture
+- Technology Architecture
+- Security Architecture
+- End-to-End Architecture
 
 ### 📐 Architecture Repository
 
-[**View the M-PESA Rent Wallet Enterprise Architecture Repository**](https://github.com/meshdee/Mpesa-Rent-Wallet-Architecture)
+**[View M-PESA Rent Wallet Enterprise Architecture Repository](https://github.com/meshdee/Mpesa-Rent-Wallet-Architecture)**
 
 ---
 
@@ -94,7 +105,7 @@ Explore the architecture covering:
 
 The project is supported by a comprehensive presentation covering the **business case, enterprise architecture, application architecture, technology architecture, security, implementation dependencies, stakeholder value, architecture traceability and project roadmap**.
 
-[**🎤 View M-PESA Rent Wallet Project Presentation**](https://github.com/meshdee/M-PESA-Rent-Wallet-Presentation)
+**[🎤 View M-PESA Rent Wallet Project Presentation](https://github.com/meshdee/M-PESA-Rent-Wallet-Presentation)**
 
 The presentation provides a consolidated view of how the Rent Wallet concept evolves from a **business problem into an architectural blueprint and working software prototype**.
 
@@ -104,13 +115,13 @@ The presentation provides a consolidated view of how the Rent Wallet concept evo
 
 The prototype currently includes technologies such as:
 
-* HTML
-* CSS
-* JavaScript
-* Node.js
-* MySQL
-* REST APIs
-* Git & GitHub
+- HTML
+- CSS
+- JavaScript
+- Node.js
+- MySQL
+- REST APIs
+- Git & GitHub
 
 ---
 
@@ -196,32 +207,36 @@ This approach provides traceability between the business problem, architectural 
 The M-PESA Rent Wallet project is supported by three complementary repositories:
 
 ```text
-                    M-PESA RENT WALLET
-                           │
-             ┌─────────────┼─────────────┐
-             │             │             │
-             ▼             ▼             ▼
-       💻 WORKING      🏗️ ENTERPRISE    📊 PROJECT
-        PROTOTYPE       ARCHITECTURE    PRESENTATION
-             │             │             │
-             │             │             │
-          Software      ArchiMate       PowerPoint
-          Prototype       Model         Presentation
-             │             │             │
-             └─────────────┼─────────────┘
-                           │
-                           ▼
-                  INTEGRATED PROJECT
-                       PORTFOLIO
+                  M-PESA RENT WALLET
+                         │
+           ┌─────────────┼─────────────┐
+           │             │             │
+           ▼             ▼             ▼
+       💻 WORKING     🏗️ ENTERPRISE   📊 PROJECT
+        PROTOTYPE      ARCHITECTURE   PRESENTATION
+           │             │             │
+           │             │             │
+        Software      ArchiMate      PowerPoint
+        Prototype       Model       Presentation
+           │             │             │
+           └─────────────┼─────────────┘
+                         │
+                         ▼
+                INTEGRATED PROJECT
+                     PORTFOLIO
 ```
 
 ### Repository Links
 
-* 💻 **[Working Prototype](https://github.com/meshdee/Mpesa-Rent-Wallet)**
-* 🏗️ **[Enterprise Architecture](https://github.com/meshdee/Mpesa-Rent-Wallet-Architecture)**
-* 📊 **[Project Presentation](https://github.com/meshdee/M-PESA-Rent-Wallet-Presentation)**
+- 💻 **[Working Prototype](https://github.com/meshdee/Mpesa-Rent-Wallet)**
+- 🏗️ **[Enterprise Architecture](https://github.com/meshdee/Mpesa-Rent-Wallet-Architecture)**
+- 📊 **[Project Presentation](https://github.com/meshdee/M-PESA-Rent-Wallet-Presentation)**
 
-Together, these repositories demonstrate the relationship between the **business concept, enterprise architecture, technical implementation and project presentation**.
+### 🌐 Published Application
+
+**[Launch M-PESA Rent Wallet](https://site-756f2fe6d017421b8e8fea47017b9c24.freebuff.page/)**
+
+Together, these repositories and the published application demonstrate the relationship between the **business concept, enterprise architecture, technical implementation and project presentation**.
 
 ---
 
@@ -248,6 +263,8 @@ Together, these repositories demonstrate the relationship between the **business
 **Meshack Wanyama Wekesa**
 
 Relationship Management | Business Development | Business Architecture | Innovation | FinTech
+
+**[GitHub Profile](https://github.com/meshdee)**
 
 ---
 
